@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Container } from "@chakra-ui/react";
 import Image from "next/image";
 
@@ -8,7 +9,7 @@ interface LoadingProps {
 export default function Loading({ loading }: LoadingProps) {
   return (
     <Container
-      position="absolute"
+      position={"absolute"}
       width="100vw"
       height={"100vh"}
       backgroundColor="#000"
@@ -22,6 +23,7 @@ export default function Loading({ loading }: LoadingProps) {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
+          display: loading ? "block" : "none",
         }}
         src="https://i.gifer.com/YlWC.gif"
         alt="loading"

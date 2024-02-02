@@ -3,7 +3,7 @@
 import { fonts } from "../themes/fonts/fonts";
 import { Providers } from "./providers";
 import "../styles/reset.css";
-import { Menu } from "@/components/Menu";
+import { Navbar } from "@/components/Navbar/index";
 import { Flex } from "@chakra-ui/react";
 import Loading from "@/components/Loading";
 import { useState } from "react";
@@ -19,19 +19,20 @@ export default function RootLayout({
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 500);
-  }
+    }, 300);
+  };
   return (
     <>
       <link rel="icon" href="/favicon.ico" sizes="any" />
-      <html lang="en" className={fonts.roboto.variable}>
+      <html lang="en" className={fonts.montserrat.variable}>
         <body className="page-body">
           <Loading loading={loading} />
-          <Menu setLoading={load} />
+          <Navbar setLoading={load} />
           <Flex
             justifyContent="center"
             width="100%"
-            padding="94px 32px 94px 32px"
+            padding="94px 32px 0px 32px"
+            height='100vh'
           >
             <Providers>{children}</Providers>
           </Flex>

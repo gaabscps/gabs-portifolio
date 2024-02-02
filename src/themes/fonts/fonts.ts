@@ -1,12 +1,12 @@
 // app/fonts.ts
-import { Roboto } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 
-const roboto = Roboto({
+const montserrat = Montserrat({
   subsets: ['latin'],
-  variable: '--font-roboto',
+  variable: '--font-montserrat',
   weight: ['300', '400', '500', '700']
 })
 
 export const fonts = {
-  roboto,
+  montserrat,
 }
