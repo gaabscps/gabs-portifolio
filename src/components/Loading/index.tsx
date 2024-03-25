@@ -1,17 +1,32 @@
 /* eslint-disable @next/next/no-img-element */
 import { Container } from "@chakra-ui/react";
 import Image from "next/image";
+import { useEffect } from "react";
 
 interface LoadingProps {
   loading: boolean;
 }
 
 export default function Loading({ loading }: LoadingProps) {
+  //scrolla a tela para o topo e desabilita o scroll
+  const onScroll = () => {
+    window.scrollTo(0, 0);
+    document.body.style.overflow = loading ? "hidden" : "auto";
+  };
+
+  useEffect(() => {
+    onScroll();
+    // retorna o scroll para o normal
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   return (
     <Container
       position={"absolute"}
       width="100vw"
-      height={"100vh"}
+      height="100vh"
       backgroundColor="#000"
       zIndex={loading ? "100" : "0"}
       opacity={loading ? "0.8" : "0"}

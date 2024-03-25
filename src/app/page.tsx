@@ -1,12 +1,12 @@
 // app/page.tsx
 "use client";
 
-import Home from "./home/page";
+import Projects from "./projects/page";
 
 export default function Page({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Home />
+      <Projects />
       {children}
     </>
   );

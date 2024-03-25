@@ -10,5 +10,6 @@ html, body, .page-body{
 }
 
 .body-content{
-    margin-top: 241px
+    margin-top: 241px;
+    min-width: 1024px;
 }

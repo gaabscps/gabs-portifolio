@@ -1,6 +1,6 @@
 import { Container, Flex, Text } from "@chakra-ui/react";
 
-export default function Home() {
+export default function About() {
   return (
     <Flex
       width="100%"

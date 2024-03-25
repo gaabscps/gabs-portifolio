@@ -13,12 +13,12 @@ console.log(image);
 export const Navbar = ({ setLoading }: NavbarProps) => {
   const menuItems = [
     {
-      name: "Home",
+      name: "Projetos",
       link: "/",
     },
     {
-      name: "Projetos",
-      link: "/projects",
+      name: "Sobre mim",
+      link: "/about",
     },
     {
       name: "Contato",
@@ -26,7 +26,7 @@ export const Navbar = ({ setLoading }: NavbarProps) => {
     },
   ];
 
-  const [selectedMenuItemIndex, setSelectedMenuItemIndex] = useState(-1);
+  const [selectedMenuItemIndex, setSelectedMenuItemIndex] = useState(0);
 
   return (
     <Flex
@@ -39,7 +39,6 @@ export const Navbar = ({ setLoading }: NavbarProps) => {
       gap="24px"
     >
       <Flex alignItems="center" width="100%" justifyContent="center">
-        {/* <Text>Gabriel Andrade</Text> */}
         <Image
           alt="Gabriel Andrade"
           src="https://www.linkedin.com/dms/prv/vid/D4D06AQHpHHaKatH8VA/messaging-attachmentFile/0/1706853683476?m=AQLBxWdFjkVc-gAAAY1oaFnu9ep-Nyyi2vUmqfFwQX9VJma5sHY4YbtT0A&ne=1&v=beta&t=aT4m825EckIdAVF4ywTKBciaoaKZTGS8fgO1jBFmAFo"
