@@ -25,6 +25,9 @@ export default function RootLayout({
     <>
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <html lang="en" className={fonts.montserrat.variable}>
+        <head>
+          <title>Gabriel Andrade</title>
+        </head>
         <body className="page-body">
           {loading && <Loading loading={loading} />}
           <Navbar setLoading={load} />
