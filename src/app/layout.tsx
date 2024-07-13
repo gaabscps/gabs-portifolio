@@ -6,7 +6,7 @@ import "../styles/reset.css";
 import { Navbar } from "@/components/Navbar/index";
 import { Flex } from "@chakra-ui/react";
 import Loading from "@/components/Loading";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function RootLayout({
   children,

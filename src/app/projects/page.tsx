@@ -6,7 +6,7 @@ export default function Projects() {
     {
       projectName: "Banca do ingresso Painel Administrativo",
       projectDescription:
-        "O projeto Banca do Ingresso é um sistema de gestão de ingressos para eventos. O painel administrativo é uma aplicação web que permite a gestão de eventos, ingressos e usuários. O sistema foi desenvolvido utilizando ReactJS, NodeJS e MongoDB.",
+        "O projeto Banca do Ingresso é um sistema de gestão de ingressos para eventos. O painel administrativo é uma aplicação web que permite a gestão de eventos, ingressos e usuários. O sistema foi desenvolvido utilizando react e typescript.",
       projectDate: "2022",
       projectImage: "https://picsum.photos/200",
       link: "/banca-do-ingresso",
@@ -14,7 +14,7 @@ export default function Projects() {
     {
       projectName: "PlayX1",
       projectDescription:
-        "O PlayX1 é um projeto de uma plataforma de apostas em jogos online. O projeto foi desenvolvido utilizando ReactJS, NextJS, Typescript, NodeJS e MongoDB",
+        "O PlayX1 é o projeto de uma plataforma de apostas em jogos online. O projeto foi desenvolvido utilizando ReactJS, NextJS, Typescript",
       projectDate: "2023",
       projectImage: "https://picsum.photos/200",
       link: "/playx1",
