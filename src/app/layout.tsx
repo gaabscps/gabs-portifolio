@@ -7,6 +7,7 @@ import { Navbar } from "@/components/Navbar/index";
 import { Flex } from "@chakra-ui/react";
 import Loading from "@/components/Loading";
 import { useState } from "react";
+import { useLanguage } from "../context/language";
 
 export default function RootLayout({
   children,
@@ -30,15 +31,17 @@ export default function RootLayout({
         </head>
         <body className="page-body">
           {loading && <Loading loading={loading} />}
-          <Navbar setLoading={load} />
-          <Flex
-            justifyContent="center"
-            width="100%"
-            padding="94px 32px 0px 32px"
-            height="100vh"
-          >
-            <Providers>{children}</Providers>
-          </Flex>
+          <Providers>
+            <Navbar setLoading={load} />
+            <Flex
+              justifyContent="center"
+              width="100%"
+              padding="94px 32px 0px 32px"
+              height="100vh"
+            >
+              {children}
+            </Flex>
+          </Providers>
         </body>
       </html>
     </>
