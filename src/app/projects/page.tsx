@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Flex, useMediaQuery } from "@chakra-ui/react";
 import { ProjectCard } from "./Components/ProjectCard";
 import { useLanguage } from "../../context/language";
