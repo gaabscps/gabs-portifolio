@@ -1,10 +1,12 @@
-import { Container, Flex, Text } from "@chakra-ui/react";
+import { Container, Box, Flex, Text } from "@chakra-ui/react";
 
 export default function About() {
   return (
-    <Flex
+    <Box
+      as="section"
       width="100%"
-      direction="column"
+      display="flex"
+      flexDirection="column"
       className="body-content"
       maxWidth="1040px"
     >
@@ -23,6 +25,6 @@ export default function About() {
         <Text textAlign="center">SkillsSkillsSkillsSkills</Text>
         <Text textAlign="center">SkillsSkillsSkillsSkills</Text>
       </Flex>
-    </Flex>
+    </Box>
   );
 }

@@ -1,10 +1,18 @@
-import { Flex, Icon, List, ListItem, Text, Image } from "@chakra-ui/react";
+"use client";
+
+import {
+  Flex,
+  Icon,
+  List,
+  ListItem,
+  Text,
+  Image,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
-import image from "../../assets/image/2.png";
-import useWindow from "@/hooks/useWindows";
 import { useLanguage } from "@/context/language";
 
 interface NavbarProps {
@@ -12,9 +20,9 @@ interface NavbarProps {
 }
 
 export const Navbar = ({ setLoading }: NavbarProps) => {
+  const isDesktop = useMediaQuery("(min-width: 1023px)");
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const [selectedMenuItemIndex, setSelectedMenuItemIndex] = useState(0);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const window = useWindow();
 
   const { translations, setLanguage, language } = useLanguage();
 
@@ -24,7 +32,7 @@ export const Navbar = ({ setLoading }: NavbarProps) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const menuItems = [
     {
-      name: isMenuOpen ? "" : logoLink,
+      name: isDesktop[0] ? "" : logoLink,
       link: "/",
     },
     {
@@ -41,23 +49,11 @@ export const Navbar = ({ setLoading }: NavbarProps) => {
     },
   ];
 
-  const page = window?.location.pathname;
-  useEffect(() => {
-    const pageName = page?.split("/")[1];
-    const menuItemIndex = menuItems.findIndex(
-      (item) => item.link.split("/")[1] === pageName
-    );
-    if (menuItemIndex !== -1) {
-      setIsMenuOpen(true);
-    } else {
-      setIsMenuOpen(false);
-    }
-  }, [menuItems, page]);
-
   return (
     <>
       <Flex gap={"8px"} position={"fixed"} padding="8px" zIndex={10}>
         <Text
+          _hover={{ textShadow: "0px 0px 20px rgba(255,255,255,1)" }}
           cursor={"pointer"}
           backgroundImage={
             language === "ptbr"
@@ -72,10 +68,11 @@ export const Navbar = ({ setLoading }: NavbarProps) => {
           BR
         </Text>
         <Text
+          _hover={{ textShadow: "0px 0px 20px rgba(255,255,255,1)" }}
           cursor={"pointer"}
           backgroundImage={
             language === "en"
-              ? "linear-gradient(123deg, rgba(255,0,0,1) 0%, rgba(16,0,255,1) 95%);"
+              ? "linear-gradient(123deg, rgba(0,35,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,0,0,1) 100%);"
               : ""
           }
           color={language === "en" ? "transparent" : "#c6c6c6"}
@@ -89,8 +86,8 @@ export const Navbar = ({ setLoading }: NavbarProps) => {
       <Flex
         alignItems={"center"}
         position="absolute"
-        padding={isMenuOpen ? "24px 0" : "0"}
-        borderBottom={isMenuOpen ? "" : "solid 1px #AC6BED"}
+        padding={isDesktop[0] ? "24px 0" : "0"}
+        borderBottom={isDesktop[0] ? "" : "solid 1px #AC6BED"}
         width="100%"
         className="menu-container"
         flexDirection={"column"}
@@ -98,7 +95,7 @@ export const Navbar = ({ setLoading }: NavbarProps) => {
       >
         <Flex
           alignItems="center"
-          width={isMenuOpen ? "100%" : "0%"}
+          width={isDesktop[0] ? "100%" : "0%"}
           justifyContent="center"
         >
           <Image
@@ -113,6 +110,7 @@ export const Navbar = ({ setLoading }: NavbarProps) => {
               {menuItems.map((item, index) =>
                 item.name === logoLink ? (
                   <Image
+                    visibility={isMobile[0] ? "hidden" : "visible"}
                     alt="Gabriel Andrade"
                     src={logoLink}
                     width={100}
@@ -136,7 +134,7 @@ export const Navbar = ({ setLoading }: NavbarProps) => {
                         selectedMenuItemIndex === index ? "#AC6BED" : "#c6c6c6"
                       }
                       className={`menuItemName-${index}`}
-                      fontSize={"24px"}
+                      fontSize={isMobile[0] ? "16px" : "24px"}
                       _hover={{
                         textDecoration: "none",
                         color: "#AC6BED",
@@ -151,7 +149,7 @@ export const Navbar = ({ setLoading }: NavbarProps) => {
             </ListItem>
           </List>
         </Flex>
-        <Flex display={isMenuOpen ? "flex" : "none"} gap="25px">
+        <Flex display={isDesktop[0] ? "flex" : "none"} gap="25px">
           <Link target="_blank" href="https://github.com/gaabscps">
             <Icon
               cursor="pointer"

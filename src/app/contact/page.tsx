@@ -1,9 +1,9 @@
-import { Container } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 export default function Home() {
   return (
-    <Container className="body-content">
+    <Box className="body-content" as="section">
       <h1>Contato</h1>
-    </Container>
+    </Box>
   );
 }
