@@ -1,34 +1,43 @@
-import { Container, Flex } from "@chakra-ui/react";
+"use client";
+
+import { Box, Flex, useMediaQuery } from "@chakra-ui/react";
 import { ProjectCard } from "./Components/ProjectCard";
+import { useLanguage } from "../../context/language";
 
 export default function Projects() {
+  const { translations } = useLanguage();
+  const isDesktop = useMediaQuery("(min-width: 1023px)")[0];
+
   const mockedProjects = [
     {
-      projectName: "Banca do ingresso Painel Administrativo",
-      projectDescription:
-        "O projeto Banca do Ingresso é um sistema de gestão de ingressos para eventos. O painel administrativo é uma aplicação web que permite a gestão de eventos, ingressos e usuários. O sistema foi desenvolvido utilizando react e typescript.",
-      projectDate: "2022",
-      projectImage: "https://picsum.photos/200",
-      link: "/banca-do-ingresso",
+      projectName: translations?.projects?.playx1?.title,
+      projectDescription: translations?.projects?.playx1?.description,
+      projectDate: "2023",
+      projectImage: "https://picsum.photos/1901",
+      link: "/playx1",
     },
     {
-      projectName: "PlayX1",
-      projectDescription:
-        "O PlayX1 é o projeto de uma plataforma de apostas em jogos online. O projeto foi desenvolvido utilizando ReactJS, NextJS, Typescript",
-      projectDate: "2023",
-      projectImage: "https://picsum.photos/200",
-      link: "/playx1",
+      projectName: translations?.projects?.bancaDoIngresso?.title,
+      projectDescription: translations?.projects?.bancaDoIngresso?.description,
+      projectDate: "2022",
+      projectImage: "https://picsum.photos/1900",
+      link: "/banca-do-ingresso",
     },
   ];
 
   return (
-    <Container height="100%" className="body-content">
-      <Flex justify="center" flexWrap="wrap" gap="37px" paddingBottom="60px">
+    <Box as="section" height="100%" className="body-content">
+      <Flex
+        justify="center"
+        flexWrap="wrap"
+        gap={isDesktop ? "37px" : "56px"}
+        paddingBottom="60px"
+      >
         {mockedProjects &&
           mockedProjects.map((project, i) => (
-            <ProjectCard key={i} project={project} />
+            <ProjectCard isDesktop={isDesktop} key={i} project={project} />
           ))}
       </Flex>
-    </Container>
+    </Box>
   );
 }

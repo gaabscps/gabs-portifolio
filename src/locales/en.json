@@ -1,0 +1,17 @@
+{
+  "menu": {
+    "projects": "Projects",
+    "about": "About me",
+    "contact": "Contact"
+  },
+  "projects": {
+    "bancaDoIngresso": {
+      "title": "Banca do ingresso Admin Dashboard",
+      "description": "The 'Banca do Ingresso' project, is a system for manage event tickets. The admin dashboard is a web application that allows the management of events, tickets and users. The system was developed using react and typescript."
+    },
+    "playx1": {
+      "title": "PlayX1",
+      "description": "The PlayX1 is a project of a platform for betting on online games. The project was developed using ReactJS, NextJS, Typescript"
+    }
+  }
+}

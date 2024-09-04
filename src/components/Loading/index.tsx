@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@chakra-ui/react";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -16,7 +17,6 @@ export default function Loading({ loading }: LoadingProps) {
 
   useEffect(() => {
     onScroll();
-    // retorna o scroll para o normal
     return () => {
       document.body.style.overflow = "auto";
     };
