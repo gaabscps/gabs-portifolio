@@ -26,7 +26,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
     } else {
       onClose();
     }
-  }, [isDesktop]);
+  }, [isDesktop, onOpen, onClose]);
 
   return (
     <Card roundBorder>
