@@ -2,8 +2,7 @@
 
 import { Card } from "@/components/Card";
 import { Text, Box, Flex, Image, useDisclosure } from "@chakra-ui/react";
-import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface ProjectCardProps {
   project: {
@@ -13,12 +12,21 @@ interface ProjectCardProps {
     projectDate: string;
     link: string;
   };
+  isDesktop?: boolean;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
   const { projectName, projectDescription, projectImage, projectDate, link } =
     project;
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  useEffect(() => {
+    if (!isDesktop) {
+      onOpen();
+    } else {
+      onClose();
+    }
+  }, [isDesktop, onOpen, onClose]);
 
   return (
     <Card roundBorder>
@@ -28,17 +36,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           onMouseLeave={onClose}
           position="relative"
           transition="all 0.3s ease"
+          display={isDesktop ? "block" : "flex"}
+          flexDirection="column-reverse"
+          alignItems="center"
         >
           <Box
             position="relative"
             cursor="pointer"
-            opacity={isOpen ? 0.2 : 1}
+            opacity={isDesktop && isOpen ? 0.2 : 1}
             transition="opacity 0.3s ease"
           >
             <Image
               objectFit="cover"
               maxHeight="600px"
-              minWidth="820px"
+              minWidth={isDesktop ? "820px" : "auto"}
               borderRadius="10px"
               src={projectImage}
               alt=""
@@ -51,26 +62,33 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               alignItems="center"
               onMouseEnter={onOpen}
               onMouseLeave={onClose}
-              position="absolute"
+              position={isDesktop ? "absolute" : "relative"}
               textAlign="center"
-              width="620px"
+              width={isDesktop ? "620px" : "auto"}
               color="white"
               top="0"
-              left="105px"
+              left={isDesktop ? "105px" : "0"}
               transition="all 0.3s ease"
               zIndex="100"
               height="100%"
-              padding="48px 0"
+              padding={isDesktop ? "48px 0" : " 0"}
+              gap={isDesktop ? "0" : "8px"}
+              marginBottom={isDesktop ? "0" : "16px"}
             >
               <Text
                 color="white"
-                fontSize="32px"
+                fontSize={isDesktop ? "32px" : "24px"}
                 fontWeight="700"
-                maxWidth="60%"
+                maxWidth={isDesktop ? "60%" : "100%"}
               >
                 {projectName}
               </Text>
-              <Text transition="margin 0.3s ease">{projectDescription}</Text>
+              <Text
+                fontSize={isDesktop ? "16px" : "14px"}
+                transition="margin 0.3s ease"
+              >
+                {projectDescription}
+              </Text>
               <Text fontWeight="700" transition="margin-bottom 0.3s ease">
                 {projectDate}
               </Text>

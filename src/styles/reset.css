@@ -1,15 +1,25 @@
-html, body, .page-body{
-    margin: 0;
-    padding: 0;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #a6a6a6;
-    background-color: #181717;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+html,
+body,
+section,
+.page-body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #a6a6a6;
+  background-color: #181717;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.body-content{
-    margin-top: 241px;
-    min-width: 1024px;
+.body-content {
+  margin-top: 241px;
+  min-width: 1024px;
+}
+
+@media screen and (max-width: 1023px) {
+  .body-content {
+    margin-top: 24px;
+    min-width: 100%;
+  }
 }
