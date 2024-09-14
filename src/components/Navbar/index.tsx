@@ -14,22 +14,21 @@ import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { useLanguage } from "@/context/language";
+import { Internationalization } from "../Internationalization";
+import { usePathname } from "next/navigation";
 
-interface NavbarProps {
-  setLoading: (loading: boolean) => void;
-}
-
-export const Navbar = ({ setLoading }: NavbarProps) => {
+export const Navbar = () => {
   const isDesktop = useMediaQuery("(min-width: 1023px)");
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [selectedMenuItemIndex, setSelectedMenuItemIndex] = useState(0);
 
   const { translations, setLanguage, language } = useLanguage();
 
+  const path = usePathname();
+
   const logoLink =
     "https://www.linkedin.com/dms/prv/vid/D4D06AQHpHHaKatH8VA/messaging-attachmentFile/0/1706853683476?m=AQLBxWdFjkVc-gAAAY1oaFnu9ep-Nyyi2vUmqfFwQX9VJma5sHY4YbtT0A&ne=1&v=beta&t=aT4m825EckIdAVF4ywTKBciaoaKZTGS8fgO1jBFmAFo";
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const menuItems = [
     {
       name: isDesktop[0] ? "" : logoLink,
@@ -37,7 +36,7 @@ export const Navbar = ({ setLoading }: NavbarProps) => {
     },
     {
       name: translations?.menu.projects,
-      link: "/",
+      link: "/projects",
     },
     {
       name: translations?.menu?.about,
@@ -49,40 +48,15 @@ export const Navbar = ({ setLoading }: NavbarProps) => {
     },
   ];
 
+  useEffect(() => {
+    if (path === "/") {
+      setSelectedMenuItemIndex(2);
+    }
+  }, [path]);
+
   return (
     <>
-      <Flex gap={"8px"} position={"fixed"} padding="8px" zIndex={10}>
-        <Text
-          _hover={{ textShadow: "0px 0px 20px rgba(255,255,255,1)" }}
-          cursor={"pointer"}
-          backgroundImage={
-            language === "ptbr"
-              ? "linear-gradient(123deg, rgba(56,255,0,1) 0%, rgba(233,226,148,1) 63%)"
-              : ""
-          }
-          color={language === "ptbr" ? "transparent" : "#c6c6c6"}
-          backgroundClip={language === "ptbr" ? "text" : ""}
-          fontWeight={700}
-          onClick={() => setLanguage("ptbr")}
-        >
-          BR
-        </Text>
-        <Text
-          _hover={{ textShadow: "0px 0px 20px rgba(255,255,255,1)" }}
-          cursor={"pointer"}
-          backgroundImage={
-            language === "en"
-              ? "linear-gradient(123deg, rgba(0,35,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,0,0,1) 100%);"
-              : ""
-          }
-          color={language === "en" ? "transparent" : "#c6c6c6"}
-          backgroundClip={language === "en" ? "text" : ""}
-          fontWeight={700}
-          onClick={() => setLanguage("en")}
-        >
-          EN
-        </Text>
-      </Flex>
+      <Internationalization language={language} setLanguage={setLanguage} />
       <Flex
         alignItems={"center"}
         position="absolute"
@@ -122,7 +96,6 @@ export const Navbar = ({ setLoading }: NavbarProps) => {
                   <Link key={index} href={item.link}>
                     <Text
                       onClick={() => {
-                        setLoading(true);
                         setSelectedMenuItemIndex(index);
                       }}
                       borderBottom={

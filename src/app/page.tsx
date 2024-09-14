@@ -1,12 +1,12 @@
 // app/page.tsx
 "use client";
 
-import Projects from "./projects/page";
+import About from "./about/page";
 
 export default function Page() {
   return (
     <>
-      <Projects />
+      <About />
     </>
   );
 }

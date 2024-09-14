@@ -13,14 +13,16 @@ export default function Projects() {
       projectName: translations?.projects?.playx1?.title,
       projectDescription: translations?.projects?.playx1?.description,
       projectDate: "2023",
-      projectImage: "https://picsum.photos/1901",
+      projectImage:
+        "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/landing.png",
       link: "/playx1",
     },
     {
       projectName: translations?.projects?.bancaDoIngresso?.title,
       projectDescription: translations?.projects?.bancaDoIngresso?.description,
       projectDate: "2022",
-      projectImage: "https://picsum.photos/1900",
+      projectImage:
+        "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/home.png",
       link: "/banca-do-ingresso",
     },
   ];

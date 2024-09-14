@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container, useMediaQuery } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 export default function PlayX1() {
   return (

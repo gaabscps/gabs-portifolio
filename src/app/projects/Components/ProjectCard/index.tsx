@@ -2,6 +2,7 @@
 
 import { Card } from "@/components/Card";
 import { Text, Box, Flex, Image, useDisclosure } from "@chakra-ui/react";
+import Link from "next/link";
 import React, { useEffect } from "react";
 
 interface ProjectCardProps {
@@ -30,7 +31,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
 
   return (
     <Card roundBorder>
-      <a href={link}>
+      <Link href={link}>
         <Box
           onMouseEnter={onOpen}
           onMouseLeave={onClose}
@@ -48,7 +49,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
           >
             <Image
               objectFit="cover"
-              maxHeight="600px"
+              height="600px"
               minWidth={isDesktop ? "820px" : "auto"}
               borderRadius="10px"
               src={projectImage}
@@ -95,7 +96,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
             </Flex>
           )}
         </Box>
-      </a>
+      </Link>
     </Card>
   );
 };
