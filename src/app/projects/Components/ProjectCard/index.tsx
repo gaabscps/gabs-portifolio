@@ -44,13 +44,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
           <Box
             position="relative"
             cursor="pointer"
-            opacity={isDesktop && isOpen ? 0.2 : 1}
+            opacity={isOpen ? 0.2 : 1}
             transition="opacity 0.3s ease"
           >
             <Image
               objectFit="cover"
               height="600px"
-              minWidth={isDesktop ? "820px" : "auto"}
+              minWidth={isDesktop ? "1040px" : "auto"}
               borderRadius="10px"
               src={projectImage}
               alt=""
@@ -63,16 +63,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
               alignItems="center"
               onMouseEnter={onOpen}
               onMouseLeave={onClose}
-              position={isDesktop ? "absolute" : "relative"}
+              position="absolute"
               textAlign="center"
               width={isDesktop ? "620px" : "auto"}
               color="white"
               top="0"
-              left={isDesktop ? "105px" : "0"}
+              left={isDesktop ? "225px" : "0"}
               transition="all 0.3s ease"
               zIndex="100"
               height="100%"
-              padding={isDesktop ? "48px 0" : " 0"}
+              padding={"48px 16px"}
               gap={isDesktop ? "0" : "8px"}
               marginBottom={isDesktop ? "0" : "16px"}
             >

@@ -28,7 +28,7 @@ export const Card: React.FC<CardProps> = ({
   borderColor = "#c6c6c6",
   hoverColor,
   hoverTextColor,
-  width = "820px",
+  width = "1040px",
   boxShadow,
 }) => {
   return (
@@ -58,7 +58,7 @@ export const Card: React.FC<CardProps> = ({
         <Image
           borderRadius={roundBorder ? "10px" : "0"}
           alt=""
-          objectFit="fill"
+          objectFit="contain"
           src={image}
         />
       )}
