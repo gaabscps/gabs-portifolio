@@ -30,7 +30,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
   }, [isDesktop, onOpen, onClose]);
 
   return (
-    <Card roundBorder>
+    <Card>
       <Link href={link}>
         <Box
           onMouseEnter={onOpen}
