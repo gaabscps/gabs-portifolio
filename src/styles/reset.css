@@ -33,6 +33,25 @@ section,
   }
 }
 
+.buttonOutline {
+  background-color: transparent !important;
+  color: #ac6bed !important;
+  border: 1px solid #ac6bed !important;
+  border-radius: 4px !important;
+  padding: 8px 16px !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s !important;
+  &:hover {
+    border: 1px solid #8a3ab9 !important;
+    color: #8a3ab9 !important;
+  }
+  &:active {
+    border: 1px solid #6f2e98 !important;
+    color: #6f2e98 !important;
+  }
+}
+
 @media screen and (max-width: 1023px) {
   .body-content {
     margin-top: 24px;

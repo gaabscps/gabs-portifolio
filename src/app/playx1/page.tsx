@@ -10,7 +10,7 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { FaCopy, FaCheck } from "react-icons/fa";
+import { FaCopy, FaCheck, FaGithub } from "react-icons/fa";
 
 export type CredentialsType = {
   title: string;
@@ -198,7 +198,7 @@ export default function PlayX1() {
             ))}
           </Box>
 
-          <Box width="100%">
+          <Flex width="100%" flexDirection="column" gap="16px">
             <Button
               onClick={() => {
                 window.open(
@@ -213,7 +213,20 @@ export default function PlayX1() {
             >
               {translations?.playx1?.buttonLabel}
             </Button>
-          </Box>
+            <Button
+              onClick={() => {
+                window.open("https://github.com/gaabscps/ProjetoX1", "_blank");
+              }}
+              border={"1px solid #ac6bed"}
+              backgroundColor="transparent"
+              height="60px"
+              className="buttonOutline"
+              width="100%"
+            >
+              <Text width="80%">{translations?.playx1?.github}</Text>
+              <FaGithub />
+            </Button>
+          </Flex>
         </Flex>
       </Box>
     </>

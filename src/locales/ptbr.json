@@ -28,6 +28,7 @@
     "credentialsTitle": "Utilize as credenciais abaixo para acessar o projeto:",
     "email": "Email",
     "password": "Senha",
-    "buttonLabel": "Acesse o projeto"
+    "buttonLabel": "Acesse o projeto",
+    "github": "Acesse no Github"
   }
 }

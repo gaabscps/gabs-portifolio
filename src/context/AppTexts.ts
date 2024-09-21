@@ -32,5 +32,6 @@ export type AppTexts = {
     email: string;
     password: string;
     buttonLabel: string;
+    github: string;
   };
 };
