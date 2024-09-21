@@ -19,5 +19,15 @@
     "text2": "Um dos meus desafios mais significativos foi o <strong>'Projeto X1'</strong>, uma plataforma de duelos de jogos online competitivo que desenvolvi integralmente. Este projeto destacou minha habilidade em construir arquiteturas robustas e otimizar interações de usuário, utilizando <strong>NextJS</strong>, <strong>Typescript</strong> e <strong>Chakra UI</strong>.",
     "text3": "Minha abordagem ao desenvolvimento é centrada na criação de código <strong>reutilizável, simples e de fácil manutenção</strong>, com ênfase em desenvolver <strong>componentes personalizados</strong> para maximizar a <strong>flexibilidade</strong> e <strong>inovação</strong>.",
     "text4": "Estou em constante desenvolvimento profissional, buscando aprimorar minhas habilidades técnicas e contribuir significativamente para projetos desafiadores, com o objetivo de me tornar um líder técnico no futuro."
+  },
+  "playx1": {
+    "text1": "O projeto X1 foi um desafio onde o principal objetivo era manter um padrão de código <strong>simples</strong>, <strong> reutilizavel</strong>, e com o mínimo de <strong>bibliotecas externas </strong> possível.",
+    "text2": "Com uma <strong>interface limpa e responsiva</strong> utilizamos <strong>React</strong> e <strong>Typescript</strong> para desenvolver o projeto, com <strong>NextJS</strong> para a renderização do lado do servidor.",
+    "text3": "Com o objetivo de tornar as partidas mais emocionantes, o projeto visa facilitar a organização de partidas de X1 onde os jogadores podem se desafiar, ter uma experiência de rede social, e acompanhar o histórico de partidas, além da possibilidade de realizar apostas.",
+    "navigate": "Quer navegar?",
+    "credentialsTitle": "Utilize as credenciais abaixo para acessar o projeto:",
+    "email": "Email",
+    "password": "Senha",
+    "buttonLabel": "Acesse o projeto"
   }
 }

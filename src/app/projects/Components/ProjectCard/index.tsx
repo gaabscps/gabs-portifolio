@@ -50,7 +50,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
             <Image
               objectFit="cover"
               height="600px"
-              minWidth={isDesktop ? "820px" : "auto"}
+              minWidth={isDesktop ? "1040px" : "auto"}
               borderRadius="10px"
               src={projectImage}
               alt=""
@@ -68,7 +68,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
               width={isDesktop ? "620px" : "auto"}
               color="white"
               top="0"
-              left={isDesktop ? "105px" : "0"}
+              left={isDesktop ? "225px" : "0"}
               transition="all 0.3s ease"
               zIndex="100"
               height="100%"

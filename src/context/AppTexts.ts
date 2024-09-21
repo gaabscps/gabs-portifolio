@@ -4,6 +4,7 @@ export type AppTexts = {
     about: string;
     contact: string;
   };
+
   projects: {
     bancaDoIngresso: {
       title: string;
@@ -14,10 +15,22 @@ export type AppTexts = {
       description: string;
     };
   };
+
   about: {
     text1: string;
     text2: string;
     text3: string;
     text4: string;
+  };
+
+  playx1: {
+    text1: string;
+    text2: string;
+    text3: string;
+    navigate: string;
+    credentialsTitle: string;
+    email: string;
+    password: string;
+    buttonLabel: string;
   };
 };
