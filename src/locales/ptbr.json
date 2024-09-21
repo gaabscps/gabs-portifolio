@@ -13,5 +13,11 @@
       "title": "PlayX1",
       "description": "O PlayX1 é o projeto de uma plataforma de apostas em jogos online. O projeto foi desenvolvido utilizando ReactJS, NextJS, Typescript"
     }
+  },
+  "about": {
+    "text1": "Sou <strong>Gabriel</strong>, um desenvolvedor front-end dedicado em criar interfaces dinâmicas, limpas e com foco na experiências de usuário. Atualmente, trabalho em uma empresa de retail, responsável pelo desenvolvimento e manutenção de aplicações web/mobile e totem, utilizando tecnologias como <strong>ReactTS</strong>, <strong>Chakra UI</strong> e <strong>React Native</strong>. Anteriormente, desempenhei papel importante no desenvolvimento do front-end de um sistema administrativo em uma grande empresa de eventos e bilheteria, usando <strong>ReactTS</strong>, <strong>Redux</strong> e <strong>Sass</strong>.",
+    "text2": "Um dos meus desafios mais significativos foi o <strong>'Projeto X1'</strong>, uma plataforma de duelos de jogos online competitivo que desenvolvi integralmente. Este projeto destacou minha habilidade em construir arquiteturas robustas e otimizar interações de usuário, utilizando <strong>NextJS</strong>, <strong>Typescript</strong> e <strong>Chakra UI</strong>.",
+    "text3": "Minha abordagem ao desenvolvimento é centrada na criação de código <strong>reutilizável, simples e de fácil manutenção</strong>, com ênfase em desenvolver <strong>componentes personalizados</strong> para maximizar a <strong>flexibilidade</strong> e <strong>inovação</strong>.",
+    "text4": "Estou em constante desenvolvimento profissional, buscando aprimorar minhas habilidades técnicas e contribuir significativamente para projetos desafiadores, com o objetivo de me tornar um líder técnico no futuro."
   }
 }
