@@ -14,6 +14,10 @@ export type AppTexts = {
       title: string;
       description: string;
     };
+    dashboard: {
+      title: string;
+      description: string;
+    };
   };
 
   about: {
@@ -32,5 +36,6 @@ export type AppTexts = {
     email: string;
     password: string;
     buttonLabel: string;
+    github: string;
   };
 };

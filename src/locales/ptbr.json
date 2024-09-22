@@ -12,6 +12,10 @@
     "playx1": {
       "title": "PlayX1",
       "description": "O PlayX1 é o projeto de uma plataforma de apostas em jogos online. O projeto foi desenvolvido utilizando ReactJS, NextJS, Typescript"
+    },
+    "dashboard": {
+      "title": "Dashboard de serviços",
+      "description": "Em construção..."
     }
   },
   "about": {
@@ -28,6 +32,7 @@
     "credentialsTitle": "Utilize as credenciais abaixo para acessar o projeto:",
     "email": "Email",
     "password": "Senha",
-    "buttonLabel": "Acesse o projeto"
+    "buttonLabel": "Acesse o projeto",
+    "github": "Acesse no Github"
   }
 }
