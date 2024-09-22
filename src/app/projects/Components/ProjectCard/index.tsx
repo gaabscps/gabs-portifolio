@@ -50,7 +50,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
             <Image
               objectFit="cover"
               height="600px"
-              minWidth={isDesktop ? "1040px" : "auto"}
+              width={isDesktop ? "1040px" : "auto"}
               borderRadius="10px"
               src={projectImage}
               alt=""
@@ -65,7 +65,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
               onMouseLeave={onClose}
               position="absolute"
               textAlign="center"
-              width={isDesktop ? "620px" : "auto"}
+              width={isDesktop ? "620px" : "100%"}
               color="white"
               top="0"
               left={isDesktop ? "225px" : "0"}

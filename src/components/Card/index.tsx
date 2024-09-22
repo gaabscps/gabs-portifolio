@@ -28,7 +28,7 @@ export const Card: React.FC<CardProps> = ({
   borderColor = "#c6c6c6",
   hoverColor,
   hoverTextColor,
-  width = "1040px",
+  width = "fit-content",
   boxShadow,
 }) => {
   return (

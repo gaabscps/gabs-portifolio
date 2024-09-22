@@ -14,6 +14,10 @@ export type AppTexts = {
       title: string;
       description: string;
     };
+    dashboard: {
+      title: string;
+      description: string;
+    };
   };
 
   about: {

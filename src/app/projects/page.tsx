@@ -25,10 +25,18 @@ export default function Projects() {
         "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/home.png",
       link: "/banca-do-ingresso",
     },
+    {
+      projectName: translations?.projects?.dashboard?.title,
+      projectDescription: translations?.projects?.dashboard?.description,
+      projectDate: "2024",
+      projectImage:
+        "https://gabsportifolio.s3.amazonaws.com/img/Dashboard/dashboard.png",
+      link: "/",
+    },
   ];
 
   return (
-    <Box as="section" height="100%" className="body-content">
+    <Box as="section" height="100%" className="body-content" maxWidth='1040px'>
       <Flex
         justify="center"
         flexWrap="wrap"

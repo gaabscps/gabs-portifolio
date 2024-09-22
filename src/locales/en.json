@@ -12,6 +12,10 @@
     "playx1": {
       "title": "PlayX1",
       "description": "The PlayX1 is a project of a platform for betting on online games. The project was developed using ReactJS, NextJS, Typescript"
+    },
+    "dashboard": {
+      "title": "Services Dashboard",
+      "description": "Under construction..."
     }
   },
   "about": {
