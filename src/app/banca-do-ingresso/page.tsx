@@ -3,6 +3,7 @@
 "use client";
 
 import { useLanguage } from "@/context/language";
+import useWindow from "@/hooks/useWindows";
 import {
   Box,
   Flex,
@@ -23,11 +24,12 @@ export type CredentialsType = {
 };
 
 export default function BancaDoIngresso() {
+  const window = useWindow();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isOpenedImage, setIsOpenedImage] = useState<boolean>(false);
   const [openedImage, setOpenedImage] = useState<string>("");
   const [isPortrait, setIsPortrait] = useState(
-    window.matchMedia("(orientation: portrait)").matches
+    window?.matchMedia("(orientation: portrait)").matches
   );
 
   const { translations } = useLanguage();
@@ -41,21 +43,21 @@ export default function BancaDoIngresso() {
 
   useEffect(() => {
     const handleOrientationChange = () => {
-      setIsPortrait(window.matchMedia("(orientation: portrait)").matches);
+      setIsPortrait(window?.matchMedia("(orientation: portrait)").matches);
     };
-    window.addEventListener("resize", handleOrientationChange);
+    window?.addEventListener("resize", handleOrientationChange);
     return () => {
-      window.removeEventListener("resize", handleOrientationChange);
+      window?.removeEventListener("resize", handleOrientationChange);
     };
   }, []);
 
   useEffect(() => {
     if (isOpenedImage) {
       // Store the current scroll position
-      setScrollPosition(window.scrollY);
-      window.scrollTo(0, 0);
+      setScrollPosition(window?.scrollY || 0);
+      window?.scrollTo(0, 0);
     } else {
-      window.scrollTo(0, scrollPosition);
+      window?.scrollTo(0, scrollPosition);
     }
   }, [isOpenedImage]);
 
@@ -248,7 +250,7 @@ export default function BancaDoIngresso() {
             <Flex width="100%" flexDirection="column" gap="16px">
               <Button
                 onClick={() => {
-                  window.open(
+                  window?.open(
                     "https://github.com/gaabscps/ProjetoX1",
                     "_blank"
                   );
