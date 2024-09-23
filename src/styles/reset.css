@@ -52,6 +52,23 @@ section,
   }
 }
 
+.closeIcon {
+  position: absolute;
+  right: -4px;
+  top: -40px;
+  cursor: pointer;
+  transition: all ease 0.2s;
+  border-radius: 50%;
+  background-color: white;
+  padding: 2px;
+  &:hover {
+    background-color: #e1e1e1;
+  }
+  &:active {
+    background-color: #c1c1c1;
+  }
+}
+
 @media screen and (max-width: 1023px) {
   .body-content {
     margin-top: 24px;
