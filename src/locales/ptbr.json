@@ -34,5 +34,11 @@
     "password": "Senha",
     "buttonLabel": "Acesse o projeto",
     "github": "Acesse no Github"
+  },
+  "bancaDoIngresso": {
+    "text1": "O projeto Banca do Ingresso é um sistema de gestão de ingressos para eventos. O painel administrativo é uma aplicação web que permite a gestão de eventos, ingressos, produtos, combos, usuarios, tudo relacionado a um evento.",
+    "text2": "O sistema foi desenvolvido utilizando <strong>React</strong> e <strong>Typescript</strong>, com o objetivo de facilitar a gestão de eventos, com uma interface white label, onde o cliente pode personalizar a interface de acordo com a identidade visual do evento.",
+    "text3": "O sistema conta com uma interface limpa e intuitiva, com foco na experiência do usuário, e com a possibilidade de realizar diversas ações como criar eventos, gerenciar ingressos, e visualizar relatórios.",
+    "github": "Acesse no Github"
   }
 }

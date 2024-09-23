@@ -38,4 +38,11 @@ export type AppTexts = {
     buttonLabel: string;
     github: string;
   };
+
+  bancaDoIngresso: {
+    text1: string;
+    text2: string;
+    text3: string;
+    github: string;
+  };
 };

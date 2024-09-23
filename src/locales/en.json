@@ -34,5 +34,12 @@
     "password": "Password",
     "buttonLabel": "Access the project",
     "github": "Access on Github"
+  },
+  "bancaDoIngresso": {
+    "text1": "The 'Banca do Ingresso' project is a ticket management system for events. The admin dashboard is a web application that allows the management of events, tickets, products, combos, users, everything related to an event.",
+    "text2": "The system was developed using <strong>React</strong> and <strong>Typescript</strong>, with the aim of facilitating event management, with a white label interface, where the client can customize the interface according to the visual identity of the event.",
+    "text3": "The system has a clean and intuitive interface, with a focus on user experience, and with the possibility of performing various actions such as creating events, managing tickets, and viewing reports.",
+    "navigate": "Want to navigate?",
+    "github": "Access on Github"
   }
 }
