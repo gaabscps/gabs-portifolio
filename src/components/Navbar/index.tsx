@@ -74,7 +74,7 @@ export const Navbar = () => {
         >
           <Image
             alt="Gabriel Andrade"
-            src="https://www.linkedin.com/dms/prv/vid/D4D06AQHpHHaKatH8VA/messaging-attachmentFile/0/1706853683476?m=AQLBxWdFjkVc-gAAAY1oaFnu9ep-Nyyi2vUmqfFwQX9VJma5sHY4YbtT0A&ne=1&v=beta&t=aT4m825EckIdAVF4ywTKBciaoaKZTGS8fgO1jBFmAFo"
+            src="https://gabsportifolio.s3.amazonaws.com/img/About/logo.png"
             width={300}
           />
         </Flex>
