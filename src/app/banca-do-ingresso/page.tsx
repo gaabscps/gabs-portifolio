@@ -64,13 +64,18 @@ export default function BancaDoIngresso() {
           className="body-content"
           as="section"
         >
-          <Flex padding="40px 0 80px" justifyContent="space-between" gap="8px">
+          <Flex
+            flexWrap="wrap"
+            padding={isDesktop ? "40px 0 80px" : "0 0 24px"}
+            justifyContent={isDesktop ? "space-between" : "center"}
+            gap="8px"
+          >
             {skills?.map((skill, i) => (
               <Card
                 boxShadow={`0px 0px 10px 0px ${skill.color}`}
                 key={i}
-                width="100px"
-                minHeight="100px"
+                width={isDesktop ? "100px" : "80px"}
+                minHeight={isDesktop ? "100px" : "80px"}
                 roundBorder
                 borderColor="#c6c6c6"
                 hoverColor={skill.color}
@@ -185,27 +190,32 @@ export default function BancaDoIngresso() {
               fontSize="24px"
               margin="40px 0"
             />
-            <Image
-              onClick={() =>
-                openImageFullSize(
-                  "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/relatorios.png"
-                )
-              }
+            <Box
               cursor="pointer"
+              borderRadius="10px"
               _hover={{
                 boxShadow: "0px 0px 25px #d0726d",
                 transform: "scale(1.01)",
               }}
               transition={"all ease 0.2s"}
-              border={"2px solid #d0726d"}
-              objectFit="cover"
-              height="600px"
-              borderRadius="10px"
-              src={
-                "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/relatorios.png"
-              }
-              alt=""
-            />
+              as="aside"
+            >
+              <Image
+                onClick={() =>
+                  openImageFullSize(
+                    "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/relatorios.png"
+                  )
+                }
+                w="100%"
+                objectFit="cover"
+                height="600px"
+                borderRadius="10px"
+                src={
+                  "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/relatorios.png"
+                }
+                alt=""
+              />
+            </Box>
           </Flex>
           <hr></hr>
           <Flex

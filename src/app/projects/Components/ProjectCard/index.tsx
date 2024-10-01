@@ -122,13 +122,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
                 {projectDate}
               </Text>
 
-              <Flex gap="8px">
+              <Flex flexWrap='wrap' gap="16px" justifyContent='center'>
                 {skills?.map((skill, i) => (
                   <Card
                     boxShadow={`0px 0px 10px 0px ${skill.color}`}
                     key={i}
-                    width="100px"
-                    minHeight="100px"
+                    width={isDesktop ? "100px" : "80px"}
+                    minHeight={isDesktop ? "100px" : "80px"}
                     roundBorder
                     borderColor="#c6c6c6"
                     hoverColor={skill.color}
