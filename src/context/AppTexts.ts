@@ -45,4 +45,13 @@ export type AppTexts = {
     text3: string;
     github: string;
   };
+  contact: {
+    title: string;
+    text: string;
+    nameInputLabel: string;
+    emailInputLabel: string;
+    messageInputLabel: string;
+    whatsappButton: string;
+    emailButton: string;
+  };
 };

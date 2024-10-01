@@ -41,5 +41,14 @@
     "text3": "The system has a clean and intuitive interface, with a focus on user experience, and with the possibility of performing various actions such as creating events, managing tickets, and viewing reports.",
     "navigate": "Want to navigate?",
     "github": "Access on Github"
+  },
+  "contact": {
+    "title": "Get in touch",
+    "text": "I'm always open to new challenges and opportunities. If you want to get in touch with me, please send an email to",
+    "nameInputLabel": "Name",
+    "emailInputLabel": "Email",
+    "messageInputLabel": "Message",
+    "whatsappButton": "WhatsApp",
+    "emailButton": "Email"
   }
 }

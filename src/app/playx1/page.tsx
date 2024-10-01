@@ -1,6 +1,10 @@
 "use client";
 
+import { Card } from "@/components/Card";
+import { FullSizeImageModal } from "@/components/FullSizeImageModal";
 import { useLanguage } from "@/context/language";
+import { useFullSize } from "@/hooks/useFullSize";
+import { useProjects } from "@/hooks/useProjects";
 import {
   Box,
   Flex,
@@ -11,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { FaCopy, FaCheck, FaGithub } from "react-icons/fa";
+import { RiCloseLine } from "react-icons/ri";
 
 export type CredentialsType = {
   title: string;
@@ -23,7 +28,11 @@ export default function PlayX1() {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPassword, setCopiedPassword] = useState(false);
 
+  const { isOpenedImage, openImageFullSize, setIsOpenedImage, openedImage } =
+    useFullSize();
   const { translations } = useLanguage();
+  const projects = useProjects();
+  const skills = projects[0].skills;
 
   const isDesktop = useMediaQuery("(min-width: 1023px)")[0];
 
@@ -59,8 +68,48 @@ export default function PlayX1() {
 
   return (
     <>
+      {isOpenedImage && (
+        <FullSizeImageModal
+          borderColor="#C3ACDA"
+          openedImage={openedImage}
+          closeIcon={
+            <RiCloseLine
+              color="black"
+              fill="black"
+              className="closeIcon"
+              size="24px"
+              onClick={() => setIsOpenedImage(false)}
+            />
+          }
+        />
+      )}
       <Box width={isDesktop ? "auto" : "100%"}>
-        <Box maxWidth="1040px" className="body-content" as="section">
+        <Box
+          pointerEvents={isOpenedImage ? "none" : "auto"}
+          opacity={isOpenedImage ? "0.2" : ""}
+          maxWidth="1040px"
+          className="body-content"
+          as="section"
+        >
+          <Flex padding="40px 0 80px" justifyContent="space-between" gap="8px">
+            {skills?.map((skill, i) => (
+              <Card
+                boxShadow={`0px 0px 10px 0px ${skill.color}`}
+                key={i}
+                width="100px"
+                minHeight="100px"
+                roundBorder
+                borderColor="#c6c6c6"
+                hoverColor={skill.color}
+                hoverTextColor={skill.color}
+              >
+                {skill.icon}
+                <Text fontSize="12px" textAlign="center">
+                  {skill.name}
+                </Text>
+              </Card>
+            ))}
+          </Flex>
           <Flex
             gap="40px"
             width="100%"
@@ -69,6 +118,12 @@ export default function PlayX1() {
           >
             <Box as="aside">
               <Image
+                onClick={() =>
+                  openImageFullSize(
+                    "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/landing.png"
+                  )
+                }
+                cursor={"pointer"}
                 border={"2px solid #C3ACDA"}
                 objectFit="cover"
                 height="600px"
@@ -112,6 +167,12 @@ export default function PlayX1() {
             </Box>
             <Box as="aside">
               <Image
+                onClick={() =>
+                  openImageFullSize(
+                    "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/home.png"
+                  )
+                }
+                cursor={"pointer"}
                 border={"2px solid #C3ACDA"}
                 objectFit="cover"
                 height="600px"
@@ -134,6 +195,12 @@ export default function PlayX1() {
               margin="40px 0"
             />
             <Image
+              onClick={() =>
+                openImageFullSize(
+                  "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/match.png"
+                )
+              }
+              cursor={"pointer"}
               border={"2px solid #C3ACDA"}
               objectFit="cover"
               height="600px"
@@ -151,7 +218,7 @@ export default function PlayX1() {
         <Flex
           width="100%"
           gap="32px"
-          padding="80px 0"
+          padding="40px 0"
           alignItems="center"
           flexDirection={isDesktop ? "row" : "column"}
         >

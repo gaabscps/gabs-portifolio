@@ -2,7 +2,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
 
+import { Card } from "@/components/Card";
+import { FullSizeImageModal } from "@/components/FullSizeImageModal";
 import { useLanguage } from "@/context/language";
+import { useFullSize } from "@/hooks/useFullSize";
+import { useProjects } from "@/hooks/useProjects";
 import useWindow from "@/hooks/useWindows";
 import {
   Box,
@@ -13,7 +17,7 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { FaCopy, FaCheck, FaGithub } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { RiCloseLine } from "react-icons/ri";
 
 export type CredentialsType = {
@@ -25,53 +29,22 @@ export type CredentialsType = {
 
 export default function BancaDoIngresso() {
   const window = useWindow();
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [isOpenedImage, setIsOpenedImage] = useState<boolean>(false);
-  const [openedImage, setOpenedImage] = useState<string>("");
-  const [isPortrait, setIsPortrait] = useState(
-    window?.matchMedia("(orientation: portrait)").matches
-  );
+  const { openImageFullSize, setIsOpenedImage, openedImage, isOpenedImage } =
+    useFullSize();
 
   const { translations } = useLanguage();
+  const projects = useProjects();
+  const skills = projects[1].skills;
 
   const isDesktop = useMediaQuery("(min-width: 1023px)")[0];
-
-  const openImageFullSize = (imageClick: string) => {
-    setIsOpenedImage(true);
-    setOpenedImage(imageClick);
-  };
-
-  useEffect(() => {
-    const handleOrientationChange = () => {
-      setIsPortrait(window?.matchMedia("(orientation: portrait)").matches);
-    };
-    window?.addEventListener("resize", handleOrientationChange);
-    return () => {
-      window?.removeEventListener("resize", handleOrientationChange);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (isOpenedImage) {
-      // Store the current scroll position
-      setScrollPosition(window?.scrollY || 0);
-      window?.scrollTo(0, 0);
-    } else {
-      window?.scrollTo(0, scrollPosition);
-    }
-  }, [isOpenedImage]);
 
   return (
     <>
       {isOpenedImage && (
-        <Box
-          transform={!isDesktop ? "scale(0.95)" : ""}
-          top={"56px"}
-          position="absolute"
-          zIndex="100"
-        >
-          <Box position="relative">
-            <Image borderRadius="16px" src={openedImage} />
+        <FullSizeImageModal
+          borderColor="#d0726d"
+          openedImage={openedImage}
+          closeIcon={
             <RiCloseLine
               color="black"
               fill="black"
@@ -79,31 +52,8 @@ export default function BancaDoIngresso() {
               size="24px"
               onClick={() => setIsOpenedImage(false)}
             />
-          </Box>
-          {!isDesktop && (
-            <Box>
-              {isPortrait && (
-                <>
-                  <Text
-                    fontWeight="700"
-                    color="white"
-                    mt="24px"
-                    textAlign="center"
-                  >
-                    Gire o dispositivo para melhor visibilidade
-                  </Text>
-                  <Image
-                    width={"160px"}
-                    margin="0 auto"
-                    src={
-                      "https://gabsportifolio.s3.amazonaws.com/img/assets/rotate.gif"
-                    }
-                  />
-                </>
-              )}
-            </Box>
-          )}
-        </Box>
+          }
+        />
       )}
 
       <Box height="100%" width={isDesktop ? "auto" : "100%"}>
@@ -114,6 +64,25 @@ export default function BancaDoIngresso() {
           className="body-content"
           as="section"
         >
+          <Flex padding="40px 0 80px" justifyContent="space-between" gap="8px">
+            {skills?.map((skill, i) => (
+              <Card
+                boxShadow={`0px 0px 10px 0px ${skill.color}`}
+                key={i}
+                width="100px"
+                minHeight="100px"
+                roundBorder
+                borderColor="#c6c6c6"
+                hoverColor={skill.color}
+                hoverTextColor={skill.color}
+              >
+                {skill.icon}
+                <Text fontSize="12px" textAlign="center">
+                  {skill.name}
+                </Text>
+              </Card>
+            ))}
+          </Flex>
           <Flex
             gap="40px"
             width="100%"
@@ -239,7 +208,6 @@ export default function BancaDoIngresso() {
             />
           </Flex>
           <hr></hr>
-
           <Flex
             width="100%"
             gap="32px"
@@ -251,7 +219,7 @@ export default function BancaDoIngresso() {
               <Button
                 onClick={() => {
                   window?.open(
-                    "https://github.com/gaabscps/ProjetoX1",
+                    "https://github.com/gaabscps/BancaDoIngresso",
                     "_blank"
                   );
                 }}

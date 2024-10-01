@@ -5,6 +5,7 @@ interface CardProps {
   justify?: string;
   align?: string;
   height?: string;
+  minHeight?: string;
   roundBorder?: boolean;
   border?: boolean;
   borderRadius?: string;
@@ -22,6 +23,7 @@ export const Card: React.FC<CardProps> = ({
   justify = "center",
   align = "center",
   height,
+  minHeight = "150px",
   border,
   roundBorder = false,
   borderRadius,
@@ -39,7 +41,7 @@ export const Card: React.FC<CardProps> = ({
       align={align}
       width={width}
       height={height}
-      minHeight="150"
+      minHeight={minHeight}
       border={border || roundBorder ? ` solid 1px ${borderColor}` : "none"}
       borderRadius={roundBorder ? "16px" : borderRadius}
       _hover={
