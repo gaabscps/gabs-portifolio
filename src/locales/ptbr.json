@@ -40,5 +40,14 @@
     "text2": "O sistema foi desenvolvido utilizando <strong>React</strong> e <strong>Typescript</strong>, com o objetivo de facilitar a gestão de eventos, com uma interface white label, onde o cliente pode personalizar a interface de acordo com a identidade visual do evento.",
     "text3": "O sistema conta com uma interface limpa e intuitiva, com foco na experiência do usuário, e com a possibilidade de realizar diversas ações como criar eventos, gerenciar ingressos, e visualizar relatórios.",
     "github": "Acesse no Github"
+  },
+  "contact": {
+    "title": "Entre em contato",
+    "text": "Estou sempre aberto a novos desafios e oportunidades. Se você deseja entrar em contato comigo, por favor, envie um e-mail para",
+    "nameInputLabel": "Nome",
+    "emailInputLabel": "Email",
+    "messageInputLabel": "Mensagem",
+    "whatsappButton": "WhatsApp",
+    "emailButton": "Email"
   }
 }

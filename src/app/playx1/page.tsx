@@ -1,8 +1,10 @@
 "use client";
 
+import { Card } from "@/components/Card";
 import { FullSizeImageModal } from "@/components/FullSizeImageModal";
 import { useLanguage } from "@/context/language";
 import { useFullSize } from "@/hooks/useFullSize";
+import { useProjects } from "@/hooks/useProjects";
 import {
   Box,
   Flex,
@@ -29,6 +31,8 @@ export default function PlayX1() {
   const { isOpenedImage, openImageFullSize, setIsOpenedImage, openedImage } =
     useFullSize();
   const { translations } = useLanguage();
+  const projects = useProjects();
+  const skills = projects[0].skills;
 
   const isDesktop = useMediaQuery("(min-width: 1023px)")[0];
 
@@ -87,6 +91,25 @@ export default function PlayX1() {
           className="body-content"
           as="section"
         >
+          <Flex padding="40px 0 80px" justifyContent="space-between" gap="8px">
+            {skills?.map((skill, i) => (
+              <Card
+                boxShadow={`0px 0px 10px 0px ${skill.color}`}
+                key={i}
+                width="100px"
+                minHeight="100px"
+                roundBorder
+                borderColor="#c6c6c6"
+                hoverColor={skill.color}
+                hoverTextColor={skill.color}
+              >
+                {skill.icon}
+                <Text fontSize="12px" textAlign="center">
+                  {skill.name}
+                </Text>
+              </Card>
+            ))}
+          </Flex>
           <Flex
             gap="40px"
             width="100%"
@@ -195,7 +218,7 @@ export default function PlayX1() {
         <Flex
           width="100%"
           gap="32px"
-          padding="80px 0"
+          padding="40px 0"
           alignItems="center"
           flexDirection={isDesktop ? "row" : "column"}
         >

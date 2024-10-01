@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 "use client";
 
 import { Box, Image, Text, useMediaQuery } from "@chakra-ui/react";

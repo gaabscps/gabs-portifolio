@@ -16,8 +16,11 @@ import {
   TbBrandReactNative,
   TbBrandTypescript,
   TbBrandJavascript,
+  TbBrandGithub,
 } from "react-icons/tb";
 import { CiMobile1 } from "react-icons/ci";
+import { SiFigma, SiSwagger } from "react-icons/si";
+import { DiScrum } from "react-icons/di";
 
 export default function About() {
   const isDesktop = useMediaQuery("(min-width: 1023px)")[0];
@@ -52,6 +55,26 @@ export default function About() {
       name: "Responsive Design",
       icon: <CiMobile1 size="40px" />,
       color: "#AC6BED",
+    },
+    {
+      name: "GitHub",
+      icon: <TbBrandGithub size="20px" />,
+      color: "#c6c6c6",
+    },
+    {
+      name: "Swagger",
+      icon: <SiSwagger size="20px" />,
+      color: "#85ea2d",
+    },
+    {
+      name: "Figma",
+      icon: <SiFigma size="20px" />,
+      color: "#0ACF83",
+    },
+    {
+      name: "Scrum",
+      icon: <DiScrum size="20px" />,
+      color: "#ff6666",
     },
   ];
 

@@ -4,6 +4,14 @@ import { Card } from "@/components/Card";
 import { Text, Box, Flex, Image, useDisclosure } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useEffect } from "react";
+import { CiMobile1 } from "react-icons/ci";
+import { FaReact } from "react-icons/fa";
+import {
+  TbBrandReactNative,
+  TbBrandNextjs,
+  TbBrandTypescript,
+  TbBrandJavascript,
+} from "react-icons/tb";
 
 interface ProjectCardProps {
   project: {
@@ -13,6 +21,11 @@ interface ProjectCardProps {
     projectDate: string;
     link: string;
     underConstruction?: boolean;
+    skills?: {
+      name: string;
+      icon: JSX.Element;
+      color: string;
+    }[];
   };
   isDesktop?: boolean;
 }
@@ -25,6 +38,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
     projectDate,
     link,
     underConstruction,
+    skills,
   } = project;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -107,6 +121,26 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
               <Text fontWeight="700" transition="margin-bottom 0.3s ease">
                 {projectDate}
               </Text>
+
+              <Flex gap="8px">
+                {skills?.map((skill, i) => (
+                  <Card
+                    boxShadow={`0px 0px 10px 0px ${skill.color}`}
+                    key={i}
+                    width="100px"
+                    minHeight="100px"
+                    roundBorder
+                    borderColor="#c6c6c6"
+                    hoverColor={skill.color}
+                    hoverTextColor={skill.color}
+                  >
+                    {skill.icon}
+                    <Text fontSize="12px" textAlign="center">
+                      {skill.name}
+                    </Text>
+                  </Card>
+                ))}
+              </Flex>
             </Flex>
           )}
         </Box>
