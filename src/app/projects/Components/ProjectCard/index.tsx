@@ -12,13 +12,20 @@ interface ProjectCardProps {
     projectImage: string;
     projectDate: string;
     link: string;
+    underConstruction?: boolean;
   };
   isDesktop?: boolean;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
-  const { projectName, projectDescription, projectImage, projectDate, link } =
-    project;
+  const {
+    projectName,
+    projectDescription,
+    projectImage,
+    projectDate,
+    link,
+    underConstruction,
+  } = project;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
@@ -31,8 +38,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
 
   return (
     <Card>
-      <Link href={link}>
+      <Link
+        href={link}
+        onClick={(e) => {
+          if (underConstruction) {
+            e.preventDefault();
+          }
+        }}
+      >
         <Box
+          cursor={underConstruction ? "not-allowed" : "pointer"}
           onMouseEnter={onOpen}
           onMouseLeave={onClose}
           position="relative"
@@ -43,7 +58,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
         >
           <Box
             position="relative"
-            cursor="pointer"
             opacity={isOpen ? 0.2 : 1}
             transition="opacity 0.3s ease"
           >

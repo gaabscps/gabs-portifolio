@@ -1,6 +1,8 @@
 "use client";
 
+import { FullSizeImageModal } from "@/components/FullSizeImageModal";
 import { useLanguage } from "@/context/language";
+import { useFullSize } from "@/hooks/useFullSize";
 import {
   Box,
   Flex,
@@ -11,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { FaCopy, FaCheck, FaGithub } from "react-icons/fa";
+import { RiCloseLine } from "react-icons/ri";
 
 export type CredentialsType = {
   title: string;
@@ -23,6 +26,8 @@ export default function PlayX1() {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPassword, setCopiedPassword] = useState(false);
 
+  const { isOpenedImage, openImageFullSize, setIsOpenedImage, openedImage } =
+    useFullSize();
   const { translations } = useLanguage();
 
   const isDesktop = useMediaQuery("(min-width: 1023px)")[0];
@@ -59,8 +64,29 @@ export default function PlayX1() {
 
   return (
     <>
+      {isOpenedImage && (
+        <FullSizeImageModal
+          borderColor="#C3ACDA"
+          openedImage={openedImage}
+          closeIcon={
+            <RiCloseLine
+              color="black"
+              fill="black"
+              className="closeIcon"
+              size="24px"
+              onClick={() => setIsOpenedImage(false)}
+            />
+          }
+        />
+      )}
       <Box width={isDesktop ? "auto" : "100%"}>
-        <Box maxWidth="1040px" className="body-content" as="section">
+        <Box
+          pointerEvents={isOpenedImage ? "none" : "auto"}
+          opacity={isOpenedImage ? "0.2" : ""}
+          maxWidth="1040px"
+          className="body-content"
+          as="section"
+        >
           <Flex
             gap="40px"
             width="100%"
@@ -69,6 +95,12 @@ export default function PlayX1() {
           >
             <Box as="aside">
               <Image
+                onClick={() =>
+                  openImageFullSize(
+                    "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/landing.png"
+                  )
+                }
+                cursor={"pointer"}
                 border={"2px solid #C3ACDA"}
                 objectFit="cover"
                 height="600px"
@@ -112,6 +144,12 @@ export default function PlayX1() {
             </Box>
             <Box as="aside">
               <Image
+                onClick={() =>
+                  openImageFullSize(
+                    "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/home.png"
+                  )
+                }
+                cursor={"pointer"}
                 border={"2px solid #C3ACDA"}
                 objectFit="cover"
                 height="600px"
@@ -134,6 +172,12 @@ export default function PlayX1() {
               margin="40px 0"
             />
             <Image
+              onClick={() =>
+                openImageFullSize(
+                  "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/match.png"
+                )
+              }
+              cursor={"pointer"}
               border={"2px solid #C3ACDA"}
               objectFit="cover"
               height="600px"

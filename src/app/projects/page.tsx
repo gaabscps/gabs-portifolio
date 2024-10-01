@@ -31,7 +31,8 @@ export default function Projects() {
       projectDate: "2024",
       projectImage:
         "https://gabsportifolio.s3.amazonaws.com/img/Dashboard/dashboard.png",
-      link: "/",
+      link: '',
+      underConstruction: true,
     },
   ];
 
