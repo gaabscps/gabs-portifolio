@@ -91,13 +91,18 @@ export default function PlayX1() {
           className="body-content"
           as="section"
         >
-          <Flex padding="40px 0 80px" justifyContent="space-between" gap="8px">
+          <Flex
+            flexWrap="wrap"
+            padding={isDesktop ? "40px 0 80px" : "0 0 24px"}
+            justifyContent={isDesktop ? "space-between" : "center"}
+            gap="8px"
+          >
             {skills?.map((skill, i) => (
               <Card
                 boxShadow={`0px 0px 10px 0px ${skill.color}`}
                 key={i}
-                width="100px"
-                minHeight="100px"
+                width={isDesktop ? "100px" : "80px"}
+                minHeight={isDesktop ? "100px" : "80px"}
                 roundBorder
                 borderColor="#c6c6c6"
                 hoverColor={skill.color}
@@ -116,7 +121,16 @@ export default function PlayX1() {
             paddingBottom="160px"
             flexDirection={isDesktop ? "row" : "column"}
           >
-            <Box as="aside">
+            <Box
+              cursor="pointer"
+              borderRadius="10px"
+              _hover={{
+                boxShadow: "0px 0px 25px #C3ACDA",
+                transform: "scale(1.01)",
+              }}
+              transition={"all ease 0.2s"}
+              as="aside"
+            >
               <Image
                 onClick={() =>
                   openImageFullSize(
@@ -165,7 +179,16 @@ export default function PlayX1() {
                 />
               </Flex>
             </Box>
-            <Box as="aside">
+            <Box
+              cursor="pointer"
+              borderRadius="10px"
+              _hover={{
+                boxShadow: "0px 0px 25px #C3ACDA",
+                transform: "scale(1.01)",
+              }}
+              transition={"all ease 0.2s"}
+              as="aside"
+            >
               <Image
                 onClick={() =>
                   openImageFullSize(
@@ -194,22 +217,33 @@ export default function PlayX1() {
               fontSize="24px"
               margin="40px 0"
             />
-            <Image
-              onClick={() =>
-                openImageFullSize(
-                  "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/match.png"
-                )
-              }
-              cursor={"pointer"}
-              border={"2px solid #C3ACDA"}
-              objectFit="cover"
-              height="600px"
+            <Box
+              cursor="pointer"
               borderRadius="10px"
-              src={
-                "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/match.png"
-              }
-              alt=""
-            />
+              _hover={{
+                boxShadow: "0px 0px 25px #C3ACDA",
+                transform: "scale(1.01)",
+              }}
+              transition={"all ease 0.2s"}
+              as="aside"
+            >
+              <Image
+                onClick={() =>
+                  openImageFullSize(
+                    "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/match.png"
+                  )
+                }
+                cursor={"pointer"}
+                border={"2px solid #C3ACDA"}
+                objectFit="cover"
+                height="600px"
+                borderRadius="10px"
+                src={
+                  "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/match.png"
+                }
+                alt=""
+              />
+            </Box>
           </Flex>
         </Box>
 

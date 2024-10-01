@@ -1,7 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/context/language";
-import { Box, Button, Flex, Input, Text, Textarea } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, Text, Textarea, useMediaQuery } from "@chakra-ui/react";
 import { useState } from "react";
 import { BsTelegram, BsWhatsapp } from "react-icons/bs";
 import { MdEmail } from "react-icons/md";
@@ -14,6 +14,7 @@ export default function Home() {
   });
 
   const { translations } = useLanguage();
+  const isDesktop = useMediaQuery("(min-width: 1023px)")[0];
 
   const resetForm = () => {
     setForm({
@@ -28,14 +29,14 @@ export default function Home() {
       <Text fontSize="24px" fontWeight="700">
         {translations?.contact?.title}
       </Text>
-      <Box margin="24px 0" as="section">
+      <Box padding="24px 0" as="section">
         <Flex flexDirection="column" gap="16px">
           <Input
             onChange={(e) => {
               setForm({ ...form, name: e.target.value });
             }}
             value={form.name}
-            w="35%"
+          w={isDesktop ? "35%" : "100%"}
             placeholder={translations?.contact?.nameInputLabel}
           />
           <Input
@@ -43,7 +44,7 @@ export default function Home() {
               setForm({ ...form, email: e.target.value });
             }}
             value={form.email}
-            w="35%"
+          w={isDesktop ? "35%" : "100%"}
             placeholder={translations?.contact?.emailInputLabel}
           />
           <Textarea
@@ -52,11 +53,11 @@ export default function Home() {
             }}
             value={form.message}
             height="180px"
-            w="70%"
+            w={isDesktop ? "70%" : "100%"}
             placeholder={translations?.contact?.messageInputLabel}
           />
           <Button
-            w="50%"
+            w={isDesktop ? "50%" : "100%"}
             bg="#25D366"
             color="white"
             _hover={{ bg: "#36c26a" }}
@@ -74,7 +75,7 @@ export default function Home() {
             </Box>
           </Button>
           <Button
-            w="50%"
+            w={isDesktop ? "50%" : "100%"}
             bg="#6666ff"
             color="white"
             _hover={{ bg: "#6699ff" }}
@@ -90,7 +91,7 @@ export default function Home() {
             </Box>
           </Button>
           <Button
-            w="50%"
+            w={isDesktop ? "50%" : "100%"}
             bg="#6666ff"
             color="white"
             _hover={{ bg: "#6699ff" }}
