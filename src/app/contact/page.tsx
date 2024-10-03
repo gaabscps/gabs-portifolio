@@ -21,6 +21,7 @@ export default function Home() {
     message: "",
   });
 
+  const isMobile = useMediaQuery("(max-width: 768px)")[0];
   const { translations } = useLanguage();
 
   const resetForm = () => {
@@ -32,7 +33,7 @@ export default function Home() {
   };
 
   return (
-    <Box minWidth="600px" className="body-content" as="section">
+    <Box className="body-content sm-body-content" as="section">
       <Text fontSize="24px" fontWeight="700">
         {translations?.contact?.title}
       </Text>
@@ -63,7 +64,11 @@ export default function Home() {
             w="100%"
             placeholder={translations?.contact?.messageInputLabel}
           />
-          <Flex p="40px 0" gap={"20px"}>
+          <Flex
+            flexDirection={isMobile ? "column" : "row"}
+            p="40px 0"
+            gap={"20px"}
+          >
             <Button
               fontSize="14px"
               w="100%"
@@ -103,7 +108,7 @@ export default function Home() {
             </Button>
             <Button
               w="100%"
-              backgroundColor={'transparent'}
+              backgroundColor={"transparent"}
               color="white"
               border={"solid 1px white"}
               _hover={{ border: "solid 1px #AC6BED", color: "#AC6BED" }}
