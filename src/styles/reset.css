@@ -17,6 +17,10 @@ section,
   min-width: 1024px;
 }
 
+.sm-body-content {
+  min-width: 600px;
+}
+
 .buttonDefault {
   background-color: #ac6bed !important;
   color: #fff !important;
@@ -72,6 +76,10 @@ section,
 @media screen and (max-width: 1023px) {
   .body-content {
     margin-top: 24px;
+    min-width: 100%;
+  }
+
+  .sm-body-content {
     min-width: 100%;
   }
 }
