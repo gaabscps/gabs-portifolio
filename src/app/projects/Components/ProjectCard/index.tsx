@@ -1,7 +1,14 @@
 "use client";
 
 import { Card } from "@/components/Card";
-import { Text, Box, Flex, Image, useDisclosure } from "@chakra-ui/react";
+import {
+  Text,
+  Box,
+  Flex,
+  Image,
+  useDisclosure,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { CiMobile1 } from "react-icons/ci";
@@ -41,6 +48,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
     skills,
   } = project;
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const isMobile = useMediaQuery("(max-width: 768px)")[0];
 
   useEffect(() => {
     if (!isDesktop) {
@@ -122,25 +130,27 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
                 {projectDate}
               </Text>
 
-              <Flex flexWrap='wrap' gap="16px" justifyContent='center'>
-                {skills?.map((skill, i) => (
-                  <Card
-                    boxShadow={`0px 0px 10px 0px ${skill.color}`}
-                    key={i}
-                    width={isDesktop ? "100px" : "80px"}
-                    minHeight={isDesktop ? "100px" : "80px"}
-                    roundBorder
-                    borderColor="#c6c6c6"
-                    hoverColor={skill.color}
-                    hoverTextColor={skill.color}
-                  >
-                    {skill.icon}
-                    <Text fontSize="12px" textAlign="center">
-                      {skill.name}
-                    </Text>
-                  </Card>
-                ))}
-              </Flex>
+              {!isMobile && (
+                <Flex flexWrap="wrap" gap="16px" justifyContent="center">
+                  {skills?.map((skill, i) => (
+                    <Card
+                      boxShadow={`0px 0px 10px 0px ${skill.color}`}
+                      key={i}
+                      width={isDesktop ? "100px" : "80px"}
+                      minHeight={isDesktop ? "100px" : "80px"}
+                      roundBorder
+                      borderColor="#c6c6c6"
+                      hoverColor={skill.color}
+                      hoverTextColor={skill.color}
+                    >
+                      {skill.icon}
+                      <Text fontSize="12px" textAlign="center">
+                        {skill.name}
+                      </Text>
+                    </Card>
+                  ))}
+                </Flex>
+              )}
             </Flex>
           )}
         </Box>
