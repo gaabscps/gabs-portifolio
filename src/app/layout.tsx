@@ -11,6 +11,7 @@ import Script from "next/script";
 declare global {
   interface Window {
     dataLayer: any[];
+    gtag: (...args: any[]) => void;
   }
 }
 
@@ -21,6 +22,11 @@ export default function RootLayout({
 }) {
   useEffect(() => {
     window.dataLayer = window.dataLayer || [];
+    window.gtag = function () {
+      window.dataLayer.push(arguments);
+    };
+    window.gtag("js", new Date());
+    window.gtag("config", "G-6K63FFPK8S");
   }, []);
 
   return (
@@ -54,6 +60,14 @@ export default function RootLayout({
               style={{ display: "none", visibility: "hidden" }}
             />
           </noscript>
+
+          {/* Google Analytics (gtag.js) */}
+          <Script
+            id="gtag-script"
+            strategy="afterInteractive"
+            src="https://www.googletagmanager.com/gtag/js?id=G-6K63FFPK8S"
+          />
+
           <Providers>
             <Navbar />
             <Flex
