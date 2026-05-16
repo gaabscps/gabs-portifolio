@@ -1,12 +1,5 @@
-// app/page.tsx
-"use client";
-
-import About from "./about/page";
+import AboutContent from "./about/AboutContent";
 
 export default function Page() {
-  return (
-    <>
-      <About />
-    </>
-  );
+  return <AboutContent />;
 }
