@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
 
-import { Box, Image, Text, useMediaQuery } from "@chakra-ui/react";
+import { Box, Flex, Icon, Image, Text, useMediaQuery } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { MdScreenRotation } from "react-icons/md";
 import { RiCloseLine } from "react-icons/ri";
+import { ProjectPlaceholder } from "@/components/ProjectPlaceholder";
 
 interface FullSizeImageModalProps {
   openedImage: string;
@@ -49,7 +51,17 @@ export const FullSizeImageModal: React.FC<FullSizeImageModalProps> = ({
         border={`1px solid ${borderColor || "black"}`}
         position="relative"
       >
-        <Image borderRadius="16px" src={openedImage} />
+        <Image
+          borderRadius="16px"
+          src={openedImage}
+          fallback={
+            <ProjectPlaceholder
+              height="600px"
+              borderRadius="16px"
+              borderColor={borderColor || "#AC6BED"}
+            />
+          }
+        />
         {closeIcon}
       </Box>
       {!isDesktop && (
@@ -64,6 +76,28 @@ export const FullSizeImageModal: React.FC<FullSizeImageModalProps> = ({
                 margin="0 auto"
                 src={
                   "https://gabsportifolio.s3.amazonaws.com/img/assets/rotate.gif"
+                }
+                fallback={
+                  <Flex
+                    width="160px"
+                    height="160px"
+                    margin="0 auto"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Icon
+                      as={MdScreenRotation}
+                      boxSize="80px"
+                      color="white"
+                      sx={{
+                        animation: "spin 2s linear infinite",
+                        "@keyframes spin": {
+                          "0%": { transform: "rotate(0deg)" },
+                          "100%": { transform: "rotate(360deg)" },
+                        },
+                      }}
+                    />
+                  </Flex>
                 }
               />
             </Box>

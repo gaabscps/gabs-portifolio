@@ -2,6 +2,7 @@
 
 import { Card } from "@/components/Card";
 import { FullSizeImageModal } from "@/components/FullSizeImageModal";
+import { ProjectPlaceholder } from "@/components/ProjectPlaceholder";
 import { useLanguage } from "@/context/language";
 import { useFullSize } from "@/hooks/useFullSize";
 import { useProjects } from "@/hooks/useProjects";
@@ -130,6 +131,9 @@ export default function PlayX1() {
               }}
               transition={"all ease 0.2s"}
               as="aside"
+              flex={isDesktop ? "1" : "unset"}
+              minWidth="0"
+              width={isDesktop ? "auto" : "100%"}
             >
               <Image
                 onClick={() =>
@@ -146,6 +150,12 @@ export default function PlayX1() {
                   "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/landing.png"
                 }
                 alt=""
+                fallback={
+                  <ProjectPlaceholder
+                    height="600px"
+                    borderColor="#C3ACDA"
+                  />
+                }
               />
             </Box>
             <Box as="aside" width={isDesktop ? "50%" : "100%"}>
@@ -188,6 +198,9 @@ export default function PlayX1() {
               }}
               transition={"all ease 0.2s"}
               as="aside"
+              flex={isDesktop ? "1" : "unset"}
+              minWidth="0"
+              width={isDesktop ? "auto" : "100%"}
             >
               <Image
                 onClick={() =>
@@ -204,6 +217,12 @@ export default function PlayX1() {
                   "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/home.png"
                 }
                 alt=""
+                fallback={
+                  <ProjectPlaceholder
+                    height="600px"
+                    borderColor="#C3ACDA"
+                  />
+                }
               />
             </Box>
           </Flex>
@@ -226,6 +245,9 @@ export default function PlayX1() {
               }}
               transition={"all ease 0.2s"}
               as="aside"
+              flex={isDesktop ? "1" : "unset"}
+              minWidth="0"
+              width={isDesktop ? "auto" : "100%"}
             >
               <Image
                 onClick={() =>
@@ -242,6 +264,12 @@ export default function PlayX1() {
                   "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/match.png"
                 }
                 alt=""
+                fallback={
+                  <ProjectPlaceholder
+                    height="600px"
+                    borderColor="#C3ACDA"
+                  />
+                }
               />
             </Box>
           </Flex>

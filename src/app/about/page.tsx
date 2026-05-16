@@ -4,13 +4,14 @@ import {
   Container,
   Box,
   Flex,
+  Icon,
   Text,
   Image,
   useMediaQuery,
 } from "@chakra-ui/react";
 import { useLanguage } from "../../context/language";
 import { Card } from "@/components/Card";
-import { FaReact } from "react-icons/fa";
+import { FaReact, FaUser } from "react-icons/fa";
 import {
   TbBrandNextjs,
   TbBrandReactNative,
@@ -97,6 +98,20 @@ export default function About() {
         borderRadius={"50%"}
         src="https://gabsportifolio.s3.amazonaws.com/img/About/perfil.png"
         alt="Gabriel Andrade"
+        fallback={
+          <Flex
+            margin="0 auto"
+            width="200px"
+            height="200px"
+            border="2px solid #AC6BED"
+            borderRadius="50%"
+            background="#1a1a1a"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Icon as={FaUser} boxSize="80px" color="#AC6BED" opacity="0.5" />
+          </Flex>
+        }
       />
       <Container maxWidth="1040px" justifyContent="center" padding="32px 0">
         <Text

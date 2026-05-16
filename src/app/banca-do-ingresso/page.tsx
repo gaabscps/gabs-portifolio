@@ -4,6 +4,7 @@
 
 import { Card } from "@/components/Card";
 import { FullSizeImageModal } from "@/components/FullSizeImageModal";
+import { ProjectPlaceholder } from "@/components/ProjectPlaceholder";
 import { useLanguage } from "@/context/language";
 import { useFullSize } from "@/hooks/useFullSize";
 import { useProjects } from "@/hooks/useProjects";
@@ -104,6 +105,9 @@ export default function BancaDoIngresso() {
               }}
               transition={"all ease 0.2s"}
               as="aside"
+              flex={isDesktop ? "1" : "unset"}
+              minWidth="0"
+              width={isDesktop ? "auto" : "100%"}
             >
               <Image
                 onClick={() =>
@@ -119,6 +123,12 @@ export default function BancaDoIngresso() {
                   "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/dashboard+bdi.png"
                 }
                 alt=""
+                fallback={
+                  <ProjectPlaceholder
+                    height="600px"
+                    borderColor="#d0726d"
+                  />
+                }
               />
             </Box>
             <Box as="aside" width={isDesktop ? "50%" : "100%"}>
@@ -161,6 +171,9 @@ export default function BancaDoIngresso() {
               }}
               transition={"all ease 0.2s"}
               as="aside"
+              flex={isDesktop ? "1" : "unset"}
+              minWidth="0"
+              width={isDesktop ? "auto" : "100%"}
             >
               <Image
                 onClick={() =>
@@ -176,6 +189,12 @@ export default function BancaDoIngresso() {
                   "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/eventos.png"
                 }
                 alt=""
+                fallback={
+                  <ProjectPlaceholder
+                    height="600px"
+                    borderColor="#d0726d"
+                  />
+                }
               />
             </Box>
           </Flex>
@@ -200,6 +219,9 @@ export default function BancaDoIngresso() {
               }}
               transition={"all ease 0.2s"}
               as="aside"
+              flex={isDesktop ? "1" : "unset"}
+              minWidth="0"
+              width={isDesktop ? "auto" : "100%"}
             >
               <Image
                 onClick={() =>
@@ -215,6 +237,12 @@ export default function BancaDoIngresso() {
                   "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/relatorios.png"
                 }
                 alt=""
+                fallback={
+                  <ProjectPlaceholder
+                    height="600px"
+                    borderColor="#d0726d"
+                  />
+                }
               />
             </Box>
           </Flex>

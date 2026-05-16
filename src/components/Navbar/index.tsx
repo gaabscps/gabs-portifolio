@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Box,
   Flex,
   Icon,
   List,
@@ -76,6 +77,19 @@ export const Navbar = () => {
             alt="Gabriel Andrade"
             src="https://gabsportifolio.s3.amazonaws.com/img/About/logo.png"
             width={300}
+            fallback={
+              <Box
+                width="300px"
+                padding="16px 0"
+                textAlign="center"
+                color="#AC6BED"
+                fontSize="22px"
+                fontWeight="700"
+                letterSpacing="2px"
+              >
+                Gabriel Andrade
+              </Box>
+            }
           />
         </Flex>
         <Flex>

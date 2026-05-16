@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from "@/components/Card";
+import { ProjectPlaceholder } from "@/components/ProjectPlaceholder";
 import type { ProjectView } from "@/hooks/useProjects";
 import {
   Box,
@@ -67,6 +68,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
               borderRadius="10px"
               src={coverImage}
               alt=""
+              fallback={
+                <ProjectPlaceholder
+                  height="600px"
+                  width={isDesktop ? "1040px" : "100%"}
+                />
+              }
             />
           </Box>
           {isOpen && (
