@@ -1,0 +1,28 @@
+name: audit
+
+# Run on PRs, on pushes to master, and once a week so we still catch
+# new advisories on packages we haven't touched.
+on:
+  pull_request:
+  push:
+    branches: [master]
+  schedule:
+    - cron: "0 9 * * 1" # Monday 09:00 UTC (06:00 America/Sao_Paulo)
+  workflow_dispatch:
+
+jobs:
+  yarn-audit:
+    name: yarn audit (fails on high or critical)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "yarn"
+
+      - run: yarn install --frozen-lockfile
+
+      - name: Run yarn audit and fail on new high/critical advisories
+        run: bash .github/scripts/audit.sh
