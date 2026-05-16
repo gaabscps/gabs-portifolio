@@ -32,7 +32,7 @@ export default function PlayX1() {
     useFullSize();
   const { translations } = useLanguage();
   const projects = useProjects();
-  const skills = projects[0].skills;
+  const skills = projects.find((p) => p.slug === "playx1")?.skills ?? [];
 
   const isDesktop = useMediaQuery("(min-width: 1023px)")[0];
 

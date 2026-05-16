@@ -34,7 +34,8 @@ export default function BancaDoIngresso() {
 
   const { translations } = useLanguage();
   const projects = useProjects();
-  const skills = projects[1].skills;
+  const skills =
+    projects.find((p) => p.slug === "banca-do-ingresso")?.skills ?? [];
 
   const isDesktop = useMediaQuery("(min-width: 1023px)")[0];
 

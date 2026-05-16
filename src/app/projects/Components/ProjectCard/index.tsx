@@ -1,52 +1,29 @@
 "use client";
 
 import { Card } from "@/components/Card";
+import type { ProjectView } from "@/hooks/useProjects";
 import {
-  Text,
   Box,
   Flex,
   Image,
+  Text,
   useDisclosure,
   useMediaQuery,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useEffect } from "react";
-import { CiMobile1 } from "react-icons/ci";
-import { FaReact } from "react-icons/fa";
-import {
-  TbBrandReactNative,
-  TbBrandNextjs,
-  TbBrandTypescript,
-  TbBrandJavascript,
-} from "react-icons/tb";
 
 interface ProjectCardProps {
-  project: {
-    projectName: string;
-    projectDescription: string;
-    projectImage: string;
-    projectDate: string;
-    link: string;
-    underConstruction?: boolean;
-    skills?: {
-      name: string;
-      icon: JSX.Element;
-      color: string;
-    }[];
-  };
+  project: ProjectView;
   isDesktop?: boolean;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
-  const {
-    projectName,
-    projectDescription,
-    projectImage,
-    projectDate,
-    link,
-    underConstruction,
-    skills,
-  } = project;
+  const { title, description, coverImage, year, links, status, skills } =
+    project;
+  const underConstruction = status === "under-construction";
+  const href = links.route ?? "";
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isMobile = useMediaQuery("(max-width: 768px)")[0];
 
@@ -61,7 +38,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
   return (
     <Card>
       <Link
-        href={link}
+        href={href}
         onClick={(e) => {
           if (underConstruction) {
             e.preventDefault();
@@ -88,7 +65,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
               height="600px"
               width={isDesktop ? "1040px" : "auto"}
               borderRadius="10px"
-              src={projectImage}
+              src={coverImage}
               alt=""
             />
           </Box>
@@ -118,16 +95,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
                 fontWeight="700"
                 maxWidth={isDesktop ? "60%" : "100%"}
               >
-                {projectName}
+                {title}
               </Text>
               <Text
                 fontSize={isDesktop ? "16px" : "14px"}
                 transition="margin 0.3s ease"
               >
-                {projectDescription}
+                {description}
               </Text>
               <Text fontWeight="700" transition="margin-bottom 0.3s ease">
-                {projectDate}
+                {year}
               </Text>
 
               {!isMobile && (
