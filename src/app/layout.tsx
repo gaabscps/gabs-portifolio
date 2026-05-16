@@ -4,9 +4,49 @@ import "../styles/reset.css";
 import { Navbar } from "@/components/Navbar/index";
 import { Flex } from "@chakra-ui/react";
 import Script from "next/script";
+import type { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 
-export const metadata = {
-  title: "Gabriel Andrade",
+export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.name,
+    template: `%s · ${siteConfig.name}`,
+  },
+  description: siteConfig.defaultDescription,
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: siteConfig.name,
+    description: siteConfig.defaultDescription,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.defaultDescription,
+    images: [siteConfig.ogImage],
+    creator: siteConfig.twitterHandle,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -14,10 +54,27 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    image: siteConfig.ogImage,
+    jobTitle: siteConfig.jobTitle,
+    sameAs: [
+      siteConfig.social.github,
+      siteConfig.social.linkedin,
+      siteConfig.social.telegram,
+    ],
+  };
+
   return (
-    <html lang="en" className={fonts.montserrat.variable}>
+    <html lang="pt-BR" className={fonts.montserrat.variable}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <script type="application/ld+json">
+          {JSON.stringify(personJsonLd)}
+        </script>
       </head>
       <body className="page-body">
         {/* Google Tag Manager */}

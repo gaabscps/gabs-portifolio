@@ -67,7 +67,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
               width={isDesktop ? "1040px" : "auto"}
               borderRadius="10px"
               src={coverImage}
-              alt=""
+              alt={title}
               fallback={
                 <ProjectPlaceholder
                   height="600px"

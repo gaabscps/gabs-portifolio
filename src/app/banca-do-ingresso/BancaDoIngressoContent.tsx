@@ -9,6 +9,7 @@ import { useLanguage } from "@/context/language";
 import { useFullSize } from "@/hooks/useFullSize";
 import { useProjects } from "@/hooks/useProjects";
 import useWindow from "@/hooks/useWindows";
+import { renderRichText } from "@/lib/renderRichText";
 import {
   Box,
   Flex,
@@ -122,7 +123,7 @@ export default function BancaDoIngressoContent() {
                 src={
                   "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/dashboard+bdi.png"
                 }
-                alt=""
+                alt="Banca do Ingresso admin dashboard"
                 fallback={
                   <ProjectPlaceholder
                     height="600px"
@@ -134,13 +135,12 @@ export default function BancaDoIngressoContent() {
             <Box as="aside" width={isDesktop ? "50%" : "100%"}>
               <Flex height="100%" alignItems="center">
                 <Text
-                  dangerouslySetInnerHTML={{
-                    __html: translations?.bancaDoIngresso?.text1,
-                  }}
                   lineHeight="40px"
                   textAlign="center"
                   fontSize="24px"
-                />
+                >
+                  {renderRichText(translations?.bancaDoIngresso?.text1)}
+                </Text>
               </Flex>
             </Box>
           </Flex>
@@ -153,13 +153,12 @@ export default function BancaDoIngressoContent() {
             <Box as="aside" width={isDesktop ? "30%" : "100%"}>
               <Flex height="100%" alignItems="center">
                 <Text
-                  dangerouslySetInnerHTML={{
-                    __html: translations?.bancaDoIngresso?.text2,
-                  }}
                   lineHeight="40px"
                   textAlign="center"
                   fontSize="24px"
-                />
+                >
+                  {renderRichText(translations?.bancaDoIngresso?.text2)}
+                </Text>
               </Flex>
             </Box>
             <Box
@@ -188,7 +187,7 @@ export default function BancaDoIngressoContent() {
                 src={
                   "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/eventos.png"
                 }
-                alt=""
+                alt="Banca do Ingresso events list"
                 fallback={
                   <ProjectPlaceholder
                     height="600px"
@@ -202,14 +201,9 @@ export default function BancaDoIngressoContent() {
             paddingBottom="80px"
             flexDirection={isDesktop ? "column" : "column-reverse"}
           >
-            <Text
-              dangerouslySetInnerHTML={{
-                __html: translations?.bancaDoIngresso?.text3,
-              }}
-              textAlign="center"
-              fontSize="24px"
-              margin="40px 0"
-            />
+            <Text textAlign="center" fontSize="24px" margin="40px 0">
+              {renderRichText(translations?.bancaDoIngresso?.text3)}
+            </Text>
             <Box
               cursor="pointer"
               borderRadius="10px"
@@ -236,7 +230,7 @@ export default function BancaDoIngressoContent() {
                 src={
                   "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/relatorios.png"
                 }
-                alt=""
+                alt="Banca do Ingresso reports view"
                 fallback={
                   <ProjectPlaceholder
                     height="600px"

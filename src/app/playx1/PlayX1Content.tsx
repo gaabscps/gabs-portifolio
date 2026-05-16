@@ -6,6 +6,7 @@ import { ProjectPlaceholder } from "@/components/ProjectPlaceholder";
 import { useLanguage } from "@/context/language";
 import { useFullSize } from "@/hooks/useFullSize";
 import { useProjects } from "@/hooks/useProjects";
+import { renderRichText } from "@/lib/renderRichText";
 import {
   Box,
   Flex,
@@ -149,7 +150,7 @@ export default function PlayX1Content() {
                 src={
                   "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/landing.png"
                 }
-                alt=""
+                alt="PlayX1 landing page"
                 fallback={
                   <ProjectPlaceholder
                     height="600px"
@@ -161,13 +162,12 @@ export default function PlayX1Content() {
             <Box as="aside" width={isDesktop ? "50%" : "100%"}>
               <Flex height="100%" alignItems="center">
                 <Text
-                  dangerouslySetInnerHTML={{
-                    __html: translations?.playx1?.text1,
-                  }}
                   lineHeight="40px"
                   textAlign="center"
                   fontSize="24px"
-                />
+                >
+                  {renderRichText(translations?.playx1?.text1)}
+                </Text>
               </Flex>
             </Box>
           </Flex>
@@ -180,13 +180,12 @@ export default function PlayX1Content() {
             <Box as="aside" width={isDesktop ? "30%" : "100%"}>
               <Flex height="100%" alignItems="center">
                 <Text
-                  dangerouslySetInnerHTML={{
-                    __html: translations?.playx1?.text2,
-                  }}
                   lineHeight="40px"
                   textAlign="center"
                   fontSize="24px"
-                />
+                >
+                  {renderRichText(translations?.playx1?.text2)}
+                </Text>
               </Flex>
             </Box>
             <Box
@@ -216,7 +215,7 @@ export default function PlayX1Content() {
                 src={
                   "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/home.png"
                 }
-                alt=""
+                alt="PlayX1 home screen"
                 fallback={
                   <ProjectPlaceholder
                     height="600px"
@@ -230,12 +229,9 @@ export default function PlayX1Content() {
             paddingBottom="80px"
             flexDirection={isDesktop ? "column" : "column-reverse"}
           >
-            <Text
-              dangerouslySetInnerHTML={{ __html: translations?.playx1?.text3 }}
-              textAlign="center"
-              fontSize="24px"
-              margin="40px 0"
-            />
+            <Text textAlign="center" fontSize="24px" margin="40px 0">
+              {renderRichText(translations?.playx1?.text3)}
+            </Text>
             <Box
               cursor="pointer"
               borderRadius="10px"
@@ -263,7 +259,7 @@ export default function PlayX1Content() {
                 src={
                   "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/match.png"
                 }
-                alt=""
+                alt="PlayX1 match screen"
                 fallback={
                   <ProjectPlaceholder
                     height="600px"
@@ -285,18 +281,10 @@ export default function PlayX1Content() {
           flexDirection={isDesktop ? "row" : "column"}
         >
           <Box width="100%">
-            <Text
-              dangerouslySetInnerHTML={{
-                __html: translations?.playx1?.navigate,
-              }}
-              fontSize="24px"
-              fontWeight="700"
-            />
-            <Text
-              dangerouslySetInnerHTML={{
-                __html: translations?.playx1?.credentialsTitle,
-              }}
-            />
+            <Text fontSize="24px" fontWeight="700">
+              {translations?.playx1?.navigate}
+            </Text>
+            <Text>{translations?.playx1?.credentialsTitle}</Text>
             {credentials.map((credential, i) => (
               <Flex key={i} gap="16px" alignItems="center">
                 <>

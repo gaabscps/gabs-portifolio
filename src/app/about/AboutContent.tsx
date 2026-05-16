@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useLanguage } from "../../context/language";
 import { Card } from "@/components/Card";
+import { renderRichText } from "@/lib/renderRichText";
 import { FaReact, FaUser } from "react-icons/fa";
 import {
   TbBrandNextjs,
@@ -114,22 +115,18 @@ export default function AboutContent() {
         }
       />
       <Container maxWidth="1040px" justifyContent="center" padding="32px 0">
-        <Text
-          marginBottom={"16px"}
-          dangerouslySetInnerHTML={{ __html: translations?.about?.text1 }}
-        />
-        <Text
-          marginBottom={"16px"}
-          dangerouslySetInnerHTML={{ __html: translations?.about?.text2 }}
-        />
-        <Text
-          marginBottom={"16px"}
-          dangerouslySetInnerHTML={{ __html: translations?.about?.text3 }}
-        />
-        <Text
-          marginBottom={"16px"}
-          dangerouslySetInnerHTML={{ __html: translations?.about?.text4 }}
-        />
+        <Text marginBottom={"16px"}>
+          {renderRichText(translations?.about?.text1)}
+        </Text>
+        <Text marginBottom={"16px"}>
+          {renderRichText(translations?.about?.text2)}
+        </Text>
+        <Text marginBottom={"16px"}>
+          {renderRichText(translations?.about?.text3)}
+        </Text>
+        <Text marginBottom={"16px"}>
+          {renderRichText(translations?.about?.text4)}
+        </Text>
       </Container>
       <Flex
         flexWrap="wrap"
