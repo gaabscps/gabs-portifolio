@@ -15,6 +15,16 @@ updates:
     commit-message:
       prefix: "⬆️"
       include: "scope"
+    # Wait a few days before opening a PR for a brand-new release.
+    # Most supply-chain attacks (a malicious version published to npm)
+    # are caught and removed within hours to a few days. Letting the
+    # community find them first means we never see the bad version.
+    # Security advisories bypass this and still come through immediately.
+    cooldown:
+      default-days: 5
+      semver-major-days: 14
+      semver-minor-days: 5
+      semver-patch-days: 3
     # Group minor and patch updates into a single PR per group.
     # Major updates still come as their own PR.
     groups:
@@ -63,3 +73,8 @@ updates:
     commit-message:
       prefix: "⬆️"
       include: "scope"
+    cooldown:
+      default-days: 5
+      semver-major-days: 14
+      semver-minor-days: 5
+      semver-patch-days: 3
