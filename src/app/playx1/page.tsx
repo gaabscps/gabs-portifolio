@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     images: [{ url: ogImage, alt: "PlayX1 landing page" }],
   },
   twitter: {
+    card: "summary_large_image",
     title: "PlayX1 · Gabriel Andrade",
     description,
     images: [ogImage],

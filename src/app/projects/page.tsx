@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import ProjectsContent from "./ProjectsContent";
-import { siteConfig } from "@/config/site";
 
 const description =
   "Projetos selecionados de Gabriel Andrade — incluindo PlayX1, Banca do Ingresso e mais.";
@@ -13,12 +12,11 @@ export const metadata: Metadata = {
     title: "Projetos · Gabriel Andrade",
     description,
     url: "/projects",
-    images: [{ url: siteConfig.ogImage, alt: siteConfig.name }],
   },
   twitter: {
+    card: "summary_large_image",
     title: "Projetos · Gabriel Andrade",
     description,
-    images: [siteConfig.ogImage],
   },
 };
 

@@ -4,6 +4,7 @@ import {
   Container,
   Box,
   Flex,
+  Heading,
   Icon,
   Text,
   Image,
@@ -90,6 +91,14 @@ export default function AboutContent() {
       className="body-content"
       maxWidth="1040px"
     >
+      <Box as="header" textAlign="center" paddingBottom="24px">
+        <Heading as="h1" fontSize={{ base: "32px", md: "40px" }} fontWeight="700">
+          {translations?.about?.h1}
+        </Heading>
+        <Text marginTop="8px" fontSize={{ base: "16px", md: "18px" }} color="#c6c6c6">
+          {translations?.about?.lede}
+        </Text>
+      </Box>
       <Image
         _hover={{ transform: "scale(1.05)" }}
         transition={"all 0.2s ease"}
@@ -115,6 +124,9 @@ export default function AboutContent() {
         }
       />
       <Container maxWidth="1040px" justifyContent="center" padding="32px 0">
+        <Heading as="h2" fontSize="24px" fontWeight="700" marginBottom="16px">
+          {translations?.about?.h2About}
+        </Heading>
         <Text marginBottom={"16px"}>
           {renderRichText(translations?.about?.text1)}
         </Text>
@@ -128,6 +140,9 @@ export default function AboutContent() {
           {renderRichText(translations?.about?.text4)}
         </Text>
       </Container>
+      <Heading as="h2" fontSize="24px" fontWeight="700" paddingTop="16px">
+        {translations?.about?.h2Skills}
+      </Heading>
       <Flex
         flexWrap="wrap"
         gap={isDesktop ? "37px" : "56px"}

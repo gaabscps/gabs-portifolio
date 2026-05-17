@@ -10,6 +10,7 @@ import { renderRichText } from "@/lib/renderRichText";
 import {
   Box,
   Flex,
+  Heading,
   Image,
   Text,
   Button,
@@ -93,9 +94,27 @@ export default function PlayX1Content() {
           className="body-content"
           as="section"
         >
+          <Heading
+            as="h1"
+            fontSize={{ base: "32px", md: "40px" }}
+            fontWeight="700"
+            textAlign="center"
+            paddingTop={isDesktop ? "16px" : "8px"}
+          >
+            {translations?.playx1?.h1}
+          </Heading>
+          <Heading
+            as="h2"
+            fontSize="24px"
+            fontWeight="700"
+            paddingTop="32px"
+            textAlign={isDesktop ? "left" : "center"}
+          >
+            {translations?.playx1?.h2About}
+          </Heading>
           <Flex
             flexWrap="wrap"
-            padding={isDesktop ? "40px 0 80px" : "0 0 24px"}
+            padding={isDesktop ? "16px 0 80px" : "16px 0 24px"}
             justifyContent={isDesktop ? "space-between" : "center"}
             gap="8px"
           >
@@ -273,10 +292,13 @@ export default function PlayX1Content() {
 
         <hr></hr>
 
+        <Heading as="h2" fontSize="24px" fontWeight="700" paddingTop="32px">
+          {translations?.playx1?.h2Access}
+        </Heading>
         <Flex
           width="100%"
           gap="32px"
-          padding="40px 0"
+          padding="24px 0 40px"
           alignItems="center"
           flexDirection={isDesktop ? "row" : "column"}
         >

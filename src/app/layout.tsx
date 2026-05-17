@@ -17,6 +17,16 @@ export const metadata: Metadata = {
   applicationName: siteConfig.name,
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
+  keywords: [
+    "Gabriel Andrade",
+    "Front-end Developer",
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Chakra UI",
+    "React Native",
+    "Portfólio",
+  ],
   alternates: {
     canonical: "/",
   },
@@ -27,20 +37,11 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: siteConfig.name,
     description: siteConfig.defaultDescription,
-    images: [
-      {
-        url: siteConfig.ogImage,
-        width: 1200,
-        height: 630,
-        alt: siteConfig.name,
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.defaultDescription,
-    images: [siteConfig.ogImage],
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -71,7 +72,6 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={fonts.montserrat.variable}>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
         <script type="application/ld+json">
           {JSON.stringify(personJsonLd)}
         </script>
