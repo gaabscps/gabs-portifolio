@@ -5,7 +5,7 @@ const description =
   "Get in touch with Gabriel Andrade — WhatsApp, Telegram, or email for new projects and opportunities.";
 
 export const metadata: Metadata = {
-  title: "Contact · Gabriel Andrade",
+  title: "Contact",
   description,
   alternates: { canonical: "/contact" },
   openGraph: {

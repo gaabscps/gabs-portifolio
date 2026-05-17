@@ -6,10 +6,10 @@ import { Footer } from "@/components/Home/Footer";
 
 export default function AboutContent() {
   return (
-    <Box className="bg-textured" minH="100vh" color="brand.text">
+    <Box className="bg-textured" minH="100vh" color="brand.text" display="flex" flexDirection="column">
       <Nav active="about" />
 
-      <Box as="section" px={{ base: 5, md: 8 }} pt={{ base: 12, md: 16 }} pb={{ base: 8, md: 10 }} maxW="720px">
+      <Box as="section" px={{ base: 5, md: 8 }} pt={{ base: 12, md: 16 }} pb={{ base: 8, md: 10 }} maxW="720px" w="100%" mx="auto">
         <Text
           fontSize="10px"
           color="brand.textSecondary"

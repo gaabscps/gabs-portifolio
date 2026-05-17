@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const project = projects.find((p) => p.slug === slug);
   if (!project) return {};
   return {
-    title: `${project.id} · Gabriel Andrade`,
+    title: project.id,
     description: project.motivation ?? `${project.id} · ${project.category ?? "case study"}.`,
     alternates: { canonical: `/work/${slug}` },
   };

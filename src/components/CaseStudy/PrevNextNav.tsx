@@ -15,7 +15,7 @@ export const PrevNextNav = ({ prev, next, index }: Props) => (
     bg="brand.deep"
     mt={6}
   >
-    <Grid templateColumns="1fr auto 1fr" gap={4.5} alignItems="center">
+    <Grid templateColumns="1fr auto 1fr" gap={4.5} alignItems="center" maxW="900px" mx="auto">
       {prev ? (
         <Link href={`/work/${prev.slug}`} style={{ textDecoration: "none" }}>
           <Box className="draw-link" cursor="pointer">

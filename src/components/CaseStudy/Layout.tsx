@@ -13,6 +13,9 @@ export const CaseStudyLayout = ({ project, children }: { project: Project; child
       gap={{ base: 6, md: 8 }}
       px={{ base: 5, md: 8 }}
       pt={9}
+      maxW="900px"
+      w="100%"
+      mx="auto"
     >
       <Box display={{ base: "none", md: "block" }}>
         <StickySidebar project={project} />

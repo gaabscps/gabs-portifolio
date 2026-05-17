@@ -32,10 +32,10 @@ export default function ContactContent() {
   const reset = () => setForm({ name: "", email: "", message: "" });
 
   return (
-    <Box className="bg-textured" minH="100vh" color="brand.text">
+    <Box className="bg-textured" minH="100vh" color="brand.text" display="flex" flexDirection="column">
       <Nav />
 
-      <Box as="section" px={{ base: 5, md: 8 }} pt={{ base: 12, md: 16 }} pb={{ base: 8, md: 10 }} maxW="640px">
+      <Box as="section" px={{ base: 5, md: 8 }} pt={{ base: 12, md: 16 }} pb={{ base: 8, md: 10 }} maxW="640px" w="100%" mx="auto">
         <Text
           fontSize="10px"
           color="brand.textSecondary"

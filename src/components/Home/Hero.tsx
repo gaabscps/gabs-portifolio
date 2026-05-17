@@ -51,7 +51,7 @@ export const Hero = () => (
     <Text fontSize={{ base: "14px", md: "15px" }} color="brand.textSecondary" lineHeight={1.6} maxW="540px" mb={7}>
       Front-end engineer in São Paulo. Three years shipping production software{" "}
       <Box as="em" color="brand.text" fontStyle="italic">before</Box>{" "}
-      the AI boom — now shipping with it as leverage, not as the demo.
+      the AI boom. Now shipping with it as leverage, not as the demo.
     </Text>
 
     <Flex

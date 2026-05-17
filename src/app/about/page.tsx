@@ -5,7 +5,7 @@ const description =
   "Gabriel Andrade — front-end engineer in São Paulo. Late pivot to code, on time for AI. Three years building production software before the AI boom.";
 
 export const metadata: Metadata = {
-  title: "About · Gabriel Andrade",
+  title: "About",
   description,
   alternates: { canonical: "/about" },
   openGraph: {
