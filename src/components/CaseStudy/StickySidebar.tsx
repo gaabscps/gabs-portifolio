@@ -18,23 +18,22 @@ const TocLink = ({ id, label }: Section) => (
     href={`#${id}`}
     align="center"
     gap={2}
-    py={1.5}
+    py={2}
     fontSize="11px"
     color="brand.textMeta"
     fontFamily="var(--font-mono)"
     cursor="pointer"
-    transition="color 200ms"
-    role="group"
+    transition="color var(--duration-fast) var(--ease-apple)"
     _hover={{ color: "brand.text" }}
     sx={{
       "&::before": {
         content: '""',
-        width: "14px",
+        width: "16px",
         height: "1px",
         background: "var(--bg-surface-2)",
-        transition: "width 200ms, background 200ms",
+        transition: "width var(--duration-fast), background var(--duration-fast)",
       },
-      "&:hover::before": { width: "22px", background: "var(--accent)" },
+      "&:hover::before": { width: "24px", background: "var(--accent)" },
     }}
   >
     {label}
@@ -50,7 +49,7 @@ export const StickySidebar = ({ project }: { project: Project }) => (
       textTransform="uppercase"
       fontFamily="var(--font-mono)"
       fontWeight="700"
-      mb={2.5}
+      mb={3}
     >
       on this page
     </Text>
@@ -58,7 +57,7 @@ export const StickySidebar = ({ project }: { project: Project }) => (
       <TocLink key={s.id} {...s} />
     ))}
 
-    <Box mt={7} pt={4.5} borderTop="1px solid" borderColor="brand.borderSubtle">
+    <Box mt={8} pt={6} borderTop="1px solid" borderColor="brand.borderSubtle">
       <Text
         fontSize="9px"
         color="brand.textMuted"
@@ -66,11 +65,11 @@ export const StickySidebar = ({ project }: { project: Project }) => (
         textTransform="uppercase"
         fontFamily="var(--font-mono)"
         fontWeight="700"
-        mb={2.5}
+        mb={3}
       >
         meta
       </Text>
-      <Box fontSize="10px" color="brand.textMeta" fontFamily="var(--font-mono)" lineHeight={1.9}>
+      <Box fontSize="10px" color="brand.textMeta" fontFamily="var(--font-mono)" lineHeight={2}>
         {project.startedAt && (
           <Box>
             started <Box as="span" color="brand.textSecondary">{project.startedAt}</Box>

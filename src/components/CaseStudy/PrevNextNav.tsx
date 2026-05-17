@@ -8,14 +8,14 @@ type Props = { prev?: Item; next?: Item; index?: string };
 
 export const PrevNextNav = ({ prev, next, index }: Props) => (
   <Box
-    px={{ base: 5, md: 8 }}
-    py={8}
+    px={{ base: 4, md: 8 }}
+    py={10}
     borderTop="1px solid"
     borderColor="brand.borderSubtle"
     bg="brand.deep"
-    mt={6}
+    mt={8}
   >
-    <Grid templateColumns="1fr auto 1fr" gap={4.5} alignItems="center" maxW="900px" mx="auto">
+    <Grid templateColumns="1fr auto 1fr" gap={6} alignItems="center" maxW="1200px" mx="auto">
       {prev ? (
         <Link href={`/work/${prev.slug}`} style={{ textDecoration: "none" }}>
           <Box className="draw-link" cursor="pointer">
@@ -25,11 +25,11 @@ export const PrevNextNav = ({ prev, next, index }: Props) => (
               fontFamily="var(--font-mono)"
               letterSpacing="0.15em"
               textTransform="uppercase"
-              mb={1}
+              mb={2}
             >
               ← previous case
             </Text>
-            <Text fontSize="18px" fontWeight="700" color="brand.text">{prev.name}</Text>
+            <Text fontSize="18px" fontWeight="600" color="brand.text">{prev.name}</Text>
           </Box>
         </Link>
       ) : (
@@ -47,11 +47,11 @@ export const PrevNextNav = ({ prev, next, index }: Props) => (
               fontFamily="var(--font-mono)"
               letterSpacing="0.15em"
               textTransform="uppercase"
-              mb={1}
+              mb={2}
             >
               next case →
             </Text>
-            <Text fontSize="18px" fontWeight="700" color="brand.text">{next.name}</Text>
+            <Text fontSize="18px" fontWeight="600" color="brand.text">{next.name}</Text>
           </Box>
         </Link>
       ) : (

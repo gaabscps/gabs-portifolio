@@ -7,8 +7,8 @@ import { projects } from "@/data/projects";
 export const Featured = () => {
   const live = projects.filter((p) => p.status === "live").slice(0, 3);
   return (
-    <Box as="section" px={{ base: 5, md: 8 }} pb={9}>
-      <Flex justify="space-between" align="baseline" mb={4}>
+    <Box as="section" px={{ base: 4, md: 8 }} pb={10}>
+      <Flex justify="space-between" align="baseline" mb={6}>
         <Text
           fontSize="10px"
           color="brand.textSecondary"
@@ -23,7 +23,7 @@ export const Featured = () => {
           {String(live.length).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
         </Text>
       </Flex>
-      <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={3}>
+      <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={4}>
         {live.map((p) => (
           <FeaturedTile
             key={p.id}

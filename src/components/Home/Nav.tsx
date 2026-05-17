@@ -11,7 +11,7 @@ const NavLink = ({ href, label, active }: { href: string; label: string; active?
       color={active ? "brand.text" : "brand.textSecondary"}
       fontSize="11px"
       fontFamily="var(--font-mono)"
-      transition="color 200ms var(--ease-out-quart)"
+      transition="color var(--duration-fast) var(--ease-apple)"
       _hover={{ color: "brand.accentHover" }}
     >
       {label}
@@ -19,33 +19,33 @@ const NavLink = ({ href, label, active }: { href: string; label: string; active?
   </Link>
 );
 
-export const Nav = ({ active }: { active?: "work" | "writing" | "about" }) => (
+export const Nav = ({ active }: { active?: "work" | "about" | "contact" }) => (
   <Flex
     as="nav"
     justify="space-between"
     align="center"
-    px={{ base: 5, md: 8 }}
+    px={{ base: 4, md: 8 }}
     py={4}
     borderBottom="1px solid"
     borderColor="brand.borderSubtle"
     position="sticky"
     top={0}
     zIndex={10}
-    bg="rgba(13,10,20,0.85)"
-    sx={{ backdropFilter: "blur(8px)" }}
+    bg="rgba(12, 10, 20, 0.78)"
+    sx={{ backdropFilter: "saturate(180%) blur(20px)", WebkitBackdropFilter: "saturate(180%) blur(20px)" }}
   >
-    <Flex align="center" gap={3.5}>
+    <Flex align="center" gap={4}>
       <TrafficLights />
       <Link href="/" style={{ textDecoration: "none" }}>
-        <Text fontFamily="var(--font-mono)" fontWeight="800" letterSpacing="0.02em" fontSize="11px" color="brand.text">
+        <Text fontFamily="var(--font-mono)" fontWeight="700" letterSpacing="0.02em" fontSize="11px" color="brand.text">
           gabriel<Box as="span" color="brand.accent">.dev</Box>
         </Text>
       </Link>
     </Flex>
-    <Flex gap={5.5}>
+    <Flex gap={6}>
       <NavLink href="/work" label="work" active={active === "work"} />
-      <NavLink href="/writing" label="writing" active={active === "writing"} />
       <NavLink href="/about" label="about" active={active === "about"} />
+      <NavLink href="/contact" label="contact" active={active === "contact"} />
     </Flex>
   </Flex>
 );

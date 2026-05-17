@@ -13,18 +13,15 @@ export const Callout = ({ callout }: { callout: CalloutType }) => {
   const s = STYLES[callout.kind];
   return (
     <Box
-      mt={3}
-      p="10px 12px"
+      mt={4}
+      p={4}
       bg="brand.surface1"
       border="1px solid"
       borderColor="brand.border"
       borderLeft={`3px solid ${s.color}`}
-      borderRadius="4px"
-      sx={{
-        transition: "transform 250ms ease, border-color 250ms",
-        background: "linear-gradient(180deg, rgba(172,107,237,.07), transparent), var(--bg-surface-1)",
-      }}
-      _hover={{ transform: "rotate(-.5deg) translateX(-2px)" }}
+      borderRadius="6px"
+      transition="border-color var(--duration-base) var(--ease-apple)"
+      _hover={{ borderColor: "brand.borderStrong", borderLeftColor: s.color }}
     >
       <Text
         as="div"
@@ -34,11 +31,11 @@ export const Callout = ({ callout }: { callout: CalloutType }) => {
         letterSpacing="0.15em"
         textTransform="uppercase"
         fontWeight="700"
-        mb={1.5}
+        mb={2}
       >
         {s.symbol} {callout.label}
       </Text>
-      <Text fontSize="11px" color="brand.textSecondary" lineHeight={1.5}>
+      <Text fontSize="12px" color="brand.textSecondary" lineHeight={1.6}>
         {callout.body}
       </Text>
     </Box>

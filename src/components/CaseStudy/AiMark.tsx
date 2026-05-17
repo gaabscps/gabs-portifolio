@@ -5,20 +5,20 @@ export const AiMark = ({ children = "AI" }: { children?: React.ReactNode }) => (
     as="span"
     display="inline-flex"
     alignItems="center"
-    gap="4px"
-    bg="rgba(172,107,237,.12)"
+    gap={1}
+    bg="var(--accent-soft)"
     color="brand.accentHover"
     fontSize="9px"
     fontFamily="var(--font-mono)"
     fontWeight="700"
     letterSpacing="0.1em"
-    px="6px"
-    py="1px"
-    borderRadius="3px"
+    px={2}
+    py="2px"
+    borderRadius="4px"
     verticalAlign="middle"
     title="AI was leveraged for this part"
-    transition="background 200ms"
-    _hover={{ bg: "rgba(172,107,237,.25)" }}
+    transition="background var(--duration-fast)"
+    _hover={{ bg: "var(--accent-quiet)" }}
   >
     {children}
   </Box>
