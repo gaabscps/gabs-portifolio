@@ -6,6 +6,7 @@ export type AppTexts = {
   };
 
   projects: {
+    h1: string;
     bancaDoIngresso: {
       title: string;
       description: string;
@@ -21,6 +22,10 @@ export type AppTexts = {
   };
 
   about: {
+    h1: string;
+    lede: string;
+    h2About: string;
+    h2Skills: string;
     text1: string;
     text2: string;
     text3: string;
@@ -28,6 +33,9 @@ export type AppTexts = {
   };
 
   playx1: {
+    h1: string;
+    h2About: string;
+    h2Access: string;
     text1: string;
     text2: string;
     text3: string;
@@ -40,6 +48,9 @@ export type AppTexts = {
   };
 
   bancaDoIngresso: {
+    h1: string;
+    h2About: string;
+    h2Code: string;
     text1: string;
     text2: string;
     text3: string;

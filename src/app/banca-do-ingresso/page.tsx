@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     images: [{ url: ogImage, alt: "Banca do Ingresso admin dashboard" }],
   },
   twitter: {
+    card: "summary_large_image",
     title: "Banca do Ingresso · Gabriel Andrade",
     description,
     images: [ogImage],

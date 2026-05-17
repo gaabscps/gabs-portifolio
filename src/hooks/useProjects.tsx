@@ -13,7 +13,7 @@ export const useProjects = (): ProjectView[] => {
   return projects.map((project) => {
     const t = translations?.projects?.[
       project.translationKey as keyof typeof translations.projects
-    ];
+    ] as { title: string; description: string } | undefined;
     return {
       ...project,
       title: t?.title ?? "",
