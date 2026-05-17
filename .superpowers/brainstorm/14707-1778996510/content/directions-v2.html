@@ -1,0 +1,108 @@
+<h2>Three more directions · "responsible AI use"</h2>
+<p class="subtitle">All built on C's spirit (honest narrative), but each leans into <strong>responsibility</strong> a different way. Click any you like.</p>
+
+<div class="cards" data-multiselect>
+
+  <div class="card" data-choice="notebook" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#fbfbfa;color:#1a1a1a;padding:22px;border-bottom:1px solid #e8e6e0;font-family:'Charter','Iowan Old Style',Georgia,serif">
+      <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#8a8580;margin-bottom:8px;font-family:'JetBrains Mono',ui-monospace,monospace">ENGINEERING NOTEBOOK · 2026</div>
+      <div style="font-size:26px;font-weight:600;line-height:1.1;letter-spacing:-0.02em;margin-bottom:8px;color:#0a0a0a">Gabriel Andrade</div>
+      <div style="font-size:12px;color:#5a5550;line-height:1.5;margin-bottom:16px;max-width:90%">Front-end engineer. I document <em>how</em> I build — including where AI helps, where it doesn't, and what I refused to ship.</div>
+      <div style="background:#f4f2ec;border-left:3px solid #2a2a2a;padding:10px 12px;margin-bottom:14px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;color:#3a3a3a">
+        <div style="color:#8a8580;margin-bottom:4px">// project log</div>
+        <div><strong style="color:#0a0a0a">betterSMP</strong> → 12 plugins · 8 reviewed by community · 2 rolled back</div>
+        <div><strong style="color:#0a0a0a">soundwave</strong> → transcription pipeline · 94% accuracy · human review on edge cases</div>
+      </div>
+      <div style="display:flex;gap:8px;font-size:10px;color:#5a5550;font-family:'JetBrains Mono',ui-monospace,monospace">
+        <span style="border:1px solid #d8d4cc;padding:3px 8px;border-radius:2px">→ entries</span>
+        <span style="border:1px solid #d8d4cc;padding:3px 8px;border-radius:2px">→ method</span>
+        <span style="border:1px solid #d8d4cc;padding:3px 8px;border-radius:2px">→ stack</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>D · Engineering Notebook</h3>
+      <p><strong>Vibe:</strong> caderno de engenharia. Tipografia serifada acadêmica + mono nos detalhes. Light, sóbrio, "research-grade".</p>
+      <p><strong>Como mostra responsabilidade:</strong> cada projeto = entry estruturado <em>Hipótese → Abordagem → Onde IA entrou → Validação → Trade-offs</em>. Inclui o que foi <em>rejeitado</em>.</p>
+      <p><strong>Projetos:</strong> "notebook entries" listados cronologicamente, com TOC lateral. Vista grid também disponível.</p>
+      <p><strong>Sinal que envia:</strong> "Eu penso antes de fazer e documento depois." Maturidade via método.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="ledger" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0e0f12;color:#e4e6ea;padding:20px;border-bottom:1px solid #1c1e24">
+      <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#7a8090;margin-bottom:6px">TRANSPARENCY · UPDATED DAILY</div>
+      <div style="font-size:22px;font-weight:700;letter-spacing:-0.02em;color:#fff;margin-bottom:4px">Gabriel Andrade</div>
+      <div style="font-size:11px;color:#9aa0b0;margin-bottom:14px">Receipts over claims. Here's what's actually in production.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px">
+        <div style="background:#161820;border:1px solid #242730;padding:8px;border-radius:4px">
+          <div style="font-size:9px;color:#7a8090;text-transform:uppercase;letter-spacing:0.1em">In production</div>
+          <div style="font-size:20px;font-weight:700;color:#7fffa8">7</div>
+          <div style="font-size:9px;color:#9aa0b0">projects · longest 14 mo</div>
+        </div>
+        <div style="background:#161820;border:1px solid #242730;padding:8px;border-radius:4px">
+          <div style="font-size:9px;color:#7a8090;text-transform:uppercase;letter-spacing:0.1em">AI-assisted</div>
+          <div style="font-size:20px;font-weight:700;color:#fff">100<span style="font-size:12px;color:#7a8090">%</span></div>
+          <div style="font-size:9px;color:#9aa0b0">human-reviewed</div>
+        </div>
+        <div style="background:#161820;border:1px solid #242730;padding:8px;border-radius:4px">
+          <div style="font-size:9px;color:#7a8090;text-transform:uppercase;letter-spacing:0.1em">Incidents</div>
+          <div style="font-size:20px;font-weight:700;color:#fff">2</div>
+          <div style="font-size:9px;color:#9aa0b0">both resolved · postmortems</div>
+        </div>
+        <div style="background:#161820;border:1px solid #242730;padding:8px;border-radius:4px">
+          <div style="font-size:9px;color:#7a8090;text-transform:uppercase;letter-spacing:0.1em">Rejected output</div>
+          <div style="font-size:20px;font-weight:700;color:#fff">~30<span style="font-size:12px;color:#7a8090">%</span></div>
+          <div style="font-size:9px;color:#9aa0b0">of AI suggestions</div>
+        </div>
+      </div>
+      <div style="font-size:9px;color:#7a8090;border-top:1px solid #242730;padding-top:8px">betterSMP · soundwave · +5 more →</div>
+    </div>
+    <div class="card-body">
+      <h3>E · Trust Ledger</h3>
+      <p><strong>Vibe:</strong> status page / transparency report. Dark, denso de números, accent verde. Inspirado em Stripe/Linear status pages.</p>
+      <p><strong>Como mostra responsabilidade:</strong> métricas verificáveis na home — projetos vivos, tempo em prod, % humano-revisado, incidentes resolvidos, <em>% de output de IA que você rejeitou</em>. O ato de declarar "rejeitei 30%" já vende maturidade.</p>
+      <p><strong>Projetos:</strong> cada um tem o próprio "trust badge" + link pro case completo.</p>
+      <p><strong>Sinal que envia:</strong> "Eu mostro receipts, não slides." Maturidade via accountability.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="casefiles" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#f5f1ea;color:#1a1a1a;padding:22px;border-bottom:1px solid #e3ddd0">
+      <div style="font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:#8a7a6a;margin-bottom:10px">CASE FILES · VOL. III</div>
+      <div style="font-family:'Editorial New','Tiempos Headline',Georgia,serif;font-size:30px;line-height:1.0;font-weight:400;letter-spacing:-0.025em;margin-bottom:10px;color:#1a1a1a">Built with AI.<br><em style="color:#6b4f2a">Reviewed by hand.</em></div>
+      <div style="font-size:11px;color:#5a4a3a;line-height:1.5;margin-bottom:16px;max-width:88%">A small portfolio of production work. Each case study includes the <em>methodology</em>: what AI did, what I changed, and why.</div>
+      <div style="background:#fff;border:1px solid #e3ddd0;border-radius:6px;padding:12px;margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">
+          <div>
+            <div style="font-family:'Editorial New',Georgia,serif;font-size:14px;font-weight:600;color:#1a1a1a">betterSMP</div>
+            <div style="font-size:10px;color:#8a7a6a">Minecraft community · 12 plugins · 8 months live</div>
+          </div>
+          <div style="font-size:9px;color:#6b4f2a;border:1px solid #d4c8b8;padding:2px 6px;border-radius:10px">Methodology ↗</div>
+        </div>
+        <div style="height:60px;background:linear-gradient(135deg,#6b4f2a,#c4a584);border-radius:4px"></div>
+      </div>
+      <div style="display:flex;gap:6px;font-size:9px;color:#8a7a6a">
+        <span>soundwave →</span><span>+5 more</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>F · Case Files (editorial + honest)</h3>
+      <p><strong>Vibe:</strong> editorial premium (tipo B), mas com sidebar "Methodology" em cada case. Paleta quente, serifada, polida.</p>
+      <p><strong>Como mostra responsabilidade:</strong> headline assume <em>"Built with AI. Reviewed by hand."</em>. Cada case study tem uma seção fixa <strong>Methodology</strong>: ferramentas, prompts-chave, o que foi reescrito à mão, validação.</p>
+      <p><strong>Projetos:</strong> few-and-deep — 4-6 cases curados muito bem editados + arquivo enxuto.</p>
+      <p><strong>Sinal que envia:</strong> "Eu uso IA como uso qualquer ferramenta séria: deliberadamente." Maturidade via curadoria.</p>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:32px;padding:18px;background:#1a1a22;border-radius:8px;border:1px solid #2a2a35">
+  <p style="font-size:13px;color:#c0c0d0;margin:0 0 10px 0"><strong style="color:#fff">💡 Como elas resolvem o "responsabilidade":</strong></p>
+  <table style="width:100%;font-size:11px;color:#a0a0b0;border-collapse:collapse">
+    <tr style="border-bottom:1px solid #2a2a35"><td style="padding:6px 0"><strong style="color:#fff">D · Notebook</strong></td><td>via <strong style="color:#e8d4a8">método</strong> — você documenta o raciocínio</td></tr>
+    <tr style="border-bottom:1px solid #2a2a35"><td style="padding:6px 0"><strong style="color:#fff">E · Ledger</strong></td><td>via <strong style="color:#7fffa8">accountability</strong> — números verificáveis, incl. % rejeitado</td></tr>
+    <tr><td style="padding:6px 0"><strong style="color:#fff">F · Case Files</strong></td><td>via <strong style="color:#c4a584">curadoria</strong> — poucos cases, methodology sidebar fixa</td></tr>
+  </table>
+  <p style="font-size:12px;color:#a0a0b0;margin:12px 0 0 0;line-height:1.6">Minha leitura, dado o que você falou: <strong style="color:#7fffa8">E (Ledger)</strong> é o mais ousado e o que mais grita "responsabilidade" — mas exige você manter as métricas honestas. <strong style="color:#e8d4a8">D (Notebook)</strong> é o mais sustentável a longo prazo. <strong style="color:#c4a584">F</strong> é o mais "vendável" pra audiência não-técnica.</p>
+  <p style="font-size:12px;color:#a0a0b0;margin:8px 0 0 0;line-height:1.6">Mixes fortes: <strong>C+D</strong> (timeline + notebook entries), <strong>D+E</strong> (notebook com painel de receipts no topo), <strong>F+E</strong> (cases editoriais + métricas honestas na home).</p>
+</div>

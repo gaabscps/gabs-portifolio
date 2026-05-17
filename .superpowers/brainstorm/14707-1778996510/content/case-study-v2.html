@@ -1,0 +1,407 @@
+<style>
+  @keyframes blink-cs2 { 0%,100%{opacity:1} 50%{opacity:.35} }
+  @keyframes glow-cs2 { 0%,100%{box-shadow:0 0 12px rgba(172,107,237,.5)} 50%{box-shadow:0 0 20px rgba(172,107,237,.85)} }
+  @keyframes mc-shimmer-cs2 { 0%,100%{filter:brightness(1) saturate(1)} 50%{filter:brightness(1.15) saturate(1.1)} }
+  @keyframes scroll-progress { 0%{width:5%} 100%{width:55%} }
+  @keyframes draw-underline { 0%{transform:scaleX(0)} 100%{transform:scaleX(1)} }
+  @keyframes count-up { 0%{transform:translateY(8px);opacity:0} 100%{transform:translateY(0);opacity:1} }
+  @keyframes wiggle-arrow { 0%,100%{transform:translateX(0)} 50%{transform:translateX(4px)} }
+  @keyframes cursor-trail { 0%,100%{transform:translate(0,0) rotate(-3deg)} 50%{transform:translate(2px,-2px) rotate(-1deg)} }
+  @keyframes pulse-glow { 0%,100%{box-shadow:0 0 0 0 rgba(172,107,237,.4)} 70%{box-shadow:0 0 0 8px rgba(172,107,237,0)} }
+
+  .cs2-bg {
+    background:
+      radial-gradient(at 15% 5%, rgba(172,107,237,.08), transparent 40%),
+      radial-gradient(at 85% 95%, rgba(172,107,237,.05), transparent 50%),
+      #0d0a14;
+    position:relative;
+  }
+  .cs2-bg::after {
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background-image: radial-gradient(circle at 1px 1px, rgba(240,234,255,.025) 1px, transparent 0);
+    background-size: 3px 3px;
+  }
+  .cs2-bg > * { position:relative; z-index:1 }
+
+  .signature-cs2 { font-family: 'Charter','Iowan Old Style','Source Serif Pro',Georgia,serif; font-style: italic; font-weight: 500 }
+
+  /* Animated underline drawn on hover */
+  .draw-link { position:relative; text-decoration:none; color:inherit; cursor:pointer; display:inline-block }
+  .draw-link::after {
+    content:""; position:absolute; left:0; right:0; bottom:-2px; height:1.5px;
+    background:#AC6BED; transform:scaleX(0); transform-origin:left;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .draw-link:hover::after { transform:scaleX(1) }
+
+  /* Marginalia callouts — handwritten-ish AI annotations */
+  .margin-note {
+    background: linear-gradient(180deg, rgba(172,107,237,.07), transparent), #15101f;
+    border:1px solid #2a2240;
+    border-left: 3px solid #AC6BED;
+    border-radius:4px; padding:10px 12px;
+    font-size:11px; color:#a89cb8; line-height:1.5;
+    position:relative;
+    transition: transform .25s ease, border-color .25s;
+  }
+  .margin-note:hover { transform: rotate(-.5deg) translateX(-2px); border-left-color:#C896FF }
+  .margin-note-label {
+    font-size:9px; color:#C896FF;
+    font-family:'JetBrains Mono',ui-monospace,monospace;
+    letter-spacing:0.15em; text-transform:uppercase;
+    font-weight:700; margin-bottom:5px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .margin-note.warn { border-left-color:#ffc857 }
+  .margin-note.warn .margin-note-label { color:#ffc857 }
+  .margin-note.danger { border-left-color:#ff7a7a }
+  .margin-note.danger .margin-note-label { color:#ff7a7a }
+
+  /* Inline AI badge — small annotation marker */
+  .ai-mark {
+    display:inline-flex; align-items:center; gap:4px;
+    background:rgba(172,107,237,.12);
+    color:#C896FF;
+    font-size:9px; font-family:'JetBrains Mono',ui-monospace,monospace;
+    font-weight:700; letter-spacing:0.1em;
+    padding:1px 6px; border-radius:3px;
+    vertical-align: middle;
+    cursor: help;
+    transition: background .2s;
+  }
+  .ai-mark:hover { background:rgba(172,107,237,.25) }
+
+  /* Live demo container — has a glowing "live" feel */
+  .live-demo {
+    background:#0a0610;
+    border:1px solid rgba(172,107,237,.3);
+    border-radius:10px;
+    padding:14px;
+    position:relative;
+    overflow:hidden;
+    transition: border-color .3s, box-shadow .3s;
+  }
+  .live-demo:hover { border-color:#AC6BED; box-shadow: 0 0 24px -8px rgba(172,107,237,.4) }
+  .live-demo::before {
+    content:"▶ LIVE PREVIEW"; position:absolute; top:8px; right:10px;
+    font-size:8px; color:#C896FF; font-family:'JetBrains Mono',ui-monospace,monospace;
+    font-weight:700; letter-spacing:0.15em; opacity:.7;
+  }
+  .mc-cs2 { width:4px; height:4px; display:inline-block; animation: mc-shimmer-cs2 3s infinite }
+
+  /* Sticky sidebar nav */
+  .toc-link {
+    display:flex; align-items:center; gap:8px;
+    padding:6px 0; font-size:11px; color:#7a6a90;
+    font-family:'JetBrains Mono',ui-monospace,monospace;
+    transition: color .2s; cursor:pointer;
+    position:relative;
+  }
+  .toc-link::before {
+    content:""; width:14px; height:1px; background:#3a2858;
+    transition: width .2s, background .2s;
+  }
+  .toc-link:hover { color:#f0eaff }
+  .toc-link:hover::before { width:22px; background:#AC6BED }
+  .toc-link.active { color:#C896FF }
+  .toc-link.active::before { width:22px; background:#AC6BED }
+
+  /* Count-up stats inline in narrative */
+  .inline-stat {
+    display:inline-block; padding:0 3px;
+    color:#C896FF; font-weight:800;
+    animation: count-up .6s cubic-bezier(.2,.8,.2,1) both;
+  }
+
+  /* Build log entries */
+  .log-entry {
+    display:grid; grid-template-columns:90px 1fr; gap:18px;
+    padding:18px 0; border-bottom:1px dashed #2a2240;
+    transition: padding-left .25s;
+  }
+  .log-entry:hover { padding-left:6px }
+  .log-entry:hover .log-date { color:#C896FF }
+  .log-entry:last-child { border-bottom:none }
+  .log-date {
+    font-family:'JetBrains Mono',ui-monospace,monospace;
+    font-size:11px; color:#7a6a90; letter-spacing:0.05em;
+    padding-top:2px; transition: color .2s;
+  }
+  .log-date .version {
+    display:block; font-size:9px; color:#5a4a70; margin-top:2px;
+  }
+
+  /* Read prose */
+  .prose { font-size:14px; line-height:1.7; color:#d4cce8 }
+  .prose strong { color:#f0eaff; font-weight:600 }
+  .prose em { color:#f0eaff }
+
+  /* Stat slab — asymmetric, embedded in narrative */
+  .stat-slab {
+    display:flex; align-items:baseline; gap:8px;
+    padding:10px 0;
+  }
+  .stat-slab .big {
+    font-size:36px; font-weight:800; letter-spacing:-0.03em;
+    color:#f0eaff; line-height:1;
+  }
+  .stat-slab .lbl {
+    font-size:10px; color:#a89cb8; font-family:'JetBrains Mono',ui-monospace,monospace;
+    letter-spacing:0.1em; text-transform:uppercase;
+  }
+
+  .cs2-traffic { display:inline-flex; gap:5px; align-items:center }
+  .cs2-traffic .dot { width:9px; height:9px; border-radius:50%; }
+
+  /* Hero with playable preview affordance */
+  .play-affordance {
+    position:absolute; top:50%; left:50%;
+    width:48px; height:48px;
+    transform:translate(-50%,-50%);
+    background:#AC6BED; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:#0d0a14; font-size:18px;
+    animation: pulse-glow 2s infinite;
+    cursor:pointer;
+  }
+
+  /* Cursor decoration */
+  .cursor-hand { animation: cursor-trail 2s ease-in-out infinite }
+</style>
+
+<h2>Case study v2 · betterSMP</h2>
+<p class="subtitle">Reescrito: <strong>longform / build log</strong> format (não template), <strong>marginalia</strong> pra notas de AI (não seção), motion em tudo. <strong>Inglês only</strong> — pt-BR via i18n toggle do site (já existe).</p>
+
+<div class="mockup" style="background:#050308;border:1px solid #2a2240;border-radius:12px;padding:0;overflow:hidden;max-width:820px;margin:0 auto">
+
+  <div class="cs2-bg" style="color:#f0eaff;padding:0;min-height:1500px;font-family:Inter,sans-serif">
+
+    <!-- minimal sticky bar -->
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 28px;border-bottom:1px solid #1f1830;background:rgba(13,10,20,.85);backdrop-filter:blur(8px);position:sticky;top:0;z-index:10">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div class="cs2-traffic">
+          <span class="dot" style="background:#ff5f57"></span>
+          <span class="dot" style="background:#febc2e"></span>
+          <span class="dot" style="background:#28c840"></span>
+        </div>
+        <div style="font-size:11px;color:#a89cb8;font-family:'JetBrains Mono',ui-monospace,monospace">
+          <span class="draw-link">gabriel.dev</span>
+          <span style="color:#5a4a70"> ← back</span>
+        </div>
+      </div>
+      <!-- reading progress -->
+      <div style="display:flex;align-items:center;gap:10px;font-size:10px;color:#7a6a90;font-family:'JetBrains Mono',ui-monospace,monospace">
+        <div style="width:80px;height:2px;background:#1f1830;border-radius:1px;overflow:hidden">
+          <div style="height:100%;background:linear-gradient(90deg,#AC6BED,#C896FF);animation:scroll-progress 4s ease-out infinite alternate"></div>
+        </div>
+        <span>55% read</span>
+      </div>
+    </div>
+
+    <!-- ASYMMETRIC LAYOUT: sidebar + main -->
+    <div style="display:grid;grid-template-columns:160px 1fr;gap:32px;padding:36px 28px 0">
+
+      <!-- LEFT: sticky sidebar -->
+      <div style="position:sticky;top:80px;height:fit-content;font-size:11px">
+        <div style="font-size:9px;color:#5a4a70;letter-spacing:0.2em;text-transform:uppercase;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:700;margin-bottom:10px">on this page</div>
+        <div class="toc-link active">intro</div>
+        <div class="toc-link">why we built it</div>
+        <div class="toc-link">build log</div>
+        <div class="toc-link">what shipped</div>
+        <div class="toc-link">what i'd change</div>
+
+        <div style="margin-top:28px;padding-top:18px;border-top:1px solid #1f1830">
+          <div style="font-size:9px;color:#5a4a70;letter-spacing:0.2em;text-transform:uppercase;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:700;margin-bottom:10px">meta</div>
+          <div style="font-size:10px;color:#7a6a90;font-family:'JetBrains Mono',ui-monospace,monospace;line-height:1.9">
+            <div>started <span style="color:#a89cb8">2025-08</span></div>
+            <div>status <span style="color:#C896FF">live</span></div>
+            <div>stack <span style="color:#a89cb8">java/spigot</span></div>
+            <div>ai <span style="color:#C896FF">claude</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: main content -->
+      <div style="max-width:560px">
+
+        <!-- intro / hero -->
+        <div style="margin-bottom:36px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:10px;color:#C896FF;font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">
+            <span class="live-cs" style="width:7px;height:7px;border-radius:50%;background:#AC6BED;display:inline-block;animation:blink-cs2 1.8s infinite,glow-cs2 2.5s infinite"></span>
+            betterSMP · running since aug 2025
+          </div>
+
+          <div style="font-size:42px;font-weight:800;letter-spacing:-0.035em;line-height:1.02;margin-bottom:18px">
+            We built the Minecraft server we wished <span class="signature-cs2" style="color:#AC6BED;font-weight:600">existed</span>.
+          </div>
+
+          <div class="prose" style="font-size:16px;color:#a89cb8;max-width:520px">
+            Most popular SMPs are abandoned AFK farms. You log in, find a corner, AFK overnight for diamonds. <strong>That's not playing.</strong> We wanted somewhere with actual things to do — and shipped <span class="inline-stat">12</span> custom plugins to make it real.
+          </div>
+        </div>
+
+        <!-- LIVE PREVIEW EMBED with play affordance -->
+        <div class="live-demo" style="margin-bottom:42px;min-height:200px;display:flex;align-items:center;justify-content:center;position:relative">
+          <div style="display:grid;grid-template-columns:repeat(40,4px);gap:1px;opacity:.85">
+            <!-- compact landscape texture -->
+            <div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#6a9c4a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#7aac5a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#6a9c4a"></div><div class="mc-cs2" style="background:#7aac5a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#6a9c4a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#7aac5a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#6a9c4a"></div><div class="mc-cs2" style="background:#7aac5a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#6a9c4a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#7aac5a"></div><div class="mc-cs2" style="background:#6a9c4a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#6a9c4a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#7aac5a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#6a9c4a"></div><div class="mc-cs2" style="background:#7aac5a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#6a9c4a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#7aac5a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#6a9c4a"></div><div class="mc-cs2" style="background:#7aac5a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#6a9c4a"></div><div class="mc-cs2" style="background:#5a8c3a"></div><div class="mc-cs2" style="background:#7aac5a"></div><div class="mc-cs2" style="background:#6a9c4a"></div><div class="mc-cs2" style="background:#5a8c3a"></div>
+            <div class="mc-cs2" style="background:#8a6a3a"></div><div class="mc-cs2" style="background:#9a7a4a"></div><div class="mc-cs2" style="background:#8a6a3a"></div><div class="mc-cs2" style="background:#7a5a2a"></div><div class="mc-cs2" style="background:#9a7a4a"></div><div class="mc-cs2" style="background:#8a6a3a"></div><div class="mc-cs2" style="background:#7a5a2a"></div><div class="mc-cs2" style="background:#9a7a4a"></div><div class="mc-cs2" style="background:#8a6a3a"></div><div class="mc-cs2" style="background:#7a5a2a"></div><div class="mc-cs2" style="background:#9a7a4a"></div><div class="mc-cs2" style="background:#8a6a3a"></div><div class="mc-cs2" style="background:#7a5a2a"></div><div class="mc-cs2" style="background:#9a7a4a"></div><div class="mc-cs2" style="background:#8a6a3a"></div><div class="mc-cs2" style="background:#7a5a2a"></div><div class="mc-cs2" style="background:#9a7a4a"></div><div class="mc-cs2" style="background:#8a6a3a"></div><div class="mc-cs2" style="background:#7a5a2a"></div><div class="mc-cs2" style="background:#9a7a4a"></div><div class="mc-cs2" style="background:#8a6a3a"></div><div class="mc-cs2" style="background:#9a7a4a"></div><div class="mc-cs2" style="background:#8a6a3a"></div><div class="mc-cs2" style="background:#7a5a2a"></div><div class="mc-cs2" style="background:#9a7a4a"></div><div class="mc-cs2" style="background:#8a6a3a"></div><div class="mc-cs2" style="background:#7a5a2a"></div><div class="mc-cs2" style="background:#9a7a4a"></div><div class="mc-cs2" style="background:#8a6a3a"></div><div class="mc-cs2" style="background:#7a5a2a"></div><div class="mc-cs2" style="background:#9a7a4a"></div><div class="mc-cs2" style="background:#8a6a3a"></div><div class="mc-cs2" style="background:#7a5a2a"></div><div class="mc-cs2" style="background:#9a7a4a"></div><div class="mc-cs2" style="background:#8a6a3a"></div><div class="mc-cs2" style="background:#7a5a2a"></div><div class="mc-cs2" style="background:#9a7a4a"></div><div class="mc-cs2" style="background:#8a6a3a"></div><div class="mc-cs2" style="background:#7a5a2a"></div><div class="mc-cs2" style="background:#9a7a4a"></div>
+          </div>
+          <div class="play-affordance">▶</div>
+        </div>
+
+        <!-- THE WHY — pull quote, scaled large -->
+        <div style="margin-bottom:36px">
+          <div style="font-family:'Charter',Georgia,serif;font-style:italic;font-size:24px;line-height:1.4;color:#f0eaff;border-left:3px solid #AC6BED;padding:10px 0 10px 20px;margin-bottom:14px">
+            "Hyped Minecraft servers are AFK farms. Nothing to do, nothing new. We just wanted something better."
+          </div>
+          <div style="font-size:11px;color:#7a6a90;font-family:'JetBrains Mono',ui-monospace,monospace;padding-left:23px">— me to my brother, late july 2025</div>
+        </div>
+
+        <!-- BUILD LOG — narrative format -->
+        <div style="margin-bottom:36px">
+          <div style="font-size:11px;color:#a89cb8;letter-spacing:0.22em;text-transform:uppercase;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:700;margin-bottom:6px">build log</div>
+          <div style="font-size:13px;color:#7a6a90;margin-bottom:24px;line-height:1.55">Real chronological notes. Where AI helped is marked in the margins — <span class="ai-mark">AI</span> means I leaned on it for that part.</div>
+
+          <div class="log-entry">
+            <div class="log-date">2025-08-14<span class="version">v0.1</span></div>
+            <div>
+              <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:#f0eaff">Server up. First plugin scaffold.</div>
+              <div class="prose">
+                Spigot setup, basic permission system, first <span class="draw-link" style="color:#C896FF">economy plugin</span> draft. Leaned hard on Claude <span class="ai-mark">AI</span> for boilerplate — Spigot has a lot of ceremony and I wanted to skip the typing, not the understanding.
+              </div>
+            </div>
+          </div>
+
+          <div class="log-entry">
+            <div class="log-date">2025-09-02<span class="version">v0.4</span></div>
+            <div>
+              <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:#f0eaff">Three plugins shipped. First rollback.</div>
+              <div class="prose">
+                Economy, quests, custom mobs went live for 5 testers. Mobs <strong>broke async event handling</strong> on second day. <span class="ai-mark">AI</span>-generated draft didn't anticipate concurrent spawns. Rolled back, rewrote by hand, learned the lesson the loud way.
+              </div>
+
+              <div class="margin-note danger" style="margin-top:12px">
+                <div class="margin-note-label">⚠ rejected</div>
+                The async pattern Claude suggested would have worked in a single-threaded test. Production never is.
+              </div>
+            </div>
+          </div>
+
+          <div class="log-entry">
+            <div class="log-date">2025-10-20<span class="version">v0.8</span></div>
+            <div>
+              <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:#f0eaff">Community opens. Real testers, real bugs.</div>
+              <div class="prose">
+                <span class="inline-stat">20</span> active players. They found edge cases that <em>no AI prompt</em> would catch — duped items via /enderchest in claimed land, exploit in custom enchanter, three race conditions in trading. Postmortems for each, written by hand.
+              </div>
+
+              <div class="margin-note warn" style="margin-top:12px">
+                <div class="margin-note-label">▲ changed by hand</div>
+                All economy balance numbers. AI's defaults were "let players have everything fast" — terrible game design. <span class="signature-cs2" style="color:#ffc857">Taste decisions stay with me.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="log-entry">
+            <div class="log-date">2026-02-10<span class="version">v1.4</span></div>
+            <div>
+              <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:#f0eaff">12 plugins, weekly cadence, changelog public.</div>
+              <div class="prose">
+                Every Friday I ship — new plugin, balance update, or fix. Community votes on contested features in Discord. <span class="ai-mark">AI</span> writes the first 70% of code; I write all the copy, all the balance, and review every line.
+              </div>
+
+              <div class="margin-note" style="margin-top:12px">
+                <div class="margin-note-label">★ rule</div>
+                If it touches taste, game-feel, or player communication — I write it. Everything else is fair game for AI assistance.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WHAT SHIPPED — inline asymmetric stats -->
+        <div style="margin-bottom:42px;padding:24px;background:linear-gradient(135deg,rgba(172,107,237,.06),transparent);border:1px solid #1f1830;border-radius:10px">
+          <div style="font-size:11px;color:#a89cb8;letter-spacing:0.22em;text-transform:uppercase;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:700;margin-bottom:18px">what shipped, in numbers</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+            <div>
+              <div class="stat-slab">
+                <div class="big">12</div>
+                <div class="lbl">plugins live</div>
+              </div>
+              <div class="stat-slab">
+                <div class="big">8mo</div>
+                <div class="lbl">in production</div>
+              </div>
+            </div>
+            <div>
+              <div class="stat-slab">
+                <div class="big">2</div>
+                <div class="lbl">rollbacks · both fixed</div>
+              </div>
+              <div class="stat-slab">
+                <div class="big">100<span style="font-size:18px;color:#a89cb8">%</span></div>
+                <div class="lbl">human-reviewed</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:18px;font-size:11px;color:#7a6a90;font-family:'JetBrains Mono',ui-monospace,monospace;border-top:1px solid #1f1830;padding-top:14px">
+            verified by community → <span class="draw-link" style="color:#C896FF">discord/bettersmp</span>
+          </div>
+        </div>
+
+        <!-- WHAT I'D CHANGE — written prose, not bullets -->
+        <div style="margin-bottom:36px">
+          <div style="font-size:11px;color:#a89cb8;letter-spacing:0.22em;text-transform:uppercase;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:700;margin-bottom:14px">what i'd change next time</div>
+          <div class="prose">
+            I'd write the <strong>test plan before</strong> letting AI scaffold anything. The two rollbacks happened because I trusted AI's "this should work" without writing what "work" actually meant. Now I write acceptance criteria first, then prompt. AI is a faster keyboard — <em>not</em> a faster judgment.
+          </div>
+        </div>
+
+        <!-- CTAs inline -->
+        <div style="margin-bottom:36px;display:flex;gap:10px;flex-wrap:wrap">
+          <a style="display:inline-flex;align-items:center;gap:8px;background:#AC6BED;color:#0d0a14;font-size:12px;font-weight:700;padding:11px 18px;border-radius:6px;font-family:'JetBrains Mono',ui-monospace,monospace;text-decoration:none">
+            join the server <span style="animation:wiggle-arrow 1.5s ease-in-out infinite">→</span>
+          </a>
+          <a class="draw-link" style="display:inline-flex;align-items:center;gap:8px;color:#f0eaff;font-size:12px;font-weight:600;padding:11px 14px;font-family:'JetBrains Mono',ui-monospace,monospace;text-decoration:none">
+            github ↗
+          </a>
+          <a class="draw-link" style="display:inline-flex;align-items:center;gap:8px;color:#f0eaff;font-size:12px;font-weight:600;padding:11px 14px;font-family:'JetBrains Mono',ui-monospace,monospace;text-decoration:none">
+            changelog ↗
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- prev/next as a real bottom strip, not boxed -->
+    <div style="padding:32px 28px;border-top:1px solid #1f1830;background:#08050d;margin-top:24px">
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center">
+        <div style="cursor:pointer" class="draw-link">
+          <div style="font-size:9px;color:#7a6a90;font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:4px">← previous case</div>
+          <div style="font-size:18px;font-weight:700;color:#f0eaff">dashboard</div>
+        </div>
+        <div style="font-size:10px;color:#5a4a70;font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:0.15em">02 / 07</div>
+        <div style="text-align:right;cursor:pointer" class="draw-link">
+          <div style="font-size:9px;color:#7a6a90;font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:4px">next case →</div>
+          <div style="font-size:18px;font-weight:700;color:#f0eaff">soundwave</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div style="margin-top:32px;padding:18px;background:#1a1a22;border-radius:8px;border:1px solid #2a2a35;max-width:820px;margin-left:auto;margin-right:auto">
+  <p style="font-size:13px;color:#c0c0d0;margin:0 0 12px 0"><strong style="color:#fff">O que mudou (vs v1):</strong></p>
+  <table style="width:100%;font-size:11px;color:#a0a0b0;border-collapse:collapse">
+    <tr style="border-bottom:1px solid #2a2a35"><td style="padding:7px 0;width:35%"><strong style="color:#fff">Linguagem</strong></td><td>Trava em <strong style="color:#AC6BED">inglês</strong>. PT-BR vem via i18n (já existe no portfólio).</td></tr>
+    <tr style="border-bottom:1px solid #2a2a35"><td style="padding:7px 0"><strong style="color:#fff">Formato</strong></td><td>Era <em>template AI</em> (Methodology / Features / Stats). Virou <strong style="color:#C896FF">longform build log</strong> com entradas datadas — lê como um post pessoal.</td></tr>
+    <tr style="border-bottom:1px solid #2a2a35"><td style="padding:7px 0"><strong style="color:#fff">Honestidade AI</strong></td><td>Não tem mais seção "Methodology". Vira <strong style="color:#C896FF">marginalia</strong>: badges <code style="background:#15101f;padding:1px 4px;border-radius:3px;color:#C896FF">AI</code> inline + notas na margem (★ rule, ▲ changed, ⚠ rejected) entrelaçadas no texto.</td></tr>
+    <tr style="border-bottom:1px solid #2a2a35"><td style="padding:7px 0"><strong style="color:#fff">Layout</strong></td><td>Assimétrico: sidebar sticky com TOC + meta + área de leitura larga. Não é o grid central de portfólio AI.</td></tr>
+    <tr style="border-bottom:1px solid #2a2a35"><td style="padding:7px 0"><strong style="color:#fff">Motion</strong></td><td>Reading progress no header. Underline desenha em hover dos links. Margin notes tiltam no hover. CTA com seta wiggling. Live preview com pulse-glow.</td></tr>
+    <tr style="border-bottom:1px solid #2a2a35"><td style="padding:7px 0"><strong style="color:#fff">Voz</strong></td><td>Headings com personalidade ("We built the Minecraft server we wished existed", "what i'd change next time"), pull quote com timestamp humano ("— me to my brother, late july 2025").</td></tr>
+    <tr><td style="padding:7px 0"><strong style="color:#fff">Final section</strong></td><td>Não tem "Conclusion" template. Tem <strong>"what i'd change next time"</strong> — prosa honesta, mostra aprendizado real.</td></tr>
+  </table>
+  <p style="font-size:12px;color:#c0c0d0;margin:14px 0 0 0;line-height:1.6"><strong style="color:#fff">Aviso honesto:</strong> mesmo essa versão tem limitação — mockup HTML não consegue mostrar tudo que seria scroll-driven (sidebar destacando seção atual, count-up de stats quando aparece na viewport, etc.). Isso é trivial com Framer Motion na implementação real.</p>
+  <p style="font-size:12px;color:#c0c0d0;margin:14px 0 0 0;line-height:1.6"><strong style="color:#fff">Pergunta:</strong> agora menos "cara de AI"? Se ainda tiver algo, me aponta o que (estrutura? voz? algum bloco específico?). Se travou, eu pulo pra escrever o spec.</p>
+</div>

@@ -1,0 +1,152 @@
+<style>
+  /* Make these mockups actually demo the craft they describe */
+  @keyframes float-g { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+  @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.15)} }
+  @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+  @keyframes scroll-x { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  .mock-g .tile{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+  .mock-g:hover .tile-1{transform:translate3d(-2px,-6px,0) rotate(-1deg);box-shadow:0 20px 40px -10px rgba(199,150,255,.4)}
+  .mock-g:hover .tile-2{transform:translate3d(2px,-3px,0) rotate(1deg);box-shadow:0 20px 40px -10px rgba(120,200,255,.35)}
+  .mock-g .live-dot{animation:pulse-dot 2s ease-in-out infinite}
+  .mock-g .grad-border{background:linear-gradient(90deg,#c796ff,#78c8ff,#9dffb0,#c796ff);background-size:200% 100%;animation:shimmer 3s linear infinite}
+
+  .mock-h .word{display:inline-block;transition:transform .25s cubic-bezier(.2,.8,.2,1),color .25s}
+  .mock-h:hover .word-1{transform:translateY(-3px);color:#d4ff3a}
+  .mock-h:hover .word-2{transform:translateY(-3px);color:#d4ff3a;transition-delay:.05s}
+  .mock-h .ticker{display:flex;gap:24px;animation:scroll-x 12s linear infinite;white-space:nowrap}
+
+  .mock-i .desk-item{transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+  .mock-i:hover .desk-1{transform:rotate(-2deg) translateY(-2px)}
+  .mock-i:hover .desk-2{transform:rotate(1deg) translateY(-3px)}
+  .mock-i:hover .desk-3{transform:rotate(-1deg) translateY(-2px)}
+  .mock-i .blink{animation:pulse-dot 1.5s infinite}
+</style>
+
+<h2>Modern 2026 — pick the personality</h2>
+<p class="subtitle">Cada card tem <strong>microinteração viva</strong> — passa o mouse em cima do mockup pra sentir. Tudo dark, moderno, com voz própria. Click pra marcar favoritos.</p>
+
+<div class="cards" data-multiselect>
+
+  <!-- G · Atelier -->
+  <div class="card" data-choice="atelier" onclick="toggleSelect(this)">
+    <div class="card-image mock-g" style="background:#0a0a0f;color:#fff;padding:20px;border-bottom:1px solid #1a1a25;position:relative;overflow:hidden;min-height:280px">
+      <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(199,150,255,.35),transparent 70%);filter:blur(20px);pointer-events:none"></div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:12px;font-size:10px;color:#a0a0b5;font-family:'JetBrains Mono',ui-monospace,monospace">
+        <span class="live-dot" style="width:6px;height:6px;border-radius:50%;background:#9dffb0;display:inline-block"></span>
+        currently shipping
+      </div>
+      <div style="font-size:30px;font-weight:700;letter-spacing:-0.03em;line-height:1;margin-bottom:6px">Gabriel<br>Andrade.</div>
+      <div style="font-size:11px;color:#8a8aa0;margin-bottom:18px;max-width:90%">Front-end engineer. Builds things that ship and stay shipped.</div>
+      <div style="height:2px;border-radius:1px;margin-bottom:14px" class="grad-border"></div>
+      <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:8px;position:relative;z-index:1">
+        <div class="tile tile-1" style="background:linear-gradient(135deg,#1a1428,#2a1845);border:1px solid #3a2858;border-radius:8px;padding:12px;min-height:90px;position:relative">
+          <div style="font-size:9px;color:#c796ff;font-family:'JetBrains Mono',ui-monospace,monospace;margin-bottom:4px">FEATURED · 2026</div>
+          <div style="font-size:14px;font-weight:600">betterSMP</div>
+          <div style="font-size:9px;color:#a0a0b5;margin-top:2px">Minecraft · live community</div>
+        </div>
+        <div class="tile tile-2" style="background:linear-gradient(135deg,#0a1f2a,#152838);border:1px solid #1f3a4f;border-radius:8px;padding:12px;min-height:90px">
+          <div style="font-size:9px;color:#78c8ff;font-family:'JetBrains Mono',ui-monospace,monospace;margin-bottom:4px">2026</div>
+          <div style="font-size:13px;font-weight:600">soundwave</div>
+          <div style="font-size:9px;color:#a0a0b5;margin-top:2px">transcription</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>G · Atelier</h3>
+      <p><strong>Vibe:</strong> dark + glow gradients + tilt 3D em hover. Card-driven, moderno tipo <em>Linear / Vercel / Rauno</em>.</p>
+      <p><strong>Personalidade:</strong> "engenheiro que faz coisa polida e viva". O craft mora nas microinterações.</p>
+      <p><strong>AI:</strong> implícito pelo nível do site. Você nem precisa dizer — quem vê entende.</p>
+      <p><strong>Stack:</strong> Framer Motion (já tem), CSS gradients, custom cursor opcional.</p>
+    </div>
+  </div>
+
+  <!-- H · Statement -->
+  <div class="card" data-choice="statement" onclick="toggleSelect(this)">
+    <div class="card-image mock-h" style="background:#fafaf5;color:#0a0a0a;padding:20px;border-bottom:1px solid #e8e8de;position:relative;overflow:hidden;min-height:280px">
+      <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#6a6a5a;margin-bottom:6px;font-family:'JetBrains Mono',ui-monospace,monospace">PORTFOLIO · 2026 —</div>
+      <div style="font-size:34px;font-weight:900;line-height:.9;letter-spacing:-0.04em;margin-bottom:12px">
+        I <span class="word word-1">build</span> things<br>that <span class="word word-2">ship.</span>
+      </div>
+      <div style="font-size:11px;color:#3a3a3a;line-height:1.5;margin-bottom:14px;max-width:88%">Front-end engineering, production software, AI as leverage — not as the demo.</div>
+      <div style="background:#0a0a0a;color:#d4ff3a;padding:8px 0;margin:0 -20px 12px;overflow:hidden">
+        <div class="ticker" style="font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;font-family:'JetBrains Mono',ui-monospace,monospace">
+          <span>BETTERSMP · LIVE</span><span>•</span><span>SOUNDWAVE · LIVE</span><span>•</span><span>PLAYX1 · 2023</span><span>•</span><span>BANCA · 2022</span><span>•</span>
+          <span>BETTERSMP · LIVE</span><span>•</span><span>SOUNDWAVE · LIVE</span><span>•</span><span>PLAYX1 · 2023</span><span>•</span><span>BANCA · 2022</span><span>•</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        <div style="border:2px solid #0a0a0a;padding:8px;border-radius:0">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em">01 / betterSMP</div>
+          <div style="font-size:10px;color:#3a3a3a;margin-top:2px">Live community →</div>
+        </div>
+        <div style="background:#0a0a0a;color:#d4ff3a;padding:8px;border:2px solid #0a0a0a">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em">02 / soundwave</div>
+          <div style="font-size:10px;color:#9aa078;margin-top:2px">Shipping now →</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>H · Statement</h3>
+      <p><strong>Vibe:</strong> brutalist-modern. Tipografia gigante, paleta restrita (off-white + preto + 1 accent elétrico), borders pretas grossas, ticker animado. Tipo <em>Vercel ship / startup confident</em>.</p>
+      <p><strong>Personalidade:</strong> opinião e voz. Headlines curtas e diretas. "Eu sei o que faço."</p>
+      <p><strong>AI:</strong> uma linha só na home: <em>"AI as leverage — not as the demo"</em>. Resto se prova nos cases.</p>
+      <p><strong>Risco:</strong> light theme (única do trio). Se preferir dark, dá pra inverter.</p>
+    </div>
+  </div>
+
+  <!-- I · Workshop -->
+  <div class="card" data-choice="workshop" onclick="toggleSelect(this)">
+    <div class="card-image mock-i" style="background:#15110d;color:#f0e8d8;padding:20px;border-bottom:1px solid #2a221a;position:relative;overflow:hidden;min-height:280px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px">
+        <div style="font-size:24px;font-weight:700;letter-spacing:-0.02em">gabriel.dev</div>
+        <div style="font-size:10px;color:#a89878;font-family:'JetBrains Mono',ui-monospace,monospace">
+          <span class="blink" style="display:inline-block;width:6px;height:6px;background:#ff9d4a;border-radius:50%;margin-right:4px"></span>
+          building
+        </div>
+      </div>
+      <div style="font-size:11px;color:#a89878;line-height:1.5;margin-bottom:14px">A workspace. Projects, notes, and a log of what I'm shipping.</div>
+      <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:8px">
+        <div class="desk-item desk-1" style="background:#1f1810;border:1px solid #3a2e1f;border-radius:6px;padding:10px;position:relative">
+          <div style="position:absolute;top:-6px;left:10px;background:#ff9d4a;color:#15110d;font-size:8px;font-weight:700;padding:1px 6px;border-radius:8px;text-transform:uppercase;letter-spacing:0.1em">now</div>
+          <div style="font-size:9px;color:#a89878;font-family:'JetBrains Mono',ui-monospace,monospace;margin-top:4px;margin-bottom:2px">/ project</div>
+          <div style="font-size:13px;font-weight:600;color:#f0e8d8">betterSMP</div>
+          <div style="font-size:9px;color:#8a7a5a;margin-top:2px">Plugins shipping weekly</div>
+        </div>
+        <div class="desk-item desk-2" style="background:#1f1810;border:1px solid #3a2e1f;border-radius:6px;padding:10px">
+          <div style="font-size:9px;color:#a89878;font-family:'JetBrains Mono',ui-monospace,monospace;margin-bottom:2px">/ note</div>
+          <div style="font-size:11px;color:#f0e8d8;line-height:1.4">"AI accelerates, taste decides."</div>
+        </div>
+        <div class="desk-item desk-3" style="grid-column:1 / -1;background:#1f1810;border:1px solid #3a2e1f;border-radius:6px;padding:10px;display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-size:9px;color:#a89878;font-family:'JetBrains Mono',ui-monospace,monospace;margin-bottom:2px">/ recently shipped</div>
+            <div style="font-size:11px;color:#f0e8d8">soundwave · playx1 · banca</div>
+          </div>
+          <div style="font-size:18px;color:#ff9d4a">→</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>I · Workshop</h3>
+      <p><strong>Vibe:</strong> warm-dark (não preto). Personal OS / mesa de trabalho. Cards leve rotacionados em hover. Cor accent quente (laranja queimado). Tipo <em>Paco Coursey / Cassidoo / Brittany Chiang</em>.</p>
+      <p><strong>Personalidade:</strong> humano, voz própria, calor. Sections "Now", "Notes", "Recently shipped" — você existe além dos projetos.</p>
+      <p><strong>AI:</strong> aparece como nota citável tipo <em>"AI accelerates, taste decides."</em> — opinião, não jargão.</p>
+      <p><strong>Risco:</strong> exige você manter "Now" atualizado.</p>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:32px;padding:18px;background:#1a1a22;border-radius:8px;border:1px solid #2a2a35">
+  <p style="font-size:13px;color:#c0c0d0;margin:0 0 10px 0"><strong style="color:#fff">💡 Como cada uma resolve o que você reclamou:</strong></p>
+  <table style="width:100%;font-size:11px;color:#a0a0b0;border-collapse:collapse">
+    <thead style="font-size:10px;color:#7a7a8a;text-transform:uppercase;letter-spacing:0.1em">
+      <tr><th style="text-align:left;padding-bottom:6px"></th><th style="text-align:left;padding-bottom:6px">moderno</th><th style="text-align:left;padding-bottom:6px">personalidade</th><th style="text-align:left;padding-bottom:6px">craft</th></tr>
+    </thead>
+    <tr style="border-top:1px solid #2a2a35"><td style="padding:6px 0"><strong style="color:#fff">G · Atelier</strong></td><td>★★★</td><td>★★ (visual)</td><td style="color:#9dffb0">★★★</td></tr>
+    <tr style="border-top:1px solid #2a2a35"><td style="padding:6px 0"><strong style="color:#fff">H · Statement</strong></td><td>★★★</td><td style="color:#d4ff3a">★★★ (voz)</td><td>★★</td></tr>
+    <tr style="border-top:1px solid #2a2a35"><td style="padding:6px 0"><strong style="color:#fff">I · Workshop</strong></td><td>★★</td><td style="color:#ff9d4a">★★★ (humano)</td><td>★★</td></tr>
+  </table>
+  <p style="font-size:12px;color:#a0a0b0;margin:14px 0 0 0;line-height:1.6"><strong style="color:#fff">Minha leitura:</strong> <strong style="color:#9dffb0">G (Atelier)</strong> é a aposta certa pra "frontend engineer que faz craft" — o site É a prova. <strong style="color:#d4ff3a">H (Statement)</strong> é a mais ousada e a que mais grita personalidade, mas exige você escrever copy boa. <strong style="color:#ff9d4a">I (Workshop)</strong> é a mais aconchegante mas a menos "wow" visualmente.</p>
+  <p style="font-size:12px;color:#a0a0b0;margin:10px 0 0 0;line-height:1.6">Mix forte: <strong>G + I</strong> — visual do Atelier + section "Now" do Workshop. Combina craft com humanidade.</p>
+</div>
