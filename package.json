@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "perf:lighthouse": "bash scripts/perf-lighthouse.sh"
   },
   "dependencies": {
     "@chakra-ui/next-js": "^2.4.4",
@@ -20,6 +21,7 @@
     "react-icons": "^5.6.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^16.2.6",
     "@types/node": "^25",
     "@types/react": "^18",
     "@types/react-dom": "^18",

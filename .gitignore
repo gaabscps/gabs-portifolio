@@ -13,6 +13,9 @@
 /.next/
 /out/
 
+# perf reports (lighthouse + bundle analyzer)
+/lighthouse-reports/
+
 # production
 /build
 
@@ -34,3 +37,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# AI
+CLAUDE.md
+docs/superpowers
+
+# ai-squad per-repo hook install (managed by `ai-squad deploy`)
+.claude/hooks/
+
+# ai-squad SDD per-session state
+.agent-session/

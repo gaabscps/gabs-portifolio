@@ -148,6 +148,53 @@ The `Project` type in `src/types/project.ts` is the source of truth — TypeScri
 | Image **empty states** & fallbacks (#12) |  |
 | **Dependabot** + audit CI (#20) |  |
 
+## 🔎 SEO setup
+
+The site ships with the SEO floor in code (per-route metadata, sitemap, robots, JSON-LD, OG image, semantic headings). To make the site actually appear in Google, you still need to register the domain with **Google Search Console** and submit the sitemap. The steps below are a one-time setup.
+
+### 1. Verify ownership in Google Search Console
+
+Open [search.google.com/search-console](https://search.google.com/search-console) and add a new property using **Domain** (preferred over URL prefix — it covers `https://`, `https://www.`, and subdomains in one go).
+
+You get two verification options. Pick **one**:
+
+**Option A — DNS TXT record (preferred).** GSC shows you a token like `google-site-verification=abc123...`. Add it as a TXT record on the root of `gabrielandrade.net` in your DNS provider:
+
+| Host | Type | Value |
+|---|---|---|
+| `@` | `TXT` | `google-site-verification=<token-from-GSC>` |
+
+Wait 5–60 minutes for propagation, then click **Verify** in GSC.
+
+**Option B — HTML file (fallback).** GSC offers a file named `google<hash>.html`. Download it, place it under `public/`, commit, deploy. The file becomes available at `https://gabrielandrade.net/google<hash>.html`. Click **Verify** in GSC.
+
+### 2. Submit the sitemap
+
+In GSC: **Sitemaps → Add a new sitemap**, enter:
+
+```
+https://gabrielandrade.net/sitemap.xml
+```
+
+Status should turn to **Success** within minutes. The sitemap is generated at build time by `src/app/sitemap.ts`; new routes appear automatically on the next deploy.
+
+### 3. Monitor indexing
+
+| Where | What to look for |
+|---|---|
+| **Pages** (left sidebar) | "Indexed" count over time. Expect 0 on day 1, full count after a few weeks. |
+| **Pages → Not indexed** | Lists pages Google found but did not index, with a reason per page. |
+| **URL Inspection** (top bar) | Paste any URL to see its indexing status and request an index re-check. |
+
+Common errors and what they mean (in plain English):
+
+- **"Discovered — currently not indexed"** — Google knows the URL exists but has not crawled it yet. Patience usually fixes it (days to weeks for a new domain).
+- **"Crawled — currently not indexed"** — Google crawled the page but decided not to index it. Usually a sign the page is too thin / too similar to another. Add more content or merge with a stronger page.
+- **"Soft 404"** — Google thinks the page is empty even though it returned 200. Check for missing `<h1>` or near-empty body.
+- **"Page with redirect"** — informational; the URL redirects to another (e.g., `www.` to non-`www.`). Safe to ignore if intentional.
+
+A brand-new domain typically takes **2–8 weeks** to fully index. The single biggest accelerator is inbound links (your LinkedIn / GitHub README / Dev.to profile linking to `gabrielandrade.net`).
+
 ## 📬 Get in touch
 
 <p>
