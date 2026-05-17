@@ -45,6 +45,39 @@ export default function AboutContent() {
           Now I build production software with AI as leverage — never as the demo. I document <em>where</em> AI helps, <em>what</em> I changed by hand, and <em>what</em> I rejected, in every project. That&apos;s how I keep myself honest about it.
         </Text>
 
+        <Box mt={10} mb={8} pt={8} borderTop="1px solid" borderColor="brand.border">
+          <Text
+            fontSize="10px"
+            color="brand.textSecondary"
+            letterSpacing="0.22em"
+            textTransform="uppercase"
+            fontFamily="var(--font-mono)"
+            fontWeight="700"
+            mb={3.5}
+          >
+            How I work with AI
+          </Text>
+          <Box
+            fontSize={{ base: "24px", md: "28px" }}
+            fontWeight="800"
+            letterSpacing="-0.03em"
+            lineHeight="1"
+            mb={5}
+            color="brand.text"
+          >
+            The flow, not the{" "}
+            <Box as="span" className="serif-italic" color="brand.accent" fontWeight="600">vibe</Box>.
+          </Box>
+
+          <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={5}>
+            Claude Code is my daily driver; Cursor for quick edits. I write acceptance criteria before I prompt — if I can&apos;t say what &ldquo;done&rdquo; looks like in plain English, the model won&apos;t know either. Then small diffs, separate commits, and a full read of every line, even when the build is green.
+          </Text>
+
+          <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={0}>
+            The hardest lesson so far: AI ships async code that passes local tests and dies under load. Missing <Box as="code" fontFamily="var(--font-mono)" fontSize="13px" color="brand.text">await</Box>s, stale closures, race conditions the prompt never asked about. Now I review every loop, every effect, every concurrent call by hand before I trust the output.
+          </Text>
+        </Box>
+
         <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={8}>
           Outside code: I play music on weekends and games on weeknights. I&apos;ve been a Minecraft addict for longer than I care to admit.
         </Text>
