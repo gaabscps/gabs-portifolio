@@ -1,8 +1,7 @@
 import { fonts } from "../themes/fonts/fonts";
 import { Providers } from "./providers";
 import "../styles/reset.css";
-import { Navbar } from "@/components/Navbar/index";
-import { Flex } from "@chakra-ui/react";
+import "../styles/tokens.css";
 import Script from "next/script";
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
@@ -70,7 +69,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="pt-BR" className={fonts.montserrat.variable}>
+    <html lang="en" className={fonts.montserrat.variable}>
       <head>
         <script type="application/ld+json">
           {JSON.stringify(personJsonLd)}
@@ -117,15 +116,7 @@ export default function RootLayout({
         </Script>
 
         <Providers>
-          <Navbar />
-          <Flex
-            justifyContent="center"
-            width="100%"
-            padding="94px 32px 0px 32px"
-            height="100vh"
-          >
-            {children}
-          </Flex>
+          {children}
         </Providers>
       </body>
     </html>
