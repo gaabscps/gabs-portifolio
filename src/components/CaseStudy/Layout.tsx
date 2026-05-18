@@ -17,13 +17,17 @@ export const CaseStudyLayout = ({ project, children }: { project: Project; child
       px={{ base: 4, md: 8 }}
       pt={10}
     >
-      {/* Sidebar floats on left, doesn't affect main centering */}
+      {/* Sidebar is viewport-fixed so it never scrolls away; left edge tracks the 1200px container */}
       <Box
         display={{ base: "none", lg: "block" }}
-        position="absolute"
-        left={{ lg: 8 }}
-        top={10}
+        position="fixed"
+        top="92px"
+        left="max(32px, calc(50vw - 568px))"
         w="180px"
+        maxH="calc(100vh - 112px)"
+        overflowY="auto"
+        zIndex={5}
+        sx={{ scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } }}
       >
         <StickySidebar project={project} />
       </Box>

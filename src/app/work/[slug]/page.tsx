@@ -10,6 +10,9 @@ import { BuildLog } from "@/components/CaseStudy/BuildLog";
 import { Stats } from "@/components/CaseStudy/Stats";
 import { Retrospective } from "@/components/CaseStudy/Retrospective";
 import { PrevNextNav } from "@/components/CaseStudy/PrevNextNav";
+import { ServerStatusPill } from "@/components/CaseStudy/ServerStatusPill";
+import { PluginGrid } from "@/components/CaseStudy/PluginGrid";
+import { ServerAddressCTA } from "@/components/CaseStudy/ServerAddressCTA";
 
 type Params = { slug: string };
 
@@ -78,7 +81,13 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
           lede={LEDES[project.slug]}
         />
 
-        {project.cover && <LivePreview component={project.cover.component} />}
+        {project.server && (
+          <Box mb={8} mt={-4}>
+            <ServerStatusPill address={project.server.address} />
+          </Box>
+        )}
+
+        {project.cover && <LivePreview cover={project.cover} />}
 
         {project.motivation && (
           <Box id="why">
@@ -87,6 +96,10 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
         )}
 
         {hasFullCase && project.buildLog && <BuildLog entries={project.buildLog} />}
+
+        {project.plugins && project.plugins.length > 0 && (
+          <PluginGrid plugins={project.plugins} />
+        )}
 
         {hasFullCase && project.results && (
           <Box id="what-shipped">
@@ -159,7 +172,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
           </Box>
         )}
 
-        {hasFullCase && (
+        {hasFullCase && project.server && (
+          <ServerAddressCTA server={project.server} links={project.links} />
+        )}
+
+        {hasFullCase && !project.server && (
           <Flex gap={2.5} flexWrap="wrap" mb={9}>
             {project.links.live && (
               <Box

@@ -13,12 +13,34 @@ export type ProjectLinks = {
   live?: string;
   github?: string;
   changelog?: string;
+  discord?: string;
 };
 
 export type ProjectCover = {
-  kind: "screenshot" | "video" | "custom";
+  kind: "screenshot" | "video" | "custom" | "gif";
   src?: string;
   component?: string;
+  alt?: string;
+};
+
+export type Plugin = {
+  name: string;
+  summary: string;
+  requestedBy?: string;
+  shippedAt: string;
+  version?: string;
+  details?: string;
+  myContribution?: string;
+  gallery?: { src: string; alt: string; caption?: string }[];
+};
+
+export type ServerInfo = {
+  address: string;
+  version?: string;
+  edition?: "java" | "bedrock" | "both";
+  bedrockPort?: number;
+  banner?: string;
+  bannerAlt?: string;
 };
 
 export type Callout = {
@@ -60,4 +82,6 @@ export type Project = {
   buildLog?: BuildLogEntry[];
   results?: Stat[];
   retrospective?: string;
+  plugins?: Plugin[];
+  server?: ServerInfo;
 };

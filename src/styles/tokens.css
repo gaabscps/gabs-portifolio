@@ -197,3 +197,15 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Anchor-jump offset so section titles clear the sticky bar */
+html { scroll-behavior: smooth; }
+[id="intro"],
+[id="why"],
+[id="build-log"],
+[id="plugins"],
+[id="what-shipped"],
+[id="what-id-change"],
+[id="join"] {
+  scroll-margin-top: 92px;
+}
