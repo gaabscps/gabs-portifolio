@@ -349,6 +349,117 @@ export const projects: Project[] = [
           },
         ],
       },
+      {
+        // TODO assets:
+        //   /bettersmp/onboarding-bossbar.png — close-up of the screen top: BossBar shows current step ("Welcome Hub"), hint text below ("Head to the Welcome to BetterSMP hologram at spawn center"), phase label "Core" on the side
+        //   /bettersmp/onboarding-tour.mp4 — 20–30s clip: new player joining, BossBar appearing after a 3-second delay, walking to the welcome hologram, REACH_RADIUS triggering, "Objective complete" title fading in, next step appearing with new objective
+        name: "Onboarding",
+        summary:
+          "Two-tour funnel for new players. Core tour rewards a starter kit (gear + cash + shards); the optional Extras tour rewards crate keys. A BossBar HUD chases the next step in real time. /onboarding stuck escalates to staff, /onboardingadmin can reset or jump steps for support cases.",
+        requestedBy: "the funnel decides retention — players don't read rules, they follow the arrow",
+        shippedAt: "2026-04",
+        version: "v1.0.0",
+        details:
+          "Step types: REACH_RADIUS (enter a sphere), COMMAND_THEN_TELEPORT (run a command and get RTP'd out), COMMAND_PREFIX (one of a command list), NPC_CLICK (right-click a Citizens NPC), DAILY_COMPLETE (any daily mission), VOTE_CAST (NuVotifier confirms). HUD refreshes every 15 ticks (0.75s). A 5-second grace window after a step becomes active prevents chain-completion when a player stands still. Starter kit is delivered through BetterSMPCompensation so the grant is auditable; if delivery fails, progress is saved and staff is paged with kit-failed.",
+        myContribution:
+          "the 5-second grace window (Claude's first cut completed step N and N+1 in one frame), the two-tour split so the starter kit isn't gated behind 30 minutes of demos, the kit-failed escalation path because losing your kit on minute one is the worst possible first impression.",
+        gallery: [
+          {
+            src: "/bettersmp/onboarding-bossbar.png",
+            alt: "Top-of-screen close-up — BossBar shows current step title 'Welcome Hub', hint text below ('Head to the Welcome to BetterSMP hologram at spawn center'), small phase label 'Core' on the right, no other HUD chrome",
+            caption: "BossBar HUD",
+          },
+          {
+            src: "/bettersmp/onboarding-tour.mp4",
+            alt: "New player onboarding — 20–30s clip: player joins spawn, 3s delay, BossBar fades in with first step, player walks to the holographic 'Welcome to BetterSMP' sign, REACH_RADIUS triggers, 'Objective complete' title fades in, next step text appears on the BossBar",
+            caption: "Core tour · first steps",
+            kind: "video",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /bettersmp/tools-pickaxe-tooltip.png — Better Pickaxe item in inventory with the full tooltip showing: dark-purple bold name, enchant list, NBT (op-visible) confirming the PDC id "bettersmp_pickaxe"
+        //   /bettersmp/tools-vein-mining.mp4 — 10–15s clip: player with Better Axe in hand breaks the bottom log of an oak tree, cascade breaks remaining logs (up to 64), every block drops at the player's feet, sound + particle feedback on each break
+        name: "Tools · Better Pickaxe / Shovel / Axe",
+        summary:
+          "Three custom Netherite tools (Pickaxe / Shovel / Axe) granted as RPG-tier or admin rewards. Identity lives on a PersistentDataContainer key (bettersmp_pickaxe / shovel / axe), never on name or lore — so anvil renames cannot fake one. The axe vein-mines logs up to 64 in a single break.",
+        requestedBy: "items that feel earned, not dropped",
+        shippedAt: "2026-04",
+        version: "v1.0.0",
+        details:
+          "Tools are minted via /givetools <player> <pickaxe|shovel|axe> (op-only). Each tool's id is written into a PersistentDataContainer key — same defensive pattern as the post-2026-04-26 portal blocks. The use permission is bettersmp.tools.use, default true; identity check is PDC-first with no name/lore fallback for new items. Axe vein-mining walks the contiguous log graph up to MAX_LOGS = 64 with an EnumSet of accepted log materials, then yields drops at the original block. Durability damage applies once per chain.",
+        myContribution:
+          "the PDC-only identity rule (anvil renames cannot promote a regular pickaxe), the 64-log cap on vein mining so a chunk-spanning jungle tree doesn't lag the server, durability-once-per-chain because charging per log made the tool break in two trees.",
+        gallery: [
+          {
+            src: "/bettersmp/tools-pickaxe-tooltip.png",
+            alt: "Inventory close-up — Better Pickaxe item hovered, tooltip shows dark-purple bold 'Better Pickaxe' name, enchant list (Efficiency / Unbreaking / Fortune), and the PDC id 'bettersmp_pickaxe' visible via F3+H (op view)",
+            caption: "Better Pickaxe · PDC identity",
+          },
+          {
+            src: "/bettersmp/tools-vein-mining.mp4",
+            alt: "Vein mining demo — 10–15s clip: player holds Better Axe, faces the bottom log of an oak tree, breaks it; cascade fells the entire trunk (up to 64 logs), drops collect at the player's feet, single durability tick on the axe",
+            caption: "Better Axe · vein mining",
+            kind: "video",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /bettersmp/cosmetic-tags-menu.png — /tags GUI: "None" slot + 3 unlocked tags (e.g. [ALPHA GOD], [Event Winner], [active_streak]), currently selected one highlighted
+        //   /bettersmp/cosmetic-tags-chat.png — in-game chat with three messages from different players, one with the [ALPHA GOD] prefix in gold-bold, another with [active_streak], one plain
+        name: "Cosmetic Tags",
+        summary:
+          "Chat and tab-list tags as rewards. Staff grants a tag via /tags give <player> <tag_id>; the player opens /tags and picks which to display (or 'None'). An auto activity tag tracks consecutive daily logins — miss a day, it's removed; three days back-to-back, it's re-granted. No LuckPerms groups, no chat-color creep — a single tag per player at a time.",
+        requestedBy: "progression has to be visible to other players, not just in a menu",
+        shippedAt: "2026-03",
+        version: "v1.0.0",
+        details:
+          "Tags defined in config (id → prefix/suffix). Per-player state in players/<uuid>.yml: unlocked list + currently selected. Activity tag rule: 3 consecutive days online (timezone-aware, default America/Sao_Paulo) unlocks/keeps active_streak; a missed day removes it on the next login and the streak restarts. Integrates with TAB plugin for tab-list rendering and PlaceholderAPI for HUDs. Auto-equipped on RPG tier-up via the cosmetic-tags hook.",
+        myContribution:
+          "single-tag-at-a-time rule (multi-tag turned every name into a wall of prefixes), the consecutive-days reset logic for the activity tag so streaks mean something, the auto-equip on RPG tier-up so players don't have to remember to switch.",
+        gallery: [
+          {
+            src: "/bettersmp/cosmetic-tags-menu.png",
+            alt: "/tags GUI — 9-slot inventory menu: 'None' slot in position 0, three unlocked tag slots ([ALPHA GOD] in gold bold, [Event Winner] in green, [active_streak] in aqua), currently selected tag highlighted with an enchant glint",
+            caption: "/tags",
+          },
+          {
+            src: "/bettersmp/cosmetic-tags-chat.png",
+            alt: "In-game chat screenshot — three player messages: one with [ALPHA GOD] gold-bold prefix, one with [active_streak] aqua prefix, one plain. Tab list on the side shows the same prefixes against player names.",
+            caption: "tag rendering",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /bettersmp/shulker-preview-rightclick.mp4 — 8–12s clip: player opens inventory, right-clicks a shulker box (NOT placing it), read-only preview GUI opens showing the shulker's 27 slots, closes on Esc
+        //   /bettersmp/shulker-preview-ah-confirm.png — Auction House buy confirmation screen with a shulker listing: the shulker's contents shown inline (grid of 27 items) above the confirm/cancel buttons
+        name: "Shulker Preview",
+        summary:
+          "Right-click any shulker box in your inventory (or run /shulkerpreview with one in main hand on mobile) to inspect its contents — read-only, no placing required. Integrated with the Auction House: shulker listings show their inside on the buy-confirm screen.",
+        requestedBy: "the AH only works if buyers can see what they're buying",
+        shippedAt: "2026-04",
+        version: "v1.0.0",
+        details:
+          "Inventory right-click is detected via ShulkerPreviewListener with an InventoryType.CHEST guard (same defensive pattern as the post-2026-04-26 security sweep). /shulkerpreview is the mobile fallback because Bedrock can't right-click in inventory. The preview is a ShulkerPreviewHolder-tagged inventory — taking items from it is intercepted and cancelled, so the preview is genuinely read-only. BetterSMPAuctionHouse calls the same service on its buy-confirm GUI so a shulker listing is never a black box for the buyer.",
+        myContribution:
+          "the read-only-via-holder rule (Claude's first draft opened the real shulker — a 30-second item dupe vector), the AH integration so the preview closes the trust loop on shulker listings, the mobile /shulkerpreview fallback because Bedrock players were the loudest about wanting this.",
+        gallery: [
+          {
+            src: "/bettersmp/shulker-preview-rightclick.mp4",
+            alt: "Inventory preview demo — 8–12s clip: player opens inventory, hovers a red shulker box, right-clicks it (no placement), a read-only 27-slot preview GUI opens labeled 'Shulker Preview', player tries to take an item (cancelled), closes with Esc",
+            caption: "right-click preview",
+            kind: "video",
+          },
+          {
+            src: "/bettersmp/shulker-preview-ah-confirm.png",
+            alt: "Auction House buy-confirm screen — top half shows the shulker listing (item icon + seller + price), middle inline panel shows the shulker's full 27-slot contents (grid of items), bottom row has Confirm and Cancel buttons",
+            caption: "AH · inline preview",
+          },
+        ],
+      },
     ],
   },
 

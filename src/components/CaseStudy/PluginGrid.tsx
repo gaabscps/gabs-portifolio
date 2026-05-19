@@ -181,7 +181,7 @@ export const PluginGrid = ({ plugins }: { plugins: Plugin[] }) => {
           fontFamily="var(--font-mono)"
           fontWeight="700"
         >
-          core systems · {plugins.length} of 12 live
+          core systems · {plugins.length} of 33 live
         </Text>
         <Text
           fontSize="11px"
