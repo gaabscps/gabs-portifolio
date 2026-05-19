@@ -492,17 +492,250 @@ export const projects: Project[] = [
     slug: "soundwave",
     translationKey: "soundwave",
     year: "2026",
-    startedAt: "2025-11",
-    category: "personal tool",
+    startedAt: "2025-12",
+    category: "audio AI platform",
     images: [],
-    skills: [skills.react, skills.next, skills.typescript],
-    links: { route: "/work/soundwave" },
+    skills: [skills.react, skills.typescript, skills.github],
+    links: {
+      route: "/work/soundwave",
+      github: "https://github.com/gaabscps/soundwave-summit",
+    },
     status: "live",
+    // To swap the cover to a recording-flow video (kind: "video"), drop the file at
+    // public/soundwave/preview.mp4 and update the cover to:
+    //   cover: { kind: "video", src: "/soundwave/preview.mp4", alt: "SoundWave Summit — 20s recording flow: hit record → speak → stop → analysis appears with topics, decisions, action items" },
     cover: { kind: "custom", component: "Waveform" },
-    stackChips: ["Next", "Whisper"],
+    stackChips: ["Vite + React", "Supabase", "Google AI", "Deepgram"],
     aiTool: "Claude",
     motivation:
       "I kept losing the good parts of meetings. Built a pipeline to surface what I missed.",
+    motivationContext: "— december 2025, after the third meeting I couldn't remember the next morning",
+    buildLog: [
+      {
+        date: "2025-12-10",
+        version: "v0.1",
+        title: "Scaffolded on Lovable. SaaS UI for audio in one evening.",
+        body: "Started from a Vite + React + shadcn template through Lovable Cloud — the entire UI shell, auth shapes, and routing landed before I wrote any business logic. Wanted to see the surface first, then carve out what would actually pay rent.",
+      },
+      {
+        date: "2025-12-11",
+        version: "v0.2",
+        title: "Day-two sprint: ditched the default provider, wired Stripe, set the credits floor.",
+        body: "Lovable's default routed everything through OpenAI. Killed it the same day — latency on 50-minute transcripts was unworkable. Switched the analysis brain to Google AI, wired Stripe + webhook for paid plans, set the first MVP credits UX. Day two of selling something.",
+        callouts: [
+          {
+            kind: "rejected",
+            label: "rejected",
+            body: "<ai>AI</ai>'s default of \"just call the LLM with the full transcript\" was fine for two-minute clips and unusable for a fifty-minute meeting. Wrote the transcription-chain spec before any more prompts.",
+          },
+        ],
+      },
+      {
+        date: "2026-04-18",
+        version: "v0.5",
+        title: "Meeting capture goes live alongside file upload.",
+        body: "Added separate <ai>meetings</ai> and <ai>meeting_transcripts</ai> tables for live-capture flows. The product now had two entry paths — record a meeting in the app or upload an existing file — both ending in the same analysis pipeline.",
+      },
+      {
+        date: "2026-05-11",
+        version: "v0.8",
+        title: "Transcription chain ships with circuit breakers.",
+        body: "Stopped trusting any single transcription provider. Built a fallback chain — Deepgram nova-2 first (fast and cheap), Deepgram whisper-large as the backup (better with noise), Gemini Flash as the last resort (the brain we already use for analysis). Each model has its own circuit breaker: open it after consecutive failures, half-open after a cooldown, closed when it recovers. A 24-hour Postgres view tells me which provider is misbehaving before the support tickets do.",
+      },
+      {
+        date: "2026-05-18",
+        version: "v1.0",
+        title: "Public sharing with granular visibility.",
+        body: "FEAT-009: any analysis can be made public, but the owner decides what's public. Eight independent toggles — audio, transcription, sentiment, speech-time, topics, decisions, insights, todos — each enforced at three layers: Postgres RLS, an Edge Function RPC, and the storage bucket policy on the audio file. Any one layer can fail without exposing data.",
+        callouts: [
+          {
+            kind: "rule",
+            label: "the rule",
+            body: "Anything that touches identity, money, or visibility gets three independent enforcement layers. The UI is convenience; the real gate is at the data layer.",
+          },
+        ],
+      },
+    ],
+    results: [
+      { value: "3", label: "AI providers · transcription chain" },
+      { value: "10", label: "output languages" },
+      { value: "17", label: "edge functions live" },
+      { value: "399", label: "tests · 69 files" },
+    ],
+    retrospective:
+      "What started as 'capture my own meetings' grew into a real platform — Stripe billing, anonymous flows, public sharing, multi-provider transcription with a circuit breaker. The thing that changed me most through this build wasn't a feature, it was the layering instinct. Anything that touches identity, money, or visibility now gets three independent enforcement layers — Postgres RLS, an Edge Function gate, a storage policy. Any one of them can fail without exposing data. The lesson generalizes: the UI is convenience. The real gate is at the data layer.",
+    plugins: [
+      {
+        // TODO assets:
+        //   /soundwave/transcription-metrics.png — admin dashboard showing the v_transcription_metrics_24h view: rows per model (deepgram-nova-2, deepgram-whisper-large, gemini-2.5-flash) with attempts_total, success_rate_pct, p50_duration_ms, p95_duration_ms
+        //   /soundwave/transcription-attempts.png — single-job detail panel showing the transcription_attempts JSON array — three rows: nova-2 (error 4xx), whisper-large (circuit_open), gemini-2.5-flash (ok), with timing
+        name: "Transcription Engine",
+        summary:
+          "Three speech-to-text providers in a fallback chain. If the first fails (or its circuit breaker is open), the next tries — and the next. Every attempt is logged; success rate is tracked per provider in a 24-hour rolling view.",
+        requestedBy: "transcription that doesn't fail the user when one vendor has a bad day",
+        shippedAt: "2026-05",
+        version: "v1.0",
+        impact:
+          "A failed transcription stopped meaning 'show the error and lose the user.' A noisy meeting recording now goes through three providers and almost always comes back with a result — without the user ever knowing the first two were tried.",
+        details:
+          "Deepgram nova-2 (fast, cheap) runs first. If it fails — or if its circuit breaker tripped to open after consecutive errors — the request falls to Deepgram whisper-large, slower but better with noise. If that also fails, Gemini 2.5 Flash runs as the last resort. Every attempt writes to a JSONB column on the job: model, outcome, started_at, duration_ms. A Postgres view aggregates success rate and p50/p95 duration per model across the last 24 hours — useful when a provider starts degrading and the support tickets haven't caught up yet.",
+        myContribution:
+          "Graceful degradation as the default, not an afterthought. The circuit breaker means a bad day at one provider doesn't burn the user's quota retrying it.",
+        gallery: [
+          {
+            src: "/soundwave/transcription-metrics.png",
+            alt: "Admin metrics dashboard — three rows for deepgram-nova-2, deepgram-whisper-large, gemini-2.5-flash, each showing total attempts, success rate %, p50 and p95 duration in ms, over the last 24 hours",
+            caption: "v_transcription_metrics_24h",
+          },
+          {
+            src: "/soundwave/transcription-attempts.png",
+            alt: "Single-job detail panel — transcription_attempts JSON array shown as three timeline rows: nova-2 (outcome: error), whisper-large (outcome: circuit_open), gemini-2.5-flash (outcome: ok), each with started_at and duration_ms",
+            caption: "per-job retry log",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /soundwave/analysis-result.png — finished analysis page: topics card (3 carousel items), decisions card, insights card, todos card, sentiment card with per-participant breakdown
+        //   /soundwave/analysis-languages.png — output-language dropdown showing all 10 options (en/pt/es/fr/de/it/ja/ko/zh/ru) with one selected
+        name: "Analysis Pipeline",
+        summary:
+          "Once an audio is transcribed, Gemini extracts the structured analysis — topics, insights, decisions, todos, sentiment — into a typed JSON object the front-end renders into cards. Defensive parsing handles the LLM responses that forget to format.",
+        requestedBy: "a transcript alone isn't useful — the user wants the meeting's decisions, not the meeting's words",
+        shippedAt: "2025-12",
+        version: "v1.0",
+        impact:
+          "The product's actual job. A 50-minute meeting becomes a one-page summary the user can scan in 30 seconds: what was decided, what's next, who said what, how the room felt.",
+        details:
+          "Google Gemini 2.5 Flash (with 2.0 Flash as a faster fallback for short clips) takes the transcript and prompts for a structured response. Output language is one of 10 (en/pt/es/fr/de/it/ja/ko/zh/ru). The parser tries three strategies in order — direct JSON.parse, markdown code-block extraction, substring between the first '{' and the last '}' — because LLMs occasionally forget formatting. If all three fail, the job retries with a tighter prompt. Sentiment analysis is gated to paid plans.",
+        myContribution:
+          "Structured output from an LLM deserves a real parser. The 'just JSON.parse it' approach works until it doesn't — and when it doesn't, the user sees an error instead of their meeting summary.",
+        gallery: [
+          {
+            src: "/soundwave/analysis-result.png",
+            alt: "Finished analysis page — top half shows a topics carousel (3 cards), middle shows decisions and todos lists, bottom shows insights and a sentiment card with per-participant emotion labels",
+            caption: "analysis · all sections",
+          },
+          {
+            src: "/soundwave/analysis-languages.png",
+            alt: "Language picker open — dropdown menu listing all 10 output languages (English, Portuguese, Spanish, French, German, Italian, Japanese, Korean, Chinese, Russian) with one currently selected",
+            caption: "10 output languages",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /soundwave/worker-queue.png — admin view of the audio_jobs table: list of rows with status pills (queued / processing / done / error), worker_id column, locked_at timestamp, progress %
+        name: "Audio Worker",
+        summary:
+          "A Node.js worker on Railway that processes audio outside of Supabase Edge Functions. Picks jobs from a Postgres queue, chunks the audio with ffmpeg, transcribes each chunk, writes the result back.",
+        requestedBy: "ffmpeg can't run inside Edge Functions, and chunked audio finishes faster than a single huge upload",
+        shippedAt: "2026-Q1",
+        version: "v1.0",
+        impact:
+          "Long meetings (1 hour+) actually finish. Without time-based chunking, the LLM would time out on the audio before reaching the analysis step.",
+        details:
+          "Edge Functions can't spawn subprocesses, which makes ffmpeg unusable there — but ffmpeg is the only reasonable tool for time-based audio chunking. So the worker is a separate Node.js service on Railway. Jobs live in a Postgres `audio_jobs` table; the worker claims one atomically using `SELECT … FOR UPDATE SKIP LOCKED`, then writes a lease (`locked_at` / `locked_by`) so a crashed worker's job can be picked up after a timeout. Default chunk size is 120 seconds. The transcription chain runs per chunk; analysis runs once on the assembled transcript.",
+        myContribution:
+          "Pick the runtime that matches the operation. Edge Functions are perfect for short, stateless requests; ffmpeg-driven chunking is not that. One service per kind of work, not one service for everything.",
+        gallery: [
+          {
+            src: "/soundwave/worker-queue.png",
+            alt: "Audio_jobs admin view — table of recent jobs with columns: status pill (queued / processing / done / error), worker_id, locked_at timestamp, progress percentage, original_filename. One row currently processing, two done, one queued.",
+            caption: "audio_jobs queue",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /soundwave/visibility-toggles.png — settings panel with 8 toggle switches (audio, transcription, sentiment, speech_time, topics, decisions, insights, todos), each labeled, some on/some off
+        //   /soundwave/public-view.png — public viewer of a shared analysis: visible sections rendered normally, hidden sections shown as 'not shared' placeholders
+        name: "Public Sharing · FEAT-009",
+        summary:
+          "Any analysis can be made public with eight independent toggles: audio, transcription, sentiment, speech-time, topics, decisions, insights, todos. Public viewers get exactly what the owner allowed — nothing more, nothing less.",
+        requestedBy: "owners wanted to share insights without sharing the raw transcript; 'all or nothing' was the wrong primitive",
+        shippedAt: "2026-05",
+        version: "v1.0",
+        impact:
+          "Users can share what's useful from a meeting (decisions, action items) without exposing the raw conversation. Was the most-requested feature in the support inbox before it shipped.",
+        details:
+          "Visibility is a JSONB column on the analysis row, validated by a `pg_jsonschema` CHECK constraint (with a pure-SQL fallback when the extension isn't available). Public reads go through a SECURITY DEFINER RPC that walks the visibility JSON and returns only the allowed fields. The storage policy gates the audio file at the signed-URL layer — a request for the audio fails at the bucket if `audio: false`, even if a UI somehow asks for it. `REVOKE SELECT … FROM anon` on the underlying table is the defense-in-depth: if everything else fails, the anon role still can't read the raw rows.",
+        myContribution:
+          "Three independent enforcement layers (RLS, RPC, storage policy) for a single property. Any one of them can fail without exposing data. The UI is convenience; the real gate is at the data layer.",
+        gallery: [
+          {
+            src: "/soundwave/visibility-toggles.png",
+            alt: "Visibility settings panel — eight labeled toggle switches in two columns: audio, transcription, sentiment, speech_time on the left; topics, decisions, insights, todos on the right. Four are on, four are off. Below: a 'copy public link' button.",
+            caption: "8 toggles",
+          },
+          {
+            src: "/soundwave/public-view.png",
+            alt: "Public viewer of a shared analysis — header with title and 'shared publicly' badge, topics and decisions cards rendered normally, the audio player section replaced with a small 'audio not shared' placeholder, the transcription section greyed out with a similar placeholder",
+            caption: "public view · respects toggles",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /soundwave/anonymous-flow.mp4 — 20–25s clip: landing page → 'try without signup' CTA → upload an audio file → see the analysis result without ever signing up
+        //   /soundwave/anonymous-claim.png — signup completion screen showing 'We found 2 analyses you started before signing up — they've been added to your account' with a list
+        name: "Anonymous-then-Claim Flow",
+        summary:
+          "Try the product without signing up. Upload audio, run an analysis, see the result. If you want to keep it, create an account — your in-progress analyses are claimed and migrated to your user automatically.",
+        requestedBy: "signup-before-value was losing most visitors at the activation gap",
+        shippedAt: "2026-Q1",
+        version: "v1.0",
+        impact:
+          "First-time experience is 'see the product work on your own audio,' not 'fill out a form and verify your email first.' Activation rate measurably improved after this shipped.",
+        details:
+          "Three edge functions own the flow. `upload-anonymous-audio` writes the file under a session token. `create-anonymous-analysis` queues the job under that token. `claim-anonymous-analyses` runs at signup, re-attaching every analysis matching the session to the new user_id. Anonymous data has a hard expiry (7 days) so abandoned analyses don't accumulate. The same Stripe-aware quota check runs whether the analysis is anonymous or authenticated.",
+        myContribution:
+          "Activation friction is the first feature, not the last polish. Letting a visitor see the product work on their own audio — before any email — is what made the funnel actually convert.",
+        gallery: [
+          {
+            src: "/soundwave/anonymous-flow.mp4",
+            alt: "Anonymous flow demo — 20–25s clip: landing page with prominent 'try without signup' CTA, click → file upload modal → drop an audio file → processing animation → finished analysis appears (topics, decisions, todos visible). No signup wall, no email gate.",
+            caption: "anonymous · full flow",
+            kind: "video",
+          },
+          {
+            src: "/soundwave/anonymous-claim.png",
+            alt: "Post-signup screen — message reads 'We found 2 analyses you started before signing up — they've been added to your account.' Below, a list of two analysis cards with titles and created_at dates, both now linked to the new user.",
+            caption: "claim on signup",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /soundwave/recorder-active.mp4 — 15–20s clip: user clicks record, sees the waveform indicator, switches browser tab (Picture-in-Picture window appears with mini waveform), tabs back (title was flashing), clicks stop, recording uploads
+        //   /soundwave/recorder-safari.png — Safari-specific permission warning screen with a custom animation explaining how to grant mic + screen-share permissions in Safari's distinct prompts
+        name: "Browser Recorder",
+        summary:
+          "Record audio in the browser: mic only, tab audio only, or both mixed together. Works across Chrome, Firefox, and Safari, each of which has its own personality. Falls back to local download if upload fails so the meeting is never lost.",
+        requestedBy: "users wanted to record their meetings in the app, not export them after",
+        shippedAt: "2025-12",
+        version: "v1.0",
+        impact:
+          "Closed the loop. The user can hit a button, run a meeting, hit stop, and have a finished analysis minutes later — no exporting from a third-party tool, no file management.",
+        details:
+          "MediaRecorder API drives the capture. AudioContext mixes mic and tab/display streams through MediaStreamAudioSourceNode → GainNode → MediaStreamAudioDestinationNode so levels can be balanced before encoding. RecordRTC handles the actual recording. Safari has its own user-gesture rules and behaves differently with screen-share audio — there's a dedicated detection path with a custom warning animation. Picture-in-Picture API keeps a tiny preview visible when the user tabs away. Title flashing pulls them back when something needs attention. If upload to Supabase fails, the recording downloads locally so a 40-minute meeting isn't lost to a flaky network.",
+        myContribution:
+          "Browser APIs are services with personalities. Safari isn't broken — it's enforcing its own permission model, and the recorder has to know that. The download fallback was added after the first user lost a meeting to a network blip.",
+        gallery: [
+          {
+            src: "/soundwave/recorder-active.mp4",
+            alt: "Recording flow — 15–20s clip: user clicks the record button on the dashboard, waveform animation starts in the panel; user switches to a different browser tab and a small Picture-in-Picture window appears with a live waveform; user returns to the tab (title was flashing for attention); user clicks stop; upload progress completes",
+            caption: "record · tab away · stop",
+            kind: "video",
+          },
+          {
+            src: "/soundwave/recorder-safari.png",
+            alt: "Safari-specific permission walkthrough — modal with a Safari logo, animated illustration showing how to grant mic permission via Safari's distinct prompt, separate step for screen-share permission with the system dialog highlighted",
+            caption: "Safari · custom walkthrough",
+          },
+        ],
+      },
+    ],
   },
 
   {
