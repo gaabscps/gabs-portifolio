@@ -21,17 +21,36 @@ const PluginGallery = ({ gallery }: { gallery: NonNullable<Plugin["gallery"]> })
           transition="all var(--duration-fast) var(--ease-apple)"
           _hover={{ borderColor: "brand.accent", transform: "translateY(-2px)" }}
         >
-          <Box
-            as="img"
-            src={g.src}
-            alt={g.alt}
-            loading="lazy"
-            position="absolute"
-            inset={0}
-            w="100%"
-            h="100%"
-            objectFit="cover"
-          />
+          {g.kind === "video" ? (
+            <Box
+              as="video"
+              src={g.src}
+              aria-label={g.alt}
+              poster={g.poster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              position="absolute"
+              inset={0}
+              w="100%"
+              h="100%"
+              objectFit="cover"
+            />
+          ) : (
+            <Box
+              as="img"
+              src={g.src}
+              alt={g.alt}
+              loading="lazy"
+              position="absolute"
+              inset={0}
+              w="100%"
+              h="100%"
+              objectFit="cover"
+            />
+          )}
         </Box>
         {g.caption && (
           <Text
@@ -162,7 +181,7 @@ export const PluginGrid = ({ plugins }: { plugins: Plugin[] }) => {
           fontFamily="var(--font-mono)"
           fontWeight="700"
         >
-          core systems · {plugins.length} of 12 live
+          core systems · {plugins.length} of 33 live
         </Text>
         <Text
           fontSize="11px"

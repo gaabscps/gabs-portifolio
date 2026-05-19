@@ -46,17 +46,36 @@ const Gallery = ({ gallery }: { gallery: NonNullable<Plugin["gallery"]> }) => (
             transition="all var(--duration-fast) var(--ease-apple)"
             _hover={{ borderColor: "brand.accent", transform: "translateY(-2px)" }}
           >
-            <Box
-              as="img"
-              src={g.src}
-              alt={g.alt}
-              loading="lazy"
-              position="absolute"
-              inset={0}
-              w="100%"
-              h="100%"
-              objectFit="cover"
-            />
+            {g.kind === "video" ? (
+              <Box
+                as="video"
+                src={g.src}
+                aria-label={g.alt}
+                poster={g.poster}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                position="absolute"
+                inset={0}
+                w="100%"
+                h="100%"
+                objectFit="cover"
+              />
+            ) : (
+              <Box
+                as="img"
+                src={g.src}
+                alt={g.alt}
+                loading="lazy"
+                position="absolute"
+                inset={0}
+                w="100%"
+                h="100%"
+                objectFit="cover"
+              />
+            )}
           </Box>
           {g.caption && (
             <Text
@@ -164,6 +183,32 @@ export const PluginModal = ({ plugin, onClose }: Props) => (
                 </>
               )}
             </Flex>
+
+            {plugin.impact && (
+              <Box
+                mb={6}
+                p={4}
+                bg="brand.bg"
+                borderLeft="3px solid"
+                borderColor="brand.accentHover"
+                borderRadius="0 8px 8px 0"
+              >
+                <Text
+                  fontSize="9px"
+                  color="brand.accent"
+                  fontFamily="var(--font-mono)"
+                  letterSpacing="0.18em"
+                  textTransform="uppercase"
+                  fontWeight="700"
+                  mb={2}
+                >
+                  what this brings
+                </Text>
+                <Text fontSize="14px" color="brand.text" lineHeight={1.6}>
+                  {plugin.impact}
+                </Text>
+              </Box>
+            )}
 
             {plugin.details && (
               <Box mb={6}>

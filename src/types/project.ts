@@ -29,9 +29,18 @@ export type Plugin = {
   requestedBy?: string;
   shippedAt: string;
   version?: string;
+  impact?: string;
   details?: string;
   myContribution?: string;
-  gallery?: { src: string; alt: string; caption?: string }[];
+  gallery?: PluginAsset[];
+};
+
+export type PluginAsset = {
+  src: string;
+  alt: string;
+  caption?: string;
+  kind?: "image" | "video";
+  poster?: string;
 };
 
 export type ServerInfo = {
