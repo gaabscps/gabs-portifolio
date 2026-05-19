@@ -988,44 +988,163 @@ export const projects: Project[] = [
     buildLog: [
       {
         date: "2026-05-08",
-        version: "v0.1",
-        title: "Monorepo and design system scaffolded before any feature.",
-        body: "Started with the boring parts on purpose: React 19 + Vite 5 in <ai>web/</ai>, Fastify 5 companion API in <ai>server/</ai>, shared types in a workspace package, a Playwright + Jest test harness, and a paper-textured design system (Caveat for the handwritten lines, Inter for everything functional, a 24px baseline grid enforced in e2e). Type coverage gate at 95% in CI before line one of business logic. The investment paid for itself by the second feature.",
-      },
-      {
-        date: "2026-05-09",
-        version: "v0.2",
-        title: "Server companion ships with the lazy-create data model.",
-        body: "Fastify API live with <ai>/api/days/:date</ai> (GET/PUT), Zod schemas on every request, atomic JSON writes. The data-model decision that shaped everything after: GET on an empty date returns an in-memory skeleton without persisting. A blank day is a real state, not a missing record — and the filesystem doesn't fill up with empty files for every date I might scroll past.",
+        version: "FEAT-001",
+        title: "Foundation scaffolded.",
+        body: "Monorepo, design system and test harness — all in before any feature. React 19 + Vite 5 in <ai>web/</ai>, Fastify 5 in <ai>server/</ai>, Caveat + Inter on a 24px baseline grid, type-coverage gate at 95% in CI.",
       },
       {
         date: "2026-05-10",
-        version: "v0.3",
-        title: "Daily page orchestrator stitches the experience together.",
-        body: "FEAT-012: one swipeable page per day — morning Intention header, an hourly Agenda from 06h to 23h, Priorities, Notes, Mood picker, evening Gratitude. Tiptap is the only component that knows what rich text is; the rest of the app treats it as a black box. HTML sanitization is restrictive on purpose — four inline tags allowed (bold, italic, underline, strike), mirrored on client and server. Less rope, fewer cuts.",
-        callouts: [
+        version: "FEAT-012",
+        title: "Daily page stitches everything together.",
+        body: "One swipeable page per day — Intention, Agenda, Priorities, Notes, Mood, Gratitude — with autosave and keyboard navigation. From this point on, the product had a shape.",
+      },
+      {
+        date: "2026-05-19",
+        version: "FEAT-030",
+        title: "Supabase migration begins.",
+        body: "Fastify + JSON files traded for Supabase: relational schema, RLS on every table, the React app talks directly to Supabase. Auth, days persistence and Fastify decommission queued (FEAT-031 → 033).",
+      },
+    ],
+    results: [
+      { value: "9", label: "features in active dev" },
+      { value: "149", label: "commits" },
+      { value: "12", label: "days · foundation to Supabase migration" },
+      { value: "95%", label: "type coverage · gated in CI" },
+    ],
+    retrospective:
+      "Still in active development — the daily page works end-to-end, the Supabase migration just started. The honest lesson so far: a feature that feels playful in the spec can quietly eat the build. FEAT-029 added ceremonial audio (quest completion sounds, day-complete fanfares). It was charming for a week. Then I caught myself tuning sound timing instead of shipping the page and ripped the whole system out the same day (<ai>chore(FEAT-029): drop the sound system entirely</ai>). What did pay off didn't feel rewarding while writing it: type coverage gated at 95%, dependency-cruiser blocking cross-feature imports, <ai>console.error</ai> wired to fail tests. Those are the rules keeping this from collapsing into one folder.",
+    plugins: [
+      {
+        // TODO assets:
+        //   /calendarfr/daily-page-full.png — full daily page screenshot: Intention header with mood at top, Agenda 06–23h on the left, Priorities + Notes on the right, Gratitude collapsed at the bottom; paper texture and baseline grid visible
+        name: "Daily Page",
+        summary:
+          "One swipeable page per day, composing Intention, Agenda, Priorities, Notes, Mood and Gratitude into a single experience. Swipe or keyboard arrows navigate between dates; autosave runs on every keystroke.",
+        requestedBy: "a planner that's one screen, not a maze of tabs",
+        shippedAt: "2026-05",
+        version: "FEAT-012",
+        impact:
+          "The whole product is this page. Every other feature is plumbing for the moment someone opens today and starts writing.",
+        details:
+          "The <ai>daily-page</ai> feature composes types from every other feature's <ai>types.ts</ai>. An autosave gateway sits between the rich-text editors and the companion API — every keystroke debounces into a PUT. Loading is a paper-skeleton; an empty date renders cleanly because GET returns an in-memory skeleton without writing a file.",
+        myContribution:
+          "One feature owns the composition. The composing feature is allowed to know everything; the composed features stay ignorant of each other.",
+        gallery: [
           {
-            kind: "rule",
-            label: "the rule",
-            body: "One feature owns the library. Everyone else sees the abstraction. The day Tiptap breaks, exactly one file needs to change.",
+            src: "/calendarfr/daily-page-full.png",
+            alt: "Full daily page — Intention header with mood at top, Agenda 06–23h on the left, Priorities and Notes on the right, Gratitude collapsed at the bottom; paper texture and baseline grid visible",
+            caption: "daily page · full layout",
           },
         ],
       },
       {
-        date: "2026-05-19",
-        version: "v0.4",
-        title: "Supabase migration begins — Fastify on the way out.",
-        body: "FEAT-030: traded the Fastify + JSON filesystem prototype for Supabase. Relational schema, RLS on every table, the React app talks to Supabase directly (no BFF). Three more FEATs queued — auth (email + password), days persistence, decommission Fastify. The migration roadmap was driven by the founders cohort pricing decision: multi-tenant and auth become mandatory the moment someone pays.",
+        // TODO assets:
+        //   /calendarfr/agenda-energy.png — Agenda column: 06–23h grid with several rows filled in (handwritten text), each row showing its energy-state emoji on the right
+        name: "Hourly Agenda",
+        summary:
+          "An 18-row grid from 06:00 to 23:00. Each row is a rich-text line with an energy-state picker — six emoji icons mapping the hour to how it felt.",
+        requestedBy: "an agenda that tracks not just what I did, but how it felt doing it",
+        shippedAt: "2026-05",
+        version: "FEAT-009 + FEAT-023",
+        impact:
+          "Looking back, the energy picker is the part I check most. The schedule reminds me what; the energy reminds me whether it was worth it.",
+        details:
+          "Each agenda row is a <ai>rich-text-line</ai>. Energy state is its own feature (FEAT-023) — six emojis on a notebook-textured palette, persisted with the row. Empty rows render as a subtle baseline; you only see the lines you used.",
+        myContribution:
+          "Don't track everything. Track the thing you actually want to look at later.",
+        gallery: [
+          {
+            src: "/calendarfr/agenda-energy.png",
+            alt: "Agenda column — 06–23h grid with several rows filled in handwritten text, each row showing its energy-state emoji on the right",
+            caption: "agenda · energy state per hour",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /calendarfr/rich-text-toolbar.png — floating toolbar above a selected agenda row: four icons (B, I, U, S), inline editor active
+        name: "Rich Text Line",
+        summary:
+          "A single-line inline editor with exactly four formatting tags allowed: bold, italic, underline, strike. Tiptap powers it; nothing else in the app knows that.",
+        requestedBy: "the right amount of formatting — enough to mark something important, not enough to turn the journal into a Word doc",
+        shippedAt: "2026-05",
+        version: "FEAT-007",
+        impact:
+          "Less rope means fewer cuts. The day Tiptap breaks, exactly one feature has to change.",
+        details:
+          "<ai>rich-text-line</ai> is the only file that imports Tiptap. Sanitization mirrors on both sides: client uses isomorphic-dompurify, server uses DOMPurify, both enforcing the same four-tag whitelist atomically. Plain text wins by default — formatting is a deliberate choice.",
+        myContribution:
+          "One feature owns the library. The rest of the app uses the abstraction. Vendor lock-in becomes a refactor, not a rewrite.",
+        gallery: [
+          {
+            src: "/calendarfr/rich-text-toolbar.png",
+            alt: "Floating toolbar above a selected agenda row — four icons (B, I, U, S), inline editor active",
+            caption: "four tags allowed, period",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /calendarfr/priorities-dnd.mp4 — short clip: drag a priority from position 3 to position 1, then check it done — wavy hand-drawn strikethrough animates over the text
+        name: "Priorities",
+        summary:
+          "Reorderable priority list with drag-and-drop, done-checkbox, and a wavy hand-drawn strikethrough that un-draws on regression.",
+        requestedBy: "priorities I can re-rank during the day without re-typing them",
+        shippedAt: "2026-05",
+        version: "FEAT-008",
+        impact:
+          "Top-of-mind items stay at the top — physically. The animation rewards completion enough to feel like checking a box on paper.",
+        details:
+          "@dnd-kit/core + @dnd-kit/sortable handle the reorder. The strikethrough is a hand-drawn SVG that animates in over the text; toggling done back un-draws the same path. Order is persisted with the priority array.",
+        myContribution:
+          "Tactile feedback is not decoration — it's the reason the user comes back. The wavy strikethrough is more important than it sounds.",
+        gallery: [
+          {
+            src: "/calendarfr/priorities-dnd.mp4",
+            alt: "Short clip — drag a priority from position 3 to position 1, then check it done; a wavy hand-drawn strikethrough animates over the text",
+            caption: "drag · reorder · strike",
+            kind: "video",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /calendarfr/mood-picker.png — mood picker open at the top of the daily page: six-emoji palette on notebook-textured background, one selected
+        name: "Mood & Energy",
+        summary:
+          "Two emoji-based pickers sharing one design language: a daily Mood at the top of the page, a per-hour Energy state on each agenda row. Six emojis on a notebook-textured palette.",
+        requestedBy: "emotion as a first-class field, not a comment buried in notes",
+        shippedAt: "2026-05",
+        version: "FEAT-010 + FEAT-023",
+        impact:
+          "I journal the feeling, not just the event. Patterns surface across weeks that I wouldn't notice from text alone.",
+        details:
+          "FEAT-010 (mood) and FEAT-023 (energy) are separate features but share the picker shell. The palette is the same six emojis; the data shape is per-day for mood, per-hour for energy.",
+        myContribution:
+          "Two features, one design language. The shell ships once; the data shape stays distinct.",
+        gallery: [
+          {
+            src: "/calendarfr/mood-picker.png",
+            alt: "Mood picker open at the top of the daily page — six-emoji palette on notebook-textured background, one currently selected",
+            caption: "mood · same shell as energy",
+          },
+        ],
+      },
+      {
+        name: "Server Companion (transitional)",
+        summary:
+          "Fastify 5 API serving GET/PUT for days, with atomic JSON writes and a lazy-create pattern. Built to last until the Supabase migration replaces it (FEAT-030 → 033).",
+        requestedBy: "persistence without committing to a database before the product proves itself",
+        shippedAt: "2026-05",
+        version: "FEAT-006",
+        impact:
+          "A blank day is a real state, not a missing record. The filesystem never fills up with empty days I might have scrolled past.",
+        details:
+          "<ai>GET /api/days/:date</ai> returns an in-memory skeleton without writing — the day is created on the first PUT. Atomic writes via tmp + rename. Zod schemas validate every request; HTML sanitization mirrors the client whitelist. Companion is decommissioned in FEAT-033 when Supabase takes over auth and days persistence.",
+        myContribution:
+          "Prototype with a real architecture, but pick the transitional tech that's small enough to throw away later. Fastify + JSON files cost nothing to maintain and even less to delete.",
       },
     ],
-    results: [
-      { value: "12", label: "days · foundation to Supabase migration" },
-      { value: "150", label: "commits" },
-      { value: "14", label: "features shipped" },
-      { value: "456", label: "test files · unit, integration, e2e" },
-    ],
-    retrospective:
-      "The thing I keep relearning: a feature that feels playful in the spec can quietly eat the build. FEAT-029 added ceremonial audio — quest completion sounds, day-complete fanfares. It was charming. Then I caught myself tuning sound timing instead of shipping the daily page, and ripped the whole system out the same week (<ai>chore(FEAT-029): drop the sound system entirely</ai>). What did pay off didn't feel rewarding while writing it: type coverage gated at 95%, dependency-cruiser blocking cross-feature imports, <ai>console.error</ai> wired to fail tests. Those are the rules that kept 14 features in 12 days from collapsing into one folder.",
   },
 
   // ============ ARCHIVE ============
