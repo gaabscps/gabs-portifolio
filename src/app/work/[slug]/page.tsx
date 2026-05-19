@@ -29,6 +29,12 @@ const HEADLINES: Record<string, React.ReactNode> = {
       <Box as="span" className="serif-italic" color="brand.accent" fontWeight="600">actually</Box> use.
     </>
   ),
+  "ai-squad": (
+    <>
+      A workflow that survives me{" "}
+      <Box as="span" className="serif-italic" color="brand.accent" fontWeight="600">forgetting</Box> to be disciplined.
+    </>
+  ),
   calendarfr: (
     <>
       A planner that{" "}
@@ -42,6 +48,8 @@ const LEDES: Record<string, string> = {
     "BetterSMP is a Minecraft multiplayer server I run with my brother — 33 custom Java plugins on top of the vanilla game. Popular servers turn into idle farms (players leave the game running overnight for rewards); we wanted somewhere with actual gameplay, and the only way to get it was to write the gameplay. AI writes every line of Java. I write the architecture, the security model, and the calls that decide if it's fun.",
   soundwave:
     "SoundWave Summit is an audio AI platform — record or upload a meeting, get back a structured analysis with topics, decisions, action items, and sentiment. Started as a tool to capture my own meetings; grew into a real platform with Stripe billing, anonymous flows, public sharing, and a three-provider transcription chain with circuit breakers. I write the architecture, the security model, and the calls that decide what ships. AI is the keyboard.",
+  "ai-squad":
+    "ai-squad is the workflow I built because using AI to code without one was eating my afternoons. Two squads (Discovery for fuzzy ideas, SDD for clear pitches), ten roles, three IDE targets, and a mechanical enforcement layer that makes bypass impossible. Every interactive gate is conversational; the Build phase runs unattended. AI is the keyboard. The workflow is the judgment.",
   calendarfr:
     "Every year I'd buy a planner and abandon it by February — too lazy to dig through a bag to find it. CalendarFR lives where I already am.",
 };

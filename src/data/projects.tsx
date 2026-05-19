@@ -739,6 +739,236 @@ export const projects: Project[] = [
   },
 
   {
+    id: "ai-squad",
+    slug: "ai-squad",
+    translationKey: "aiSquad",
+    year: "2026",
+    startedAt: "2026-05",
+    category: "AI workflow",
+    images: [],
+    skills: [skills.typescript, skills.github],
+    links: {
+      route: "/work/ai-squad",
+      github: "https://github.com/gaabscps/ai-squad",
+      changelog: "https://github.com/gaabscps/ai-squad/blob/main/CHANGELOG.md",
+    },
+    status: "live",
+    cover: {
+      kind: "screenshot",
+      src: "/ai-squad/hero.svg",
+      alt: "ai-squad overview — fuzzy idea on the left flows through Discovery (Frame, Investigate, Decide) and SDD (Specify, Plan, Tasks, Build) into shipped code on the right",
+    },
+    stackChips: ["Python stdlib", "JSON schema", "Skills + Subagents"],
+    aiTool: "Claude",
+    motivation:
+      "Using AI to code without a workflow was eating my afternoons. Built the gates I kept forgetting to walk through.",
+    motivationContext: "— april 2026, after the fourth feature I'd half-built and abandoned",
+    buildLog: [
+      {
+        date: "2026-05-03",
+        version: "v0.1.0",
+        title: "Initial architecture: two squads, ten roles, capped concurrency.",
+        body: "Discovery for fuzzy ideas (Frame → Investigate → Decide). SDD for clear pitches (Specify → Plan → Tasks → Build). Phase 4 runs unattended with up to 5 tasks in parallel, hash-based stall detection, and a blocker-specialist that writes a decision memo when anything escalates. MIT licensed, scaffolded as a mono-repo of skills and subagents.",
+      },
+      {
+        date: "2026-05-06",
+        version: "v0.2.0",
+        title: "Mechanical hooks ship. Bypass becomes impossible.",
+        body: "Prompt-discipline alone wasn't enough — Claude would happily edit files outside <ai>.agent-session/</ai> when nothing physically stopped it. Added pure-stdlib Python 3 hooks the runtime enforces: <ai>guard-session-scope</ai>, <ai>block-git-write</ai>, <ai>verify-audit-dispatch</ai>, <ai>verify-output-packet</ai>. The audit-agent is the last gate before handoff and refuses if the dispatch manifest doesn't reconcile against the output packets.",
+        callouts: [
+          {
+            kind: "rule",
+            label: "the rule",
+            body: "Discipline that lives only in a prompt is not discipline. If the agent can ignore it, eventually it will. Hooks moved every load-bearing rule from \"the prompt asks for X\" to \"the runtime refuses non-X.\"",
+          },
+        ],
+      },
+      {
+        date: "2026-05-06",
+        version: "v0.3.0",
+        title: "Three runtimes, one source. Cursor and Kiro deploy paths.",
+        body: "Same day as 0.2.0. Cursor export converts each Skill to a Cursor artifact and merges hooks into the user's <ai>~/.cursor/hooks.json</ai>. Kiro path converts every Skill and Subagent to a Custom Agent JSON with per-agent hook wiring so <ai>guard-session-scope</ai> only fires for the orchestrator, not the dev. Three IDE targets from one set of source files.",
+      },
+      {
+        date: "2026-05-19",
+        version: "0.4 · unreleased",
+        title: "Canonical status enum + committer subagent.",
+        body: "Single source-of-truth for dispatch status lives in <ai>shared/schemas/dispatch-manifest.schema.json</ai>. Python and TypeScript consumers derive their enums from it at runtime. Added a <ai>committer</ai> subagent (haiku) that auto-commits the working tree at the end of Phase 4 when verdict is <ai>done</ai>. Deprecated the <ai>partial</ai> status; full removal planned for vNext+1.",
+      },
+    ],
+    results: [
+      { value: "10", label: "roles in the pipeline" },
+      { value: "59/59", label: "smoke tests · PASS" },
+      { value: "3", label: "IDE runtimes · Claude / Cursor / Kiro" },
+      { value: "16d", label: "v0.1 to v0.4" },
+    ],
+    retrospective:
+      "What I wanted from this was a workflow that survived me forgetting to be disciplined. The first cut was all prompts — long, careful, full of \"you must\" language. It worked when I read every output. It failed the moment I trusted Phase 4 to run unattended. The fix was hooks: every load-bearing rule moved from \"the prompt asks\" to \"the runtime refuses.\" The second insight was multi-runtime — same Skills source, three IDE targets — because the workflow shouldn't care which editor I'm in this month. The third was the audit-agent: a single read-only reconciliation step at the end that refuses to hand off if the dispatch manifest doesn't match what actually ran. Boring, mechanical, and the reason I now trust the pipeline.",
+    plugins: [
+      {
+        // TODO assets:
+        //   /ai-squad/discovery-memo.png — example memo.md output: Frame section with opportunity + user + value hypothesis, Investigate section with codebase-mapper findings + 4 risk-analyst verdicts (validated/refuted/inconclusive per Cagan risk), Decide section with options table + human decision
+        name: "Discovery Squad",
+        summary:
+          "For when you don't know if you should build something. Three phases — Frame, Investigate, Decide — that pressure-test an idea against the Cagan big risks (value, usability, feasibility, viability) before any line of code.",
+        requestedBy: "the 'careful code that ships for nobody' problem",
+        shippedAt: "2026-05",
+        version: "v0.1.0",
+        impact:
+          "Stops a fuzzy idea from turning into 30 hours of careful implementation aimed at the wrong problem. Either it earns a decision memo and proceeds to SDD, or it dies cleanly with no sunk-cost regret.",
+        details:
+          "Phase 1 (Frame) is a conversational skill that drafts a memo with the opportunity, the user, the value hypothesis. Phase 2 (Investigate) dispatches a codebase-mapper plus four risk-analysts in parallel — one per Cagan big risk — and aggregates their findings. Phase 3 (Decide) generates an options table with a recommendation and requires a human decision before anything proceeds.",
+        myContribution:
+          "Discovery is its own pipeline, not a step inside SDD. Decisions made under build pressure tend to favor 'just build it'; separating the squads gives the idea a fair hearing.",
+        gallery: [
+          {
+            src: "/ai-squad/discovery-memo.png",
+            alt: "Discovery memo.md rendered in a code viewer — top section 'Frame' with opportunity statement + user + value hypothesis; middle 'Investigate' section with bullet findings from codebase-mapper + four risk-analyst verdicts each labeled (value, usability, feasibility, viability) with verdict tag (validated/refuted/inconclusive); bottom 'Decide' section with 3-option table and a Decision row with the human's choice highlighted",
+            caption: "memo.md · all three phases",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /ai-squad/sdd-tasks.png — example tasks.md output: list of 8 tasks with id (FEAT-001/T1, T2, ...), title, AC coverage tags (AC-001, AC-002 mapped per task), parallelization marker (parallel-safe vs sequential), estimated effort
+        name: "SDD Squad — Specify, Plan, Tasks, Build",
+        summary:
+          "For when you have a clear pitch and need to ship it. Four phases — Specify, Plan, Tasks, Build — where the first three are conversational (you approve each gate) and the fourth runs autonomously.",
+        requestedBy: "AI-assisted code without a workflow tends to produce careful output that doesn't match what you meant",
+        shippedAt: "2026-05",
+        version: "v0.1.0",
+        impact:
+          "Turns 'vibe coding' into a structured pipeline with explicit checkpoints. The first three phases pin down what you're building; the fourth phase actually builds it without you babysitting.",
+        details:
+          "Phase 1 (Specify) drafts the feature spec with user stories and acceptance criteria. Phase 2 (Plan) proposes architecture decisions. Phase 3 (Tasks) breaks the work into parallelizable units with AC coverage. Phase 4 (Build) dispatches dev → reviewers → qa per task. Every gate is a human approval; only Phase 4 runs unattended.",
+        myContribution:
+          "Conversational gates for the decisions; autonomous execution for the typing. The first three phases are where judgment lives; the fourth is where typing happens.",
+        gallery: [
+          {
+            src: "/ai-squad/squads.svg",
+            alt: "Two-squad overview — left panel 'Discovery' with Frame/Investigate/Decide phases listed vertically with arrow flow; right panel 'SDD' with Specify/Plan/Tasks/Build phases. A bridge in the middle labeled 'Discovery says Proceed → compose pitch'",
+            caption: "two squads · one source",
+          },
+          {
+            src: "/ai-squad/sdd-tasks.png",
+            alt: "tasks.md rendered as a list — 6–8 tasks each shown as: task ID (FEAT-001/T1, T2, ...), short title, AC coverage tags (AC-001, AC-002 mapped per task), parallelization marker (a 'parallel-safe' badge or 'sequential' badge), effort estimate",
+            caption: "tasks.md · AC coverage + parallelization",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /ai-squad/phase4-handoff.png — handoff.md screenshot: header with task_id + verdict (done), files_changed list, ac_coverage map (FEAT-001/AC-001: covered, AC-002: covered), evidence pointers, audit-agent verdict pill (audit-pass)
+        name: "Phase 4 — Autonomous Build",
+        summary:
+          "The autonomous build phase. For each approved task, the orchestrator dispatches a dev (test-first), then code-reviewer + logic-reviewer in parallel, then qa. Findings loop back up to 3 rounds. Up to 5 tasks run concurrently.",
+        requestedBy: "the only way to trust an unattended pipeline is to give every step its own gate",
+        shippedAt: "2026-05",
+        version: "v0.1.0",
+        impact:
+          "Lets the human walk away after Phase 3. The pipeline runs to completion or escalates explicitly; either way, no silent failure.",
+        details:
+          "Dev runs first inside an isolated context, writing tests before implementation. code-reviewer (patterns and style) and logic-reviewer (edge cases and races) run in parallel against the same diff. Findings loop back to dev — max 3 rounds — until reviewers sign off. QA validates every acceptance criterion against the spec. If anything stalls or escalates, blocker-specialist writes a decision memo or kicks it back to the human.",
+        myContribution:
+          "Parallel reviewers with separate concerns — patterns vs. behavior — catch different bugs. The loop cap is what prevents an infinite dev-review ping-pong; the blocker-specialist is what lets the human be away when something goes wrong.",
+        gallery: [
+          {
+            src: "/ai-squad/build-pipeline.svg",
+            alt: "Phase 4 pipeline diagram — orchestrator on the left dispatching to dev (test-first), dev's output going to two parallel reviewers (code-reviewer and logic-reviewer) shown side by side, both feeding back into a 'findings?' gate that loops to dev (max 3 rounds), then onward to QA validating acceptance criteria, then a final handoff with a green checkmark. Bottom note: 'Up to 5 tasks run in parallel · escalation goes to blocker-specialist · audit-agent gates the handoff.'",
+            caption: "Phase 4 · runs autonomously per task",
+          },
+          {
+            src: "/ai-squad/phase4-handoff.png",
+            alt: "handoff.md rendered in a code viewer — header with task_id and verdict pill 'done', section 'files_changed' listing 4–6 relative paths, section 'ac_coverage' showing AC-001/AC-002/AC-003 each marked 'covered' with the test file that covers it, section 'evidence' with PR-style links, footer 'audit-agent: pass' pill",
+            caption: "handoff · verifiable artifact",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /ai-squad/hooks-refuse.png — terminal output: orchestrator tries to edit a consumer-repo file outside .agent-session/, the guard-session-scope hook returns a structured refusal with the violated rule and the offending path
+        //   /ai-squad/hooks-list.png — Skill frontmatter snippet showing preToolUse + stop hook references, with explanatory comments about which Skill/Subagent each hook is wired to
+        name: "Mechanical Hooks",
+        summary:
+          "Discipline that lives only in a prompt is not discipline. These are pure-stdlib Python 3 hooks the runtime enforces — orchestrators can't edit consumer-repo files, can't run git writes, can't end a session without dispatching the audit agent. If the agent tries, the runtime refuses.",
+        requestedBy: "the prompt-discipline gap — Claude would happily do the wrong thing if nothing physically stopped it",
+        shippedAt: "2026-05",
+        version: "v0.2.0",
+        impact:
+          "Bypass becomes impossible, not just discouraged. Every load-bearing rule moved from 'the prompt asks for X' to 'the runtime refuses non-X.'",
+        details:
+          "Five hooks ship today: guard-session-scope (orchestrator can only edit inside .agent-session/<task_id>/), block-git-write (orchestrator cannot run git commit/add/reset/push), verify-audit-dispatch (orchestrator session cannot end without dispatching the audit-agent), verify-output-packet (every subagent must write its output packet before completing), verify-pipeline-completeness (catches incomplete pipelines before handoff). All pure stdlib so they ship in the same install as the skills.",
+        myContribution:
+          "Hooks moved every load-bearing rule from prompt to runtime. The prompt asks; the hook enforces. Without that, every workflow eventually gets bypassed under pressure.",
+        gallery: [
+          {
+            src: "/ai-squad/hooks-refuse.png",
+            alt: "Terminal screenshot — orchestrator agent attempts an Edit tool call on a path outside .agent-session/ (e.g., consumer-repo/src/feature.ts). The guard-session-scope hook intercepts and returns a refusal block with: violated rule name, offending path, allowed paths, hint to re-scope the edit",
+            caption: "guard-session-scope · refuses out-of-scope edit",
+          },
+          {
+            src: "/ai-squad/hooks-list.png",
+            alt: "Skill frontmatter YAML snippet shown with syntax highlighting — keys preToolUse: and stop: each listing 2-3 hook references (python3 paths under ~/.claude/hooks/), with line comments explaining 'guard-session-scope only fires for orchestrator, not dev'",
+            caption: "per-Skill hook wiring",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /ai-squad/audit-manifest.png — JSON dispatch-manifest.json shown in a syntax-highlighted viewer: declared_dispatches array with 3 expected roles, actual_dispatches array with role/task_id/dispatch_id for each completed Task call
+        //   /ai-squad/audit-refused.png — handoff refusal screen: header 'AUDIT FAILED', list of 1-2 findings with role/dispatch gap (e.g., 'expected logic-reviewer for FEAT-001/T2, none recorded'), action button 'return to orchestrator'
+        name: "Audit Agent + Dispatch Manifest",
+        summary:
+          "The last gate before handoff. The orchestrator declares the expected pipeline in a JSON manifest before any dispatch; the audit-agent reconciles declared dispatches against actual outputs before allowing handoff. If anything was bypassed, it refuses the handoff and surfaces the gap.",
+        requestedBy: "the orchestrator-bypass problem — how do you know the pipeline you described is the one that actually ran?",
+        shippedAt: "2026-05",
+        version: "v0.2.0",
+        impact:
+          "Catches the orchestrator skipping a step (e.g., dispatching dev but not reviewers) before the handoff would land. The human sees a refused handoff with a specific finding, not a silently broken pipeline.",
+        details:
+          "The dispatch manifest lives at .agent-session/<task_id>/dispatch-manifest.json. The orchestrator declares expected dispatches before any Task call and appends to actual_dispatches[] after each. The audit-agent runs 6 mechanical checks: manifest completeness, dispatch-to-output 1:1, role/task_id consistency, pipeline-stage coverage, AC closure, source-file ownership. If any check fails, the handoff is refused. Lineage: GitHub required status checks + Verifiability-First Audit Agents (arXiv 2512.17259) + transactional Outbox.",
+        myContribution:
+          "A mechanical reconciliation step at the end is the difference between trusting the agent and trusting the system the agent ran in. The audit agent doesn't believe the orchestrator's claims; it checks them.",
+        gallery: [
+          {
+            src: "/ai-squad/audit-manifest.png",
+            alt: "dispatch-manifest.json open in an editor with JSON syntax highlighting — top-level keys: task_id, declared_dispatches (array of 3 expected roles: dev, code-reviewer, logic-reviewer, qa), actual_dispatches (array with role/dispatch_id/output_packet_path for each completed Task call, with timestamps)",
+            caption: "dispatch-manifest · declared vs actual",
+          },
+          {
+            src: "/ai-squad/audit-refused.png",
+            alt: "Handoff refusal modal — header 'AUDIT FAILED' in red, body lists 2 findings: 'expected logic-reviewer for FEAT-001/T2 — no dispatch recorded' and 'qa output_packet missing for FEAT-001/T2', footer with 'return to orchestrator' button. No handoff committed.",
+            caption: "handoff refused · specific findings",
+          },
+        ],
+      },
+      {
+        // TODO assets:
+        //   /ai-squad/deploy-targets.png — three-panel side-by-side terminal output: panel 1 'deploy.sh' showing files copied to ~/.claude/, panel 2 'deploy-cursor.sh' showing skills exported + hooks.json merged, panel 3 'deploy-kiro.sh' showing per-Skill conversion to ~/.kiro/agents/*.json
+        name: "Multi-runtime Deploy",
+        summary:
+          "Same Skills source, three IDE targets. deploy.sh installs to Claude Code, deploy-cursor.sh exports to Cursor, deploy-kiro.sh converts to Kiro Custom Agents. The workflow doesn't care which editor you're in this month.",
+        requestedBy: "AI workflows shouldn't be tied to a single tool — too much churn in the IDE space to bet on one",
+        shippedAt: "2026-05",
+        version: "v0.3.0",
+        impact:
+          "Switching IDEs no longer means redoing your workflow. Same prompts, same hooks, same dispatch manifest — wherever you're working.",
+        details:
+          "Each deploy script handles its target's quirks. Cursor: per-skill files merged into ~/.cursor/skills/, hooks merged into ~/.cursor/hooks.json. Kiro: each Skill and Subagent converted to a Custom Agent JSON via a Python converter, per-agent hook wiring (so guard-session-scope only fires for the orchestrator, not for dev). Tool name aliases handled (Kiro accepts 'read'/'write'/'shell' or the legacy aliases). WebSearch / WebFetch dropped with a stderr warning when no MCP equivalent exists.",
+        myContribution:
+          "One source, three runtimes. The IDE is a deployment target, not the source of truth. Lets the workflow survive whichever editor wins the next round.",
+        gallery: [
+          {
+            src: "/ai-squad/deploy-targets.png",
+            alt: "Three-panel terminal screenshot side by side — left panel labeled 'Claude Code' showing deploy.sh output with files copied to ~/.claude/skills/ and ~/.claude/agents/; middle panel labeled 'Cursor' showing deploy-cursor.sh output with skills exported and hooks.json merged; right panel labeled 'Kiro' showing deploy-kiro.sh output with per-Skill conversion to JSON Custom Agents at ~/.kiro/agents/",
+            caption: "one source · three runtimes",
+          },
+        ],
+      },
+    ],
+  },
+
+  {
     id: "CalendarFR",
     slug: "calendarfr",
     translationKey: "calendarfr",
