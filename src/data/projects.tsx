@@ -14,8 +14,6 @@ export const projects: Project[] = [
     skills: [skills.github],
     links: {
       route: "/work/bettersmp",
-      live: "https://bettersmp.example",
-      github: "https://github.com/gaabscps",
       discord: "https://discord.gg/bettersmp",
     },
     status: "live",

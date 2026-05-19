@@ -39,7 +39,7 @@ const HEADLINES: Record<string, React.ReactNode> = {
 
 const LEDES: Record<string, string> = {
   bettersmp:
-    "Most popular SMPs are abandoned AFK farms. You log in, find a corner, AFK overnight for diamonds. That's not playing. We wanted somewhere with actual things to do — and shipped 12 custom plugins to make it real.",
+    "Most popular SMPs are abandoned AFK farms. You log in, find a corner, AFK overnight for diamonds. That's not playing. We wanted somewhere with actual things to do — and shipped 33 custom plugins to make it real.",
   soundwave:
     "I take a lot of meetings. I miss a lot of details. soundwave records, transcribes, and surfaces the parts I'd otherwise lose — and grades how I sound on the parts I want to improve.",
   calendarfr:
