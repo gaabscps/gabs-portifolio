@@ -29,6 +29,7 @@ export type Plugin = {
   requestedBy?: string;
   shippedAt: string;
   version?: string;
+  impact?: string;
   details?: string;
   myContribution?: string;
   gallery?: PluginAsset[];

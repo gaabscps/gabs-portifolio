@@ -106,6 +106,8 @@ export const projects: Project[] = [
         requestedBy: "the weekly hype moment",
         shippedAt: "2026-04",
         version: "v1.0.0",
+        impact:
+          "A reason to be online at peak hours. When the Discord pre-alert fires, players actually drop what they're doing and come back — the server has gravity beyond 'log in to mine.'",
         details:
           "The first cut was a hardcoded handler per event. The second put everything — wave timing, mob composition, reward tiers, difficulty curves — in a YAML config the runtime walks. Adding 'Eclipse Hunt' or 'Treasure Run' became a config diff, not a new plugin. Production taught me the rest: 1–2 hours between events burned players out, 12+ hours felt empty, and a Discord ping when one's incoming gave it gravity before it spawned.",
         myContribution:
@@ -134,6 +136,8 @@ export const projects: Project[] = [
         requestedBy: "the anti-idle thesis, made literal",
         shippedAt: "2026-04",
         version: "v1.0.0",
+        impact:
+          "Idle farming the same corner stops being viable when rare loot can spawn 14,000 blocks away — and the player next to you might know exactly where. Players walk around, talk to each other, decide what information is worth selling.",
         details:
           "The first version showed exact coordinates and killed itself in two days — finding the rare mob was just 'follow the marker.' I rewrote it to show only a cardinal hint (N/S/E/W) and built a confirmation-dialog UI where players could *sell* the exact coordinates to each other for in-game currency. Information became the most valuable item in the game. The rarest thing on the server isn't the loot — it's the location of the loot.",
         myContribution:
@@ -163,6 +167,8 @@ export const projects: Project[] = [
         requestedBy: "depth, not grind — and content that didn't break every time the AI touched it",
         shippedAt: "2026-05",
         version: "v1.0.0",
+        impact:
+          "A long-term arc beyond 'collect resources.' New players have a structured way to climb; veterans have something to optimize. Sessions go from '15 minutes of mining' to 'one tier closer to T4.'",
         details:
           "The quests themselves live in YAML files, one per class-tier. That decision had a cost: Claude kept silently regressing the schema between iterations, breaking quests in subtle ways nobody noticed until a player got stuck. So the plugin grew a real lint test suite that fails the build if the YAML drifts from its contract. Six classes were in the original brief; three was the right size for a 12-week launch. Under-promise, ship, expand.",
         myContribution:
@@ -196,6 +202,8 @@ export const projects: Project[] = [
         requestedBy: "to replace shouting prices in chat",
         shippedAt: "2026-02",
         version: "v1.0.0",
+        impact:
+          "Killed the chat spam of 'WTS 50g for stack of diamonds.' Players price-discover at any hour, even when nobody's online to negotiate — the economy runs 24/7.",
         details:
           "Most servers reach for Postgres for this. I picked embedded SQLite — one JAR, no separate process to babysit, no DB team. A 100-player server doesn't need the operational tail of a real database. The interesting bug got caught in review: Claude's first draft stored prices as floating-point doubles. Money in floats is the classic mistake nobody notices until reconciliation breaks. Switched to integer cents before deploy. Two migrations later (I changed my mind on storage shape twice), still embedded, still fast.",
         myContribution:
@@ -228,6 +236,8 @@ export const projects: Project[] = [
         requestedBy: "a daily reason to log in that didn't depend on grinding alone",
         shippedAt: "2026-03",
         version: "v1.0.0",
+        impact:
+          "A daily reason to log in that isn't 'check the dailies.' Everyone pulling toward the same goal creates a social pressure solo objectives can't match — late-day, players coordinate to push the bar over.",
         details:
           "The interesting problem wasn't the goal — it was the feedback channel. Every item sold triggered a progress update broadcast to every player on the action-bar (a thin status line above the hotbar). With six people online and a busy market, the screen flickered like an alarm. A 5-second throttle per player turned it from a fire hose into a heartbeat. Feedback rate is a load-bearing concern; the AI's first cut had no backpressure on user-facing events.",
         myContribution:
@@ -252,6 +262,8 @@ export const projects: Project[] = [
         requestedBy: "the line we wouldn't cross on monetization",
         shippedAt: "2026-04",
         version: "v1.0.0",
+        impact:
+          "The monetization lane that doesn't compromise gameplay. Players who want to support the server have somewhere to spend; players who don't are never at a disadvantage.",
         details:
           "No damage. No item pickup. No attacks. No block changes. No status effects. The cosmetic-only contract isn't a paragraph in the docs; it's seven event listeners that cancel every harmful interaction the pet could otherwise produce, at the highest priority. The instant a pet starts behaving like a real mob, the listener cancels it before the engine commits. Docs aren't enforcement. Code is.",
         myContribution:
@@ -275,6 +287,8 @@ export const projects: Project[] = [
         requestedBy: "a fight system that didn't ruin your real inventory",
         shippedAt: "2026-04",
         version: "v1.0.0",
+        impact:
+          "Lets players settle fights without the loss-aversion that kills most server PvP. The risk-free arena means people actually duel; the per-mode stats give competitive players something to chase.",
         details:
           "The first version trusted players to use the kit themselves. They brought enchanted netherite instead — the strongest gear in the game, no consequence if they lost. So I added an inventory snapshot on entry: your real gear is stashed, the kit is loaded, and on exit (win, lose, disconnect, mid-fight crash) the original is restored. Either the duel commits fully or it rolls back fully. Treat it like a database transaction.",
         myContribution:
@@ -303,6 +317,8 @@ export const projects: Project[] = [
         requestedBy: "monetization that respected the no-pay-to-win rule",
         shippedAt: "2026-04",
         version: "v1.0.0",
+        impact:
+          "Sustainable revenue without pay-to-win. Subscribers get convenience, never power. The server pays for itself without the community feeling fleeced.",
         details:
           "Three plugins, three responsibilities. Payment lives in the third-party billing platform. A dedicated entitlement plugin owns the state — is this player subscribed, when does it expire. This plugin is the read-only consumer that turns active state into feature behavior. None of them know the others' internals. When a subscription expires, the perks are rolled back; the data is never deleted. The extra home slots you set up while subscribed stay where you left them — you just can't visit until you renew.",
         myContribution:
@@ -330,6 +346,8 @@ export const projects: Project[] = [
         requestedBy: "a chance-economy currency that doesn't mix with the marketplace",
         shippedAt: "2026-03",
         version: "v1.0.0",
+        impact:
+          "A second loop that doesn't compete with the marketplace. Players grind shards for chance rewards; the gold economy stays focused on real trade. Two separate dopamine systems, neither cannibalizing the other.",
         details:
           "The interesting call was making shards non-tradeable. No /shards pay. No listings. No transfer between players. The marketplace runs on gold; the slot machine runs on shards; the two economies never touch. Without the wall, players would arbitrage one against the other in a week. Non-tradeability is a feature, not a limitation.",
         myContribution:
@@ -357,6 +375,8 @@ export const projects: Project[] = [
         requestedBy: "the funnel decides retention — players don't read rules, they follow the arrow",
         shippedAt: "2026-04",
         version: "v1.0.0",
+        impact:
+          "The funnel that decides retention. Players who finish the tour stick around; players who quit at step three don't come back. Getting the first 15 minutes right is worth more than any feature ten hours in.",
         details:
           "The shape is a state machine; the steps come from a YAML file. The bug I caught early: a stationary player could complete two steps in the same frame because both their advance conditions were satisfied at once (proximity AND command). Five-second grace window per step before the next can fire, and the chain ordering held. If the starter kit fails to deliver — for any reason — the player's progress is preserved and staff gets paged. Losing your kit on minute one is the worst possible first impression.",
         myContribution:
@@ -385,6 +405,8 @@ export const projects: Project[] = [
         requestedBy: "items that feel earned, not dropped",
         shippedAt: "2026-04",
         version: "v1.0.0",
+        impact:
+          "Gives RPG progression a tangible payoff. Hitting a high tier means a named, useful tool is yours — visible to every other player who hovers it. Progression with nothing to show for it doesn't motivate anyone.",
         details:
           "The week after the security sweep, every custom item on the server moved to typed-metadata identity. Display names are user-mutable — players can rename items at an anvil and pretend any item is the rare one. Typed server-side keys aren't. The vein-mining cap matters too: without a hard limit, a chunk-spanning jungle tree locks up the main server thread for a noticeable beat.",
         myContribution:
@@ -413,6 +435,8 @@ export const projects: Project[] = [
         requestedBy: "progression has to be visible to other players, not just in a menu",
         shippedAt: "2026-03",
         version: "v1.0.0",
+        impact:
+          "Progression that shows up in chat. Players walk around with the tag attached to their name — social proof of consistency, not a number hidden in a menu. The Activity Tag rewards showing up without making it feel like a job.",
         details:
           "Multi-tag turned every name into a billboard nobody read. The Activity Tag is the fun one: log in three days in a row and you get a streak tag; miss a day and it's gone, you start over. Timezone-aware, because a 23:55 login on the user's clock should count as 'today,' not 'yesterday' in server UTC. The kind of detail that makes a daily-reward system feel arbitrary when it's wrong.",
         myContribution:
@@ -440,6 +464,8 @@ export const projects: Project[] = [
         requestedBy: "the marketplace only works if buyers can see what they're buying",
         shippedAt: "2026-04",
         version: "v1.0.0",
+        impact:
+          "Closed the trust loop on bagged inventory listings. Without preview, buying a shulker is a gamble; with it, the marketplace works. Quality-of-life that makes one of the biggest features land.",
         details:
           "Listing a shulker on the marketplace used to be a black box for buyers — you saw the icon, not the contents. So the preview lets them inspect before paying. The trick was making it genuinely read-only. The first cut just opened the real shulker. That's a 30-second item-duplication exploit, because what's read-only in the UI is read-write in the underlying inventory if nothing intercepts the take operation. The fix was a tagged inventory that cancels every take at the listener layer.",
         myContribution:

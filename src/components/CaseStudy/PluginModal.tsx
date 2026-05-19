@@ -184,6 +184,32 @@ export const PluginModal = ({ plugin, onClose }: Props) => (
               )}
             </Flex>
 
+            {plugin.impact && (
+              <Box
+                mb={6}
+                p={4}
+                bg="brand.bg"
+                borderLeft="3px solid"
+                borderColor="brand.accentHover"
+                borderRadius="0 8px 8px 0"
+              >
+                <Text
+                  fontSize="9px"
+                  color="brand.accent"
+                  fontFamily="var(--font-mono)"
+                  letterSpacing="0.18em"
+                  textTransform="uppercase"
+                  fontWeight="700"
+                  mb={2}
+                >
+                  what this brings
+                </Text>
+                <Text fontSize="14px" color="brand.text" lineHeight={1.6}>
+                  {plugin.impact}
+                </Text>
+              </Box>
+            )}
+
             {plugin.details && (
               <Box mb={6}>
                 <Text
