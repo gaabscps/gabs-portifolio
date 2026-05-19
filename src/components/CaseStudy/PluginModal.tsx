@@ -46,17 +46,36 @@ const Gallery = ({ gallery }: { gallery: NonNullable<Plugin["gallery"]> }) => (
             transition="all var(--duration-fast) var(--ease-apple)"
             _hover={{ borderColor: "brand.accent", transform: "translateY(-2px)" }}
           >
-            <Box
-              as="img"
-              src={g.src}
-              alt={g.alt}
-              loading="lazy"
-              position="absolute"
-              inset={0}
-              w="100%"
-              h="100%"
-              objectFit="cover"
-            />
+            {g.kind === "video" ? (
+              <Box
+                as="video"
+                src={g.src}
+                aria-label={g.alt}
+                poster={g.poster}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                position="absolute"
+                inset={0}
+                w="100%"
+                h="100%"
+                objectFit="cover"
+              />
+            ) : (
+              <Box
+                as="img"
+                src={g.src}
+                alt={g.alt}
+                loading="lazy"
+                position="absolute"
+                inset={0}
+                w="100%"
+                h="100%"
+                objectFit="cover"
+              />
+            )}
           </Box>
           {g.caption && (
             <Text
