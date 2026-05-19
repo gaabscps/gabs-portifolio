@@ -973,17 +973,59 @@ export const projects: Project[] = [
     slug: "calendarfr",
     translationKey: "calendarfr",
     year: "2026",
-    startedAt: "2026-01",
+    startedAt: "2026-05",
     category: "personal tool",
     images: [],
-    skills: [skills.react, skills.next, skills.typescript],
+    skills: [skills.react, skills.typescript, skills.github],
     links: { route: "/work/calendarfr" },
-    status: "live",
+    status: "wip",
     cover: { kind: "custom", component: "MiniCalendar" },
-    stackChips: ["React", "PWA"],
+    stackChips: ["Vite + React", "Fastify", "Tiptap"],
     aiTool: "Claude",
     motivation:
       "Every year I'd buy a planner and drop it by February. Built one that lives where I already am.",
+    motivationContext: "— may 2026, the third unused planner on the shelf",
+    buildLog: [
+      {
+        date: "2026-05-08",
+        version: "v0.1",
+        title: "Monorepo and design system scaffolded before any feature.",
+        body: "Started with the boring parts on purpose: React 19 + Vite 5 in <ai>web/</ai>, Fastify 5 companion API in <ai>server/</ai>, shared types in a workspace package, a Playwright + Jest test harness, and a paper-textured design system (Caveat for the handwritten lines, Inter for everything functional, a 24px baseline grid enforced in e2e). Type coverage gate at 95% in CI before line one of business logic. The investment paid for itself by the second feature.",
+      },
+      {
+        date: "2026-05-09",
+        version: "v0.2",
+        title: "Server companion ships with the lazy-create data model.",
+        body: "Fastify API live with <ai>/api/days/:date</ai> (GET/PUT), Zod schemas on every request, atomic JSON writes. The data-model decision that shaped everything after: GET on an empty date returns an in-memory skeleton without persisting. A blank day is a real state, not a missing record — and the filesystem doesn't fill up with empty files for every date I might scroll past.",
+      },
+      {
+        date: "2026-05-10",
+        version: "v0.3",
+        title: "Daily page orchestrator stitches the experience together.",
+        body: "FEAT-012: one swipeable page per day — morning Intention header, an hourly Agenda from 06h to 23h, Priorities, Notes, Mood picker, evening Gratitude. Tiptap is the only component that knows what rich text is; the rest of the app treats it as a black box. HTML sanitization is restrictive on purpose — four inline tags allowed (bold, italic, underline, strike), mirrored on client and server. Less rope, fewer cuts.",
+        callouts: [
+          {
+            kind: "rule",
+            label: "the rule",
+            body: "One feature owns the library. Everyone else sees the abstraction. The day Tiptap breaks, exactly one file needs to change.",
+          },
+        ],
+      },
+      {
+        date: "2026-05-19",
+        version: "v0.4",
+        title: "Supabase migration begins — Fastify on the way out.",
+        body: "FEAT-030: traded the Fastify + JSON filesystem prototype for Supabase. Relational schema, RLS on every table, the React app talks to Supabase directly (no BFF). Three more FEATs queued — auth (email + password), days persistence, decommission Fastify. The migration roadmap was driven by the founders cohort pricing decision: multi-tenant and auth become mandatory the moment someone pays.",
+      },
+    ],
+    results: [
+      { value: "12", label: "days · foundation to Supabase migration" },
+      { value: "150", label: "commits" },
+      { value: "14", label: "features shipped" },
+      { value: "456", label: "test files · unit, integration, e2e" },
+    ],
+    retrospective:
+      "The thing I keep relearning: a feature that feels playful in the spec can quietly eat the build. FEAT-029 added ceremonial audio — quest completion sounds, day-complete fanfares. It was charming. Then I caught myself tuning sound timing instead of shipping the daily page, and ripped the whole system out the same week (<ai>chore(FEAT-029): drop the sound system entirely</ai>). What did pay off didn't feel rewarding while writing it: type coverage gated at 95%, dependency-cruiser blocking cross-feature imports, <ai>console.error</ai> wired to fail tests. Those are the rules that kept 14 features in 12 days from collapsing into one folder.",
   },
 
   // ============ ARCHIVE ============

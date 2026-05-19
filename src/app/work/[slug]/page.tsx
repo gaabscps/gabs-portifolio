@@ -37,8 +37,8 @@ const HEADLINES: Record<string, React.ReactNode> = {
   ),
   calendarfr: (
     <>
-      A planner that{" "}
-      <Box as="span" className="serif-italic" color="brand.accent" fontWeight="600">sticks</Box>.
+      A planner I actually{" "}
+      <Box as="span" className="serif-italic" color="brand.accent" fontWeight="600">open</Box>.
     </>
   ),
 };
@@ -51,7 +51,7 @@ const LEDES: Record<string, string> = {
   "ai-squad":
     "ai-squad is the workflow I built because using AI to code without one was eating my afternoons. Two squads (Discovery for fuzzy ideas, SDD for clear pitches), ten roles, three IDE targets, and a mechanical enforcement layer that makes bypass impossible. Every interactive gate is conversational; the Build phase runs unattended. AI is the keyboard. The workflow is the judgment.",
   calendarfr:
-    "Every year I'd buy a planner and abandon it by February — too lazy to dig through a bag to find it. CalendarFR lives where I already am.",
+    "CalendarFR is a digital bullet journal that lives in the browser. Every day is one page — morning intention, an hourly agenda, evening gratitude — with the paper aesthetic intact: a handwritten font, a paper-grain texture, a baseline grid that aligns like a real notebook. Five planners are still sitting half-empty in a drawer behind me. This one I open every day because it's where I already am.",
 };
 
 export async function generateStaticParams() {
