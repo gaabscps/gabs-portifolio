@@ -39,7 +39,7 @@ const HEADLINES: Record<string, React.ReactNode> = {
 
 const LEDES: Record<string, string> = {
   bettersmp:
-    "Most popular SMPs are abandoned AFK farms. You log in, find a corner, AFK overnight for diamonds. That's not playing. We wanted somewhere with actual things to do — and shipped 33 custom plugins to make it real.",
+    "BetterSMP is a self-hosted Minecraft multiplayer server — 33 custom Java plugins on top of the vanilla game that change how it's played. Popular servers degenerate into idle farms (players leave the game running overnight to collect rewards). We wanted somewhere with actual gameplay, and the only way to get it was to write the gameplay. AI wrote every line of Java; the architecture, security model, and balance decisions are mine.",
   soundwave:
     "I take a lot of meetings. I miss a lot of details. soundwave records, transcribes, and surfaces the parts I'd otherwise lose — and grades how I sound on the parts I want to improve.",
   calendarfr:
