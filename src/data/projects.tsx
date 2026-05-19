@@ -44,13 +44,13 @@ export const projects: Project[] = [
       {
         date: "2026-03-25",
         version: "v0.4",
-        title: "Global Missions — first daily-cadence loop.",
-        body: "One server-wide community mission per UTC day, tier-weighted (tier1: 15, tier2: 30, tier3: 55). Action-bar throttle and a 60-minute reminder were added after the first week — players were missing the toast on join.",
+        title: "First daily community goal goes live.",
+        body: "Shipped the first daily mission. Everyone online contributes to the same target, everyone shares the reward when it clears. The first week taught me the rest: every progress event was broadcast to every player on a status bar at the top of the screen, and during peak trading hours the screen flickered like an alarm. Added a per-player rate-limit and a join-day reminder.",
         callouts: [
           {
             kind: "changed",
             label: "changed by hand",
-            body: "<ai>AI</ai>'s first cut had no rate-limit on the action-bar feedback. With six players online it was already chat-flicker. I wrote a 5-second cooldown per player into the spec before the next try.",
+            body: "<ai>AI</ai>'s first cut had no rate-limit on the feedback channel. With six players online it was already flicker. I wrote a 5-second cooldown per player into the spec before the next try.",
           },
         ],
       },
@@ -58,26 +58,26 @@ export const projects: Project[] = [
         date: "2026-04-11",
         version: "v0.5",
         title: "World Events ship: Supply Drop + ELITE Mobs.",
-        body: "Random server-wide event every 4–12 hours: Supply Drop arena with mob waves (30s interval, 6 per wave, max 12), a mini-boss with 4× health, and a reward window for up to 5 players. ELITE Mobs spawn anywhere on the world map (48–14,750 blocks from spawn, max 12 alive at once) — players track them by cardinal hint or buy coordinates from whoever found them first.",
+        body: "Two of the biggest gameplay systems went live together. World Events: every few hours, an arena materializes somewhere with waves of enemies, a boss, and tiered rewards for the top survivors. ELITE Mobs: rare named enemies spawn at random in the open world, and players track them by cardinal direction — or buy the exact coordinates from whoever found them first. Information became the secondary economy.",
       },
       {
         date: "2026-04-26",
         version: "v0.7",
-        title: "Security sweep — six exploits closed in a day.",
-        body: "Community testers found a stack of item-name and lore exploits: a shulker box renamed \"SPAWNERS\" opened the shop GUI, command injection in a LuckPerms fallback that used <ai>player.getName()</ai> in a console dispatch, a sethome dupe via a 100ms /delhome race. Migrated item identity to PersistentDataContainer, charged sethome before the command instead of after, swapped console-string LuckPerms calls for the Java API.",
+        title: "Security sweep — six exploits closed in a weekend.",
+        body: "Community testers found a stack of exploits in one community-test weekend. A renamed container opened a shop screen it shouldn't have. A permissions command interpolated a username straight into the console — textbook injection. A purchase charged 100ms after the command, leaving a race to undo it before the bill landed. Six fixes shipped in one sweep — and every custom item on the server moved to typed-metadata identity to close that whole class of bug at the root.",
         callouts: [
           {
             kind: "rejected",
             label: "rejected",
-            body: "<ai>AI</ai>'s first patch for the rename exploit was a substring match on the inventory title. Players renamed their shulkers \"my spawners\" and bypassed it in five minutes. The real fix was checking InventoryType.CHEST first — boring, correct, written after I rejected the clever one.",
+            body: "<ai>AI</ai>'s first patch for the rename exploit was a substring match. Players renamed their containers around the substring and bypassed it in five minutes. The real fix was checking the inventory type first — boring, correct, written after I rejected the clever one.",
           },
         ],
       },
       {
         date: "2026-05-01",
         version: "v1.0",
-        title: "RPG launch — Miner profession live, Hunter and Farmer one week later.",
-        body: "First profession (Miner, T1–T4) shipped with NPC interactions, quest journal book, a BossBar compass HUD that points at the active quest target, and trust scaling per (player, npc) pair. Hunter and Farmer followed on 2026-05-02. The plugin has a real test suite — QuestCatalogueLintTest, AdvanceKindHandlerCoverageTest, CropAllowlistCoverageTest — because <ai>AI</ai> kept regressing the quest config validation.",
+        title: "RPG launch — Miner live, Hunter and Farmer a week later.",
+        body: "The RPG layer went live. Pick a class — Miner first, Hunter and Farmer a week later — walk a quest line of four tiers, build trust with the NPCs along the way. A compass at the top of the screen points at your active target. The quest definitions are YAML files: content as data. The plugin grew a real lint test suite because the AI kept silently regressing the schema between iterations, breaking quests in subtle ways nobody noticed until a player got stuck.",
         callouts: [
           {
             kind: "rule",
@@ -94,7 +94,7 @@ export const projects: Project[] = [
       { value: "6", label: "exploits closed · single sweep" },
     ],
     retrospective:
-      "I don't know Java. I never have. What I know is how to write the architecture, an observability plan, a test plan, and the scope of a thing — and how to stop AI when it's about to ship something that'll break in production. The biggest rollback came from one thing: I trusted Claude's defaults for security-adjacent code without writing what \"safe\" had to mean. A string-match on inventory titles that a player bypassed in five minutes by renaming a container. A console-dispatch that interpolated <ai>player.getName()</ai> directly into a permissions command — textbook command injection. A <ai>/sethome</ai> that charged 100ms after the command ran instead of before, leaving a race for <ai>/delhome</ai> to dodge the charge. Six exploits in one community-test pass, shipped in one sweep. The lesson generalizes: every listener that touches money, items, or permissions now gets acceptance criteria written before the first prompt — typed metadata for item identity (not strings, never strings), inventory-type guards on shop listeners, charge-before-action ordering, zero string interpolation into anything that runs as a privileged command. The rest is just typing.",
+      "I don't know Java. What I know is how to write the architecture, the observability plan, the test plan, and the scope — and how to stop AI when it's about to ship something that'll break in production. The biggest rollback wasn't a bug. It was me trusting Claude's defaults on security-adjacent code without writing what \"safe\" meant. A string-match on inventory titles that a player bypassed in five minutes by renaming a container. A console command that interpolated a username straight into a permissions call — textbook command injection. A purchase that charged 100ms after the command ran, leaving a race for the player to undo it before the bill landed. Six exploits in one community-test weekend, all shipped in one sweep. The lesson generalizes past Minecraft: anything that touches money, identity, or permissions gets its acceptance criteria written before the first prompt. The rest is typing.",
     plugins: [
       {
         // TODO assets:
@@ -102,14 +102,14 @@ export const projects: Project[] = [
         //   /bettersmp/world-events-supply-drop-rewards.png — winner reward screen showing $25,000 + 80 shards + "resource" crate key
         name: "World Events · Supply Drop",
         summary:
-          "A data-driven event runtime for the game world. Every 4–12 hours a scheduler draws a new event from a YAML catalog, spawns a protected zone at a safe random location, runs scripted enemy waves and a boss fight, and unlocks a tiered-reward window for the top 5 players who survive. New event types are added by editing the YAML — same code path, no redeploy.",
-        requestedBy: "the weekly hype moment, without a hardcoded handler per event",
+          "Every few hours, the world wakes up. An arena materializes somewhere on the map, enemy waves spawn, a boss appears, players race in for the loot drop.",
+        requestedBy: "the weekly hype moment",
         shippedAt: "2026-04",
         version: "v1.0.0",
         details:
-          "A 30-second poll drives a weighted draw from `events.yml`; on hit, a spawn location is rolled inside a 14,750-block sandbox (250-block boundary margin, up to 64 collision-safe retries). The event runtime then sequences: scripted enemy waves on a 30-second tick (6 per wave, max 2 active waves, capped at 12 total), a high-HP boss (4× health, 1.8× damage) that gates the reward chest, and a participation window for up to 5 winners. Difficulty rolls (easy / normal / hard / extreme) scale reward multipliers and combatant stats from a shared table. A Discord webhook fires the pre-alert so players can self-organize before the schedule passes.",
+          "The first cut was a hardcoded handler per event. The second put everything — wave timing, mob composition, reward tiers, difficulty curves — in a YAML config the runtime walks. Adding 'Eclipse Hunt' or 'Treasure Run' became a config diff, not a new plugin. Production taught me the rest: 1–2 hours between events burned players out, 12+ hours felt empty, and a Discord ping when one's incoming gave it gravity before it spawned.",
         myContribution:
-          "the data-driven event catalog over hardcoded handlers (one runtime, N event types). The participation gate (boss must die before the reward unlocks) to prevent free-riding. The 4–12 hour cadence after the 1–2 hour default burned players out — a balance call only the production traffic could surface. The Discord webhook as a presence signal so the event has gravity before it spawns.",
+          "Event catalogs as data, not code. New event types ship as config, not deploys.",
         gallery: [
           {
             src: "/bettersmp/world-events-supply-drop.mp4",
@@ -130,14 +130,14 @@ export const projects: Project[] = [
         //   /bettersmp/elite-mobs-purchase-coords.png — PurchaseConfirmGui screenshot: another player offering coordinates for sale, confirmation dialog with price
         name: "ELITE Mobs",
         summary:
-          "Information-as-currency as a feature. Rare named enemies spawn at random locations and drop tier-specific loot. The system only ever exposes a cardinal-direction hint (N/S/E/W) — not the exact coordinates — and pairs that with a confirmation-dialog primitive (PurchaseConfirmGui) that lets any player sell those coordinates to another for in-game currency. A two-sided market built on top of a positional-information asymmetry.",
+          "Rare named enemies spawn somewhere in the open world. Whoever finds one wins tier-specific loot.",
         requestedBy: "the anti-idle thesis, made literal",
         shippedAt: "2026-04",
         version: "v1.0.0",
         details:
-          "A configurable spawn loop runs every 20 minutes (2 enemies per cycle, capped at 12 alive at once). Spawn distance is 48–14,750 blocks from the world center, retried up to 20 times if the picked location fails a habitability check. Four difficulty tiers (EASY / NORMAL / HARD / EXTREME) each have their own reward table and bonus-drop pool. Players who have already found one can list its exact coordinates for sale through PurchaseConfirmGui — both sides get an audit-log chat record. The cardinal-direction HUD renders as a BossBar (a server-pushed top-of-screen indicator), which is the only HUD primitive that works identically on Java and Bedrock (Minecraft's two client platforms) via the Geyser protocol bridge.",
+          "The first version showed exact coordinates and killed itself in two days — finding the rare mob was just 'follow the marker.' I rewrote it to show only a cardinal hint (N/S/E/W) and built a confirmation-dialog UI where players could *sell* the exact coordinates to each other for in-game currency. Information became the most valuable item in the game. The rarest thing on the server isn't the loot — it's the location of the loot.",
         myContribution:
-          "the cardinal-hint-only rule — the AI's first cut exposed exact coordinates and killed the game in two days. The coords-as-currency secondary market built on top of that asymmetry. The weighted spawn pool that biases toward harder tiers mid-week so weekend players don't catch a stale rotation. Choosing BossBar as the HUD primitive specifically because it's the one rendering path that survives the Java↔Bedrock split.",
+          "Information as currency. The rarest item in the game is now 'where the rare item is.'",
         gallery: [
           {
             src: "/bettersmp/elite-mobs-spawn.mp4",
@@ -159,14 +159,14 @@ export const projects: Project[] = [
         //   /bettersmp/rpg-compass-bossbar.png — close-up of the BossBar at top of screen with the compass-style facing arrow toward the active quest target and the distance in blocks
         name: "RPG · Professions",
         summary:
-          "A schema-driven RPG layer on top of the game. Three character classes (Miner / Hunter / Farmer), each with four tiers of YAML-declared quests, a trust state per (player, NPC) pair, a quest journal book, and a top-of-screen compass HUD that points at the active target. The quest catalogue has its own lint test in the test suite — because the AI kept silently regressing the schema between iterations.",
+          "Pick a class — Miner, Hunter, or Farmer — and walk a quest line of four tiers. NPCs you build trust with. A book that tracks your journal. A compass at the top of the screen that points at your next target.",
         requestedBy: "depth, not grind — and content that didn't break every time the AI touched it",
         shippedAt: "2026-05",
         version: "v1.0.0",
         details:
-          "Each class runs T1 → T4 quest YAMLs validated by a real JUnit lint suite (QuestCatalogueLintTest, AdvanceKindHandlerCoverageTest, CropAllowlistCoverageTest). Quest types include SELL_VOLUME (polled every 5 seconds against the sell plugin's ledger), kill counts, gather counts, and NPC delivery. The compass HUD repaints every server tick (20 ticks/s) using `atan2` for facing and Euclidean distance — cheap enough to run for every online player concurrently. Trust state is keyed by the composite (player_uuid, npc_id) and gates higher-tier reward eligibility. Persistence flushes every 5 minutes plus on logout, with a Bukkit-tick UTC-midnight rollover poll mirroring the Global Missions plugin.",
+          "The quests themselves live in YAML files, one per class-tier. That decision had a cost: Claude kept silently regressing the schema between iterations, breaking quests in subtle ways nobody noticed until a player got stuck. So the plugin grew a real lint test suite that fails the build if the YAML drifts from its contract. Six classes were in the original brief; three was the right size for a 12-week launch. Under-promise, ship, expand.",
         myContribution:
-          "Cutting the brief from six classes to three was the right size for a 12-week launch — under-promise, ship, then expand. Trust-as-progression instead of XP-as-progression so the system has narrative gravity. The lint test suite was a direct response to the AI silently breaking the YAML schema mid-iteration — without it, the data is in flux and the game is unshippable. The Better+ discount on profession-switch as a soft monetization lane that doesn't gate gameplay.",
+          "Content is data, and data needs tests. The lint suite stopped a regression class the AI kept reintroducing.",
         gallery: [
           {
             src: "/bettersmp/rpg-profession-menu.png",
@@ -192,14 +192,14 @@ export const projects: Project[] = [
         //   /bettersmp/auction-house-history.png — /ah history view: past sales with timestamp, buyer, price
         name: "Auction House",
         summary:
-          "A small player-to-player marketplace with a deliberately small DB. Players list items for sale, browse by category and substring, buy out instantly, and audit their own sales history. The schema is two tables, three named indexes, and integer cents for prices — picked one size below the obvious answer (SQLite over Postgres) because a 100-player server doesn't need the operational tail of a separate DB process.",
-        requestedBy: "a marketplace primitive — without standing up Postgres for it",
+          "Players list items, others browse by name or category, instant buyout. A small player-to-player marketplace.",
+        requestedBy: "to replace shouting prices in chat",
         shippedAt: "2026-02",
         version: "v1.0.0",
         details:
-          "Embedded SQLite via xerial sqlite-jdbc 3.51.2.0. Two tables: `listings` (id, seller_uuid, seller_name, price_cents, created_at as ISO-8601 TEXT, material, search_key, item_blob) and `sales` (same shape + sold_at as ISO-8601 TEXT). Three indexes, each named for the read it serves: `idx_listings_price` for the price-sorted browse, `idx_listings_search` for the substring match, `idx_listings_seller` for the per-seller view. Prices are stored as integer cents to avoid floating-point drift. Two real migrations live in the repo and ship versioned: epoch-ms → ISO-8601 TEXT for `created_at`, and `price` → `price_cents`. Payment goes through Vault (the standard economy API for Minecraft servers); shulker (a portable container item) listings hook into the read-only preview plugin so buyers can inspect the bagged inventory before paying.",
+          "Most servers reach for Postgres for this. I picked embedded SQLite — one JAR, no separate process to babysit, no DB team. A 100-player server doesn't need the operational tail of a real database. The interesting bug got caught in review: Claude's first draft stored prices as floating-point doubles. Money in floats is the classic mistake nobody notices until reconciliation breaks. Switched to integer cents before deploy. Two migrations later (I changed my mind on storage shape twice), still embedded, still fast.",
         myContribution:
-          "Picking SQLite over Postgres — a 100-player server doesn't need the operational cost of a separate DB process; the embedded option ships in one JAR. Integer cents over floating-point was caught before deploy when the AI's draft used doubles for prices. Naming the indexes after the reads they serve, not the columns, so future me knows what they're for. Two real migrations because I changed my mind on storage shape — both versioned, both replayable.",
+          "Picked the smaller database. Embedded SQLite, no operational tail, ships in one JAR.",
         gallery: [
           {
             src: "/bettersmp/auction-house-listings.png",
@@ -224,14 +224,14 @@ export const projects: Project[] = [
         //   /bettersmp/global-missions-menu.png — /globalmission GUI showing the day's mission card, server-wide progress bar, contributors leaderboard
         name: "Global Missions",
         summary:
-          "A daily community goal where feedback rate is a load-bearing concern. One mission per UTC day, shared target across all online players, tier-weighted (15 / 30 / 55) so the difficulty distribution feels right over a week. Progress is broadcast to players through a rate-limited action-bar (one line above the hotbar) so the same event-emitting code doesn't melt the user's screen when six players sell items in the same second.",
-        requestedBy: "a daily reason to log in — and a stress test for our event throttling",
+          "One server-wide goal per day. Everyone contributes, everyone shares the same reward when it clears.",
+        requestedBy: "a daily reason to log in that didn't depend on grinding alone",
         shippedAt: "2026-03",
         version: "v1.0.0",
         details:
-          "UTC rollover is polled every server second (20 ticks). Dirty progress is flushed to disk every 30 seconds. The user-facing feedback channel — the action-bar — is throttled to one message per player per 5 seconds, because the same progress event can be triggered by every market sale and would otherwise produce a flicker storm. Reminders: a title-card toast on the first login of the day, and a periodic action-bar every 60 minutes if your contribution is still zero. Mission catalog and contributors leaderboard are exposed through PlaceholderAPI (the standard interop layer for Minecraft HUD plugins) so any HUD can render them without coupling.",
+          "The interesting problem wasn't the goal — it was the feedback channel. Every item sold triggered a progress update broadcast to every player on the action-bar (a thin status line above the hotbar). With six people online and a busy market, the screen flickered like an alarm. A 5-second throttle per player turned it from a fire hose into a heartbeat. Feedback rate is a load-bearing concern; the AI's first cut had no backpressure on user-facing events.",
         myContribution:
-          "The throttle constants — the AI's defaults flickered the action-bar with six concurrent players online; I wrote the 5-second cooldown into the spec before the next prompt. Tier weights tuned over a week of production data. Choosing server-wide over per-player was the design call: the social pressure of seeing the shared progress is the actual feature, not the reward.",
+          "Feedback rate is a load-bearing concern. A 5-second throttle saved the chat window from itself.",
         gallery: [
           {
             src: "/bettersmp/global-missions-toast.png",
@@ -248,14 +248,14 @@ export const projects: Project[] = [
       {
         name: "Pets",
         summary:
-          "Cosmetic companions enforced by listener cancellation, not by docs. 15 entries in the V1 catalog, each a vanilla game entity (bee, wolf, fox, etc.) with every harmful interaction it could normally produce — taking damage, dropping items, attacking players, burning, changing blocks — cancelled at the highest-priority hook. The cosmetic-only contract is a code-level invariant, not a configuration toggle.",
-        requestedBy: "the line we wouldn't cross on monetization — and a contract the runtime enforces",
+          "Fifteen cosmetic companions. A bee, a wolf, a baby axolotl. They follow you, they sit on command, they can't do anything else.",
+        requestedBy: "the line we wouldn't cross on monetization",
         shippedAt: "2026-04",
         version: "v1.0.0",
         details:
-          "Pet entities are standard game mobs registered through PetService with seven interaction listeners cancelled at HIGHEST priority: EntityDamageEvent, EntityDamageByEntityEvent, EntityChangeBlockEvent, EntityCombustEvent, EntityPotionEffectEvent, EntityDropItemEvent, EntityDeathEvent. They despawn on quit, refresh on join and respawn, scale and float-offset are per-entry config. The Better+ Pup is the only entitlement-locked pet (gated by the subscription plugin's state, not by a separate purchase path). Storefront integration with Tebex (the de-facto Minecraft monetization SaaS) is intentionally kept off — the cosmetic catalog is the only paid surface, the system isn't shaped for upsell.",
+          "No damage. No item pickup. No attacks. No block changes. No status effects. The cosmetic-only contract isn't a paragraph in the docs; it's seven event listeners that cancel every harmful interaction the pet could otherwise produce, at the highest priority. The instant a pet starts behaving like a real mob, the listener cancels it before the engine commits. Docs aren't enforcement. Code is.",
         myContribution:
-          "The cosmetic-only contract is enforced at the listener layer, not documented as a rule — docs aren't enforcement, code is. The 15-pet catalog is keyed by biome variety, not rarity tiers, so there's no fake scarcity selling pressure. The choice to keep Tebex integration off the paid path: the system has no upsell surface beyond cosmetics, by design.",
+          "Docs aren't enforcement. The cosmetic-only contract is seven cancelled listeners, not a paragraph.",
         gallery: [
           { src: "/bettersmp/pet-better-pup.png", alt: "Better+ Pup pet — small pale wolf companion (baby, scale 0.72) following the player at ground level. Better+ entitlement icon visible.", caption: "Better+ Pup" },
           { src: "/bettersmp/pet-mini-enderman.png", alt: "Mini Enderman pet — half-scale (0.5) Enderman following silently behind the player", caption: "Mini Enderman" },
@@ -271,14 +271,14 @@ export const projects: Project[] = [
         //   /bettersmp/pvp-kit-duel.mp4 — 30s clip: two players accept a Kit Duel, teleport into the arena, fight, loser dies, 60s loot window opens, winner leaves early or claims
         name: "PvP · Duels",
         summary:
-          "Player-vs-player duels modeled as a transactional pattern. Entry snapshots the player's full inventory and restores it on exit — so a Kit Duel always fights with the kit, not with real gear smuggled in. A queue, an arena pool (protected by WorldGuard, the standard region-protection plugin), two modes (Classic and Kit), mutual surrender, a 60-second loot window after the kill, per-mode leaderboards. Win/loss stats are tracked separately per mode so the metric doesn't pollute across rule sets.",
-        requestedBy: "a duel system where the game-mode contract is enforced, not trusted",
+          "Players queue, get teleported to an arena, fight. Two modes: bring-your-own gear or use the standard kit.",
+        requestedBy: "a fight system that didn't ruin your real inventory",
         shippedAt: "2026-04",
         version: "v1.0.0",
         details:
-          "`/duel` opens the menu, `/duel top [kit]` shows the leaderboard, `/duel stats [player]` is the per-mode K/D. On entry, the player's inventory is snapshotted and replaced with the kit (Kit mode) or kept (Classic mode); on exit, the snapshot is restored unconditionally — even on disconnect mid-fight, even on crash. The loot window is exactly 60 seconds: the loser's dropped items stay on the ground for that window and only the winning player can pick them up. The duration tuned in production: 45s left losers angry, 90s let winners camp. Win/loss and elo-style stats are tracked separately per mode so a Classic-mode top player isn't shoved into the Kit leaderboard.",
+          "The first version trusted players to use the kit themselves. They brought enchanted netherite instead — the strongest gear in the game, no consequence if they lost. So I added an inventory snapshot on entry: your real gear is stashed, the kit is loaded, and on exit (win, lose, disconnect, mid-fight crash) the original is restored. Either the duel commits fully or it rolls back fully. Treat it like a database transaction.",
         myContribution:
-          "Treating entry/exit as a transaction with explicit snapshot/restore — the AI's first cut trusted the entry kit and players brought their real gear into Kit Duels. The 60-second loot window as a tuned constant, not a default. Per-mode stat partitioning so the leaderboard tracks the rule set, not the player. Restore-on-disconnect because Minecraft network drops are real and the worst version of a fight system is the one that costs you your inventory.",
+          "Treat the duel as a transaction. Snapshot on entry, restore on exit, no exceptions.",
         gallery: [
           {
             src: "/bettersmp/pvp-duel-menu.png",
@@ -299,14 +299,14 @@ export const projects: Project[] = [
         //   /bettersmp/better-plus-chat-suffix.png — chat screenshot showing a Better+ subscriber's message with the suffix tag rendered after their name
         name: "Better+",
         summary:
-          "The subscription tier built as a three-tier ownership separation. Payment lives in Tebex (the de-facto Minecraft billing SaaS); entitlement state lives in the player-log plugin (the system of record for everything entitlement-related); this plugin is the read-only consumer that turns active state into feature behavior. Expiring a subscription rolls back access, never data.",
+          "The subscription tier. A few dollars a month unlocks extra home slots, a chat suffix, an exclusive pet, and a discount on RPG profession changes.",
         requestedBy: "monetization that respected the no-pay-to-win rule",
         shippedAt: "2026-04",
         version: "v1.0.0",
         details:
-          "Active subscribers get a 50% discount on profession-switch costs in the RPG plugin (`profession-switch-discount: 0.5`), unlock two extra home slots, get a Better+ chat suffix, and gain access to the Better+ Pup cosmetic. The extra home slots are guarded at teleport time: if a subscription expires, those homes are not deleted — the data is preserved, only the teleport-in is blocked until the subscription renews. Tab-list prefix is prepended through the LuckPerms (the standard permissions plugin) group state.",
+          "Three plugins, three responsibilities. Payment lives in the third-party billing platform. A dedicated entitlement plugin owns the state — is this player subscribed, when does it expire. This plugin is the read-only consumer that turns active state into feature behavior. None of them know the others' internals. When a subscription expires, the perks are rolled back; the data is never deleted. The extra home slots you set up while subscribed stay where you left them — you just can't visit until you renew.",
         myContribution:
-          "The no-rugpull rule on expired data — the AI's first draft just deleted the extra homes when a subscription lapsed; that would have been the worst possible community message. Three-tier ownership: Tebex owns payment, player-log owns state, this plugin owns feature behavior. None of them know about the others' internals. Discount-not-bonus design for RPG: subscribers get a cheaper switch, not a stronger character — paid perks change the cost curve, never the win condition.",
+          "Expiring a subscription rolls back access, never data. Payment, state, and behavior are three separate plugins for a reason.",
         gallery: [
           {
             src: "/bettersmp/better-plus-status.png",
@@ -326,14 +326,14 @@ export const projects: Project[] = [
         //   /bettersmp/shards-crates.png — /shardcrates GUI: grid of crate types with shard price, sample loot preview
         name: "Shards",
         summary:
-          "A second, deliberately non-tradeable currency. Players earn it passively (per minute online) and spend it on crates and spawner purchases. Sits beside the primary tradeable currency without ever crossing into it — there is no `/shards pay`, no transfer, no listing. The arbitrage between the slot-machine economy and the marketplace economy is closed by design.",
+          "A second currency. Players earn it over time and spend it on lootbox-style crates.",
         requestedBy: "a chance-economy currency that doesn't mix with the marketplace",
         shippedAt: "2026-03",
         version: "v1.0.0",
         details:
-          "Earn rate is per-player, gated by a default-true permission (`bettersmpshards.earn`); ops can flip `bettersmpshards.noearn` on a per-account basis to exclude bots without touching the earn loop. Balances live in the plugin's own SQLite, exposed through PlaceholderAPI so any HUD can render them. Crate and spawner purchases use Vault for the primary-currency side and the shards balance for the shards side — two distinct ledgers, no rate between them. `/shards crates` and `/shardcrates` are aliases for the same shop GUI.",
+          "The interesting call was making shards non-tradeable. No /shards pay. No listings. No transfer between players. The marketplace runs on gold; the slot machine runs on shards; the two economies never touch. Without the wall, players would arbitrage one against the other in a week. Non-tradeability is a feature, not a limitation.",
         myContribution:
-          "The non-tradeable rule — keeps the chance economy from arbitraging against the marketplace. Two separate ledgers (currency and shards) so the slot-machine pool and the player-to-player market never compete for the same gold sink. The earn permission as the only ops-touchable knob: bots get excluded with a single grant, the earn loop itself doesn't need to know.",
+          "Non-tradeable by design. Two economies, never crossing — closes arbitrage before it can open.",
         gallery: [
           {
             src: "/bettersmp/shards-balance.png",
@@ -353,14 +353,14 @@ export const projects: Project[] = [
         //   /bettersmp/onboarding-tour.mp4 — 20–30s clip: new player joining, BossBar appearing after a 3-second delay, walking to the welcome hologram, REACH_RADIUS triggering, "Objective complete" title fading in, next step appearing with new objective
         name: "Onboarding",
         summary:
-          "First-run experience built as an explicit state machine. New players walk a two-tour funnel: a Core tour rewards a starter kit (gear + currency); an optional Extras tour rewards crate keys. Each step has one of six advance types — proximity, command, NPC interaction, daily-mission completion, vote confirmation — so the same engine drives every step transition. The state machine has explicit recovery paths: `/onboarding stuck` escalates to staff, `/onboardingadmin` lets ops reset or jump a player's step.",
-        requestedBy: "the funnel decides retention — and it has to survive a player getting stuck",
+          "First-time players get walked through the server. Two tours: a Core tour rewards a starter kit, an optional Extras tour rewards crate keys. A status bar at the top of the screen tracks your next step.",
+        requestedBy: "the funnel decides retention — players don't read rules, they follow the arrow",
         shippedAt: "2026-04",
         version: "v1.0.0",
         details:
-          "Six step advance types declared in YAML: REACH_RADIUS (enter a sphere), COMMAND_THEN_TELEPORT (run a command and be teleported out), COMMAND_PREFIX (run any of a command list), NPC_CLICK (right-click a Citizens NPC — Citizens is the standard NPC plugin), DAILY_COMPLETE (close any daily mission), VOTE_CAST (a vote confirmed by NuVotifier). The HUD repaints every 15 ticks (0.75s). A 5-second grace window after a step becomes active prevents chain-completion — without it, a stationary player could complete step N and step N+1 in the same frame. The starter kit is delivered through the compensation plugin so every grant is audit-logged; if delivery fails for any reason, the player's progress is preserved and an op-tier alert is dispatched.",
+          "The shape is a state machine; the steps come from a YAML file. The bug I caught early: a stationary player could complete two steps in the same frame because both their advance conditions were satisfied at once (proximity AND command). Five-second grace window per step before the next can fire, and the chain ordering held. If the starter kit fails to deliver — for any reason — the player's progress is preserved and staff gets paged. Losing your kit on minute one is the worst possible first impression.",
         myContribution:
-          "The 5-second grace window — the AI's first cut completed step N and N+1 in one frame because both passed their predicates simultaneously; without the grace window the state machine has no causal ordering. Splitting Core (starter kit) from Extras (crate keys) so the foundational reward isn't gated behind 30 minutes of demos. The `kit-failed` escalation path because losing your kit on minute one is the worst possible first impression — the system has to fail loudly when it fails at all.",
+          "State machines need causal ordering, even when state changes in milliseconds. The 5-second grace window made it real.",
         gallery: [
           {
             src: "/bettersmp/onboarding-bossbar.png",
@@ -381,14 +381,14 @@ export const projects: Project[] = [
         //   /bettersmp/tools-vein-mining.mp4 — 10–15s clip: player with Better Axe in hand breaks the bottom log of an oak tree, cascade breaks remaining logs (up to 64), every block drops at the player's feet, sound + particle feedback on each break
         name: "Tools · Better Pickaxe / Shovel / Axe",
         summary:
-          "Three custom items whose identity is enforced by typed metadata, not by their display name. After the security sweep showed that string-matching item names is a class of exploit (players can rename items in-game using an anvil), every custom item on the server moved to identity-by-PersistentDataContainer — a Bukkit-API mechanism for attaching typed, server-only metadata to items. The axe also implements bounded vein-mining: one swing fells up to 64 connected logs of the same species, with a single durability tick for the whole chain.",
-        requestedBy: "custom items that survive the rename attack — and a worked example of the PDC pattern across the codebase",
+          "Three custom mining tools earned through RPG progression. The axe also fells whole trees in one swing — up to 64 connected logs of the same species.",
+        requestedBy: "items that feel earned, not dropped",
         shippedAt: "2026-04",
         version: "v1.0.0",
         details:
-          "Tools are minted via `/givetools <player> <pickaxe|shovel|axe>` (op-only). Each tool's identity is a PersistentDataContainer key (`bettersmp_pickaxe`, `bettersmp_shovel`, `bettersmp_axe`) written on creation — the same defensive pattern applied to the portal blocks after the 2026-04-26 security sweep. The use permission is `bettersmp.tools.use`, default true; the identity check is PDC-first with no display-name or lore fallback for newly minted items. Vein-mining walks the contiguous log graph from the break point up to `MAX_LOGS = 64`, gated by an EnumSet of accepted log materials, and yields all drops at the original block. Durability damage applies once per chain, not per log.",
+          "The week after the security sweep, every custom item on the server moved to typed-metadata identity. Display names are user-mutable — players can rename items at an anvil and pretend any item is the rare one. Typed server-side keys aren't. The vein-mining cap matters too: without a hard limit, a chunk-spanning jungle tree locks up the main server thread for a noticeable beat.",
         myContribution:
-          "PDC-only identity as a rule across the codebase — not just here. After the security sweep, every custom item that could be renamed needed to move off display-name identity. The 64-log cap on vein mining is the difference between a useful tool and a server-stall: a chunk-spanning jungle tree without the cap chokes the main thread. Durability-once-per-chain because charging per log made the tool break in two trees and broke the gameplay loop.",
+          "Item identity lives in typed metadata, not strings. Display names are user-mutable; typed keys aren't.",
         gallery: [
           {
             src: "/bettersmp/tools-pickaxe-tooltip.png",
@@ -409,14 +409,14 @@ export const projects: Project[] = [
         //   /bettersmp/cosmetic-tags-chat.png — in-game chat with three messages from different players, one with the [ALPHA GOD] prefix in gold-bold, another with [active_streak], one plain
         name: "Cosmetic Tags",
         summary:
-          "Player-visible progression rewards rendered as chat and tab-list tags — with a strict invariant: one tag displayed per player at a time, no chat-color creep. Includes an automatic activity tag wired to consecutive-day logins (timezone-aware), and an auto-equip hook so when a player ticks up a tier in the RPG plugin, the corresponding tag is granted and displayed without an extra step.",
+          "Players earn chat tags as progression rewards. Only one displays at a time.",
         requestedBy: "progression has to be visible to other players, not just in a menu",
         shippedAt: "2026-03",
         version: "v1.0.0",
         details:
-          "Tags are defined in config (id → prefix / suffix). Per-player state lives in `players/<uuid>.yml`: an unlocked list plus a single currently-selected tag. The activity tag rule: three consecutive days online (timezone-aware, default `America/Sao_Paulo` so a 23:55 login the night before is the same calendar day from the user's perspective) unlocks or maintains `active_streak`; a missed day removes it on next login and the streak counter resets. Renders through the TAB plugin (the standard tab-list rendering plugin) and PlaceholderAPI for HUDs. Auto-equipped on RPG tier-up through a cross-plugin hook published by the cosmetic-tags service.",
+          "Multi-tag turned every name into a billboard nobody read. The Activity Tag is the fun one: log in three days in a row and you get a streak tag; miss a day and it's gone, you start over. Timezone-aware, because a 23:55 login on the user's clock should count as 'today,' not 'yesterday' in server UTC. The kind of detail that makes a daily-reward system feel arbitrary when it's wrong.",
         myContribution:
-          "One-tag-at-a-time as a hard rule — multi-tag turned every player name into a wall of prefixes that nobody read. Timezone-aware consecutive-day logic so streaks reflect the user's local day, not server UTC (the kind of bug that makes a daily-reward system feel arbitrary). Auto-equip on RPG tier-up via a cross-plugin hook so progression has visible payoff without making the player remember to switch.",
+          "One tag at a time. Multi-tag turned every name into a billboard.",
         gallery: [
           {
             src: "/bettersmp/cosmetic-tags-menu.png",
@@ -436,14 +436,14 @@ export const projects: Project[] = [
         //   /bettersmp/shulker-preview-ah-confirm.png — Auction House buy confirmation screen with a shulker listing: the shulker's contents shown inline (grid of 27 items) above the confirm/cancel buttons
         name: "Shulker Preview",
         summary:
-          "A read-only inventory view, built as a holder-tagged inventory with intercept-and-cancel on every take. Right-clicking a shulker box (a portable container item) in your inventory opens its 27 slots inline without placing it. Integrated with the Auction House: every shulker listing renders its contents on the buy-confirm screen, so buyers see what they're paying for before they pay.",
+          "Shulker boxes are portable containers you carry around in your inventory. This plugin lets you right-click one and see its contents without placing it.",
         requestedBy: "the marketplace only works if buyers can see what they're buying",
         shippedAt: "2026-04",
         version: "v1.0.0",
         details:
-          "Inventory right-click is detected via `ShulkerPreviewListener` with an `InventoryType.CHEST` guard (the same defensive pattern hardened across the codebase after the 2026-04-26 security sweep). `/shulkerpreview` is the mobile fallback for Bedrock clients, which can't right-click items in inventory. The preview is a `ShulkerPreviewHolder`-tagged inventory: every take/move operation on it is intercepted in the listener and cancelled before it commits — the preview is enforced read-only at the listener layer, not at the UI layer. The Auction House plugin calls the same service for its buy-confirm GUI so a shulker listing is never an opaque purchase.",
+          "Listing a shulker on the marketplace used to be a black box for buyers — you saw the icon, not the contents. So the preview lets them inspect before paying. The trick was making it genuinely read-only. The first cut just opened the real shulker. That's a 30-second item-duplication exploit, because what's read-only in the UI is read-write in the underlying inventory if nothing intercepts the take operation. The fix was a tagged inventory that cancels every take at the listener layer.",
         myContribution:
-          "Read-only via holder, enforced at the listener layer. The AI's first draft opened the real shulker — a 30-second item-duplication vector, because what's read-only in the UI is read-write in the underlying inventory if nothing intercepts the take operation. The Auction House integration closes the trust loop on shulker listings (the marketplace doesn't work without it). The mobile `/shulkerpreview` fallback because Bedrock clients were the loudest about wanting feature parity with Java.",
+          "Read-only enforced at the listener, not the UI. Closed the trust loop on the marketplace.",
         gallery: [
           {
             src: "/bettersmp/shulker-preview-rightclick.mp4",
