@@ -492,17 +492,153 @@ export const projects: Project[] = [
     slug: "soundwave",
     translationKey: "soundwave",
     year: "2026",
-    startedAt: "2025-11",
-    category: "personal tool",
+    startedAt: "2025-12",
+    category: "audio AI platform",
     images: [],
-    skills: [skills.react, skills.next, skills.typescript],
-    links: { route: "/work/soundwave" },
+    skills: [skills.react, skills.typescript, skills.github],
+    links: {
+      route: "/work/soundwave",
+      github: "https://github.com/gaabscps/soundwave-summit",
+    },
     status: "live",
+    // To swap the cover to a recording-flow video (kind: "video"), drop the file at
+    // public/soundwave/preview.mp4 and update the cover to:
+    //   cover: { kind: "video", src: "/soundwave/preview.mp4", alt: "SoundWave Summit — 20s recording flow: hit record → speak → stop → analysis appears with topics, decisions, action items" },
     cover: { kind: "custom", component: "Waveform" },
-    stackChips: ["Next", "Whisper"],
+    stackChips: ["Vite + React", "Supabase", "Google AI"],
     aiTool: "Claude",
     motivation:
       "I kept losing the good parts of meetings. Built a pipeline to surface what I missed.",
+    motivationContext: "— december 2025, after the third meeting I couldn't remember the next morning",
+    buildLog: [
+      {
+        date: "2025-12-10",
+        version: "v0.1",
+        title: "Scaffolded on Lovable. SaaS UI for audio in one evening.",
+        body: "Started from a Vite + React + shadcn template through Lovable Cloud — the entire UI shell, auth shapes, and routing landed before I wrote any business logic. Wanted to see the surface first, then carve out what would actually pay rent.",
+      },
+      {
+        date: "2025-12-11",
+        version: "v0.2",
+        title: "Migrated provider, hooked Stripe, set the first credits floor.",
+        body: "Default Lovable wiring went through OpenAI; switched the analysis path to Google AI in the same day because the latency on the long-transcript call was unworkable. Stripe + webhook for the paid plans, audio compression for upload size, first MVP price tiers and credits UX. Day 1 in prod was a marathon.",
+        callouts: [
+          {
+            kind: "rejected",
+            label: "rejected",
+            body: "<ai>AI</ai>'s default of \"just call the LLM with the full transcript\" was fine for 2-minute clips and unusable for a 50-minute meeting. Wrote the transcription-chain spec before any more prompts.",
+          },
+        ],
+      },
+      {
+        date: "2026-Q1",
+        version: "v0.6",
+        title: "Feature-based migration. Worker modularization.",
+        body: "Moved 7 domains (auth, analysis, recording, subscription, admin, dashboard, landing) into <ai>src/features/</ai>. Broke the audio worker apart: circuit-breaker, metrics, transcription-chain, jobs/, processing/. Centralized billing config in <ai>supabase/functions/_shared/billing-config.ts</ai> so the price math has exactly one source of truth.",
+      },
+      {
+        date: "2026-05-12",
+        version: "v0.9",
+        title: "Production-readiness sweep with my own ai-squad workflow.",
+        body: "Five Sessions of SDD pipeline: regenerated a corrupted <ai>types.ts</ai>, distinguished daily vs monthly credit reset in the dashboard UI, closed 17 of 20 npm-audit vulnerabilities, satisfied <ai>react-hooks/exhaustive-deps</ai> in three files. Roadmap shows 399 tests across 69 files passing on the gate; bundle at 762 kB (gzip 234 kB) flagged as the next thing to cut.",
+        callouts: [
+          {
+            kind: "changed",
+            label: "changed by hand",
+            body: "Bumped jspdf and a Vite v7 major out of the production sweep into a backlog session. Major bumps need their own spec — not a sub-bullet in a hardening pass.",
+          },
+        ],
+      },
+      {
+        date: "2026-05-18",
+        version: "v1.0",
+        title: "Public visibility control. Staging branch workflow doc.",
+        body: "FEAT-009: non-bypassable enforcement on analysis visibility — Postgres RLS + Edge Function check + client guard, three independent layers. CLAUDE.md added documenting the staging-branch workflow so the agents don't ship straight to prod.",
+        callouts: [
+          {
+            kind: "rule",
+            label: "the rule",
+            body: "Anything touching public/private visibility runs through Postgres RLS first. Client-side toggles are convenience, not control. <ai>AI</ai> caught me trying to gate on client state once. The hook escalated it before it shipped.",
+          },
+        ],
+      },
+    ],
+    results: [
+      { value: "399", label: "tests passing · 69 files" },
+      { value: "37", label: "migrations shipped" },
+      { value: "5mo", label: "scaffold to v1.0" },
+      { value: "234kB", label: "gzip bundle · under budget" },
+    ],
+    retrospective:
+      "I started this to capture the meetings I kept losing. What it became was the project I learned my own AI workflow on. The first day was a sprint: Lovable scaffold, provider migration off OpenAI, Stripe wired, MVP credits — all before the first user. The next five months were the opposite shape: feature-based migration, worker broken into modules, billing config centralized, three layers of visibility enforcement. The lesson that stuck: <ai>AI</ai> ships the surface fast and the foundation slow. The 762 kB bundle is what happens when you let it pile up — the cleanup PR has its own session because it deserves one.",
+  },
+
+  {
+    id: "ai-squad",
+    slug: "ai-squad",
+    translationKey: "aiSquad",
+    year: "2026",
+    startedAt: "2026-05",
+    category: "AI workflow",
+    images: [],
+    skills: [skills.typescript, skills.github],
+    links: {
+      route: "/work/ai-squad",
+      github: "https://github.com/gaabscps/ai-squad",
+      changelog: "https://github.com/gaabscps/ai-squad/blob/main/CHANGELOG.md",
+    },
+    status: "live",
+    cover: {
+      kind: "screenshot",
+      src: "/ai-squad/hero.svg",
+      alt: "ai-squad overview — fuzzy idea on the left flows through Discovery (Frame, Investigate, Decide) and SDD (Specify, Plan, Tasks, Build) into shipped code on the right",
+    },
+    stackChips: ["Python stdlib", "JSON schema", "Skills + Subagents"],
+    aiTool: "Claude",
+    motivation:
+      "Using AI to code without a workflow was eating my afternoons. Built the gates I kept forgetting to walk through.",
+    motivationContext: "— april 2026, after the fourth feature I'd half-built and abandoned",
+    buildLog: [
+      {
+        date: "2026-05-03",
+        version: "v0.1.0",
+        title: "Initial architecture — Discovery + SDD squads, capped concurrency.",
+        body: "Two squads, ten roles. Discovery: Frame → Investigate → Decide. SDD: Specify → Plan → Tasks → Build. Phase 4 runs unattended with up to 5 tasks in parallel, hash-based stall detection, and a blocker-specialist that writes a decision memo when anything escalates. MIT licensed, scaffolded as a mono-repo of skills + subagents.",
+      },
+      {
+        date: "2026-05-06",
+        version: "v0.2.0",
+        title: "audit-agent + mechanical hooks. Bypass becomes impossible.",
+        body: "Prompt-discipline alone wasn't enough — Claude would happily edit files outside <ai>.agent-session/</ai> when nothing physically stopped it. Added pure-stdlib Python 3 hooks that the harness enforces: <ai>guard-session-scope</ai>, <ai>block-git-write</ai>, <ai>verify-audit-dispatch</ai>, <ai>verify-output-packet</ai>. The audit-agent is the last gate before handoff and refuses if the dispatch manifest doesn't reconcile against the output packets.",
+        callouts: [
+          {
+            kind: "rule",
+            label: "the rule",
+            body: "Discipline that lives only in a prompt is not discipline. If the agent can ignore it, eventually it will. Hooks moved every load-bearing rule from \"the prompt asks for X\" to \"the runtime refuses non-X.\"",
+          },
+        ],
+      },
+      {
+        date: "2026-05-06",
+        version: "v0.3.0",
+        title: "Three runtimes, one source. Cursor and Kiro deploy paths.",
+        body: "Same day as 0.2.0. Cursor export converts each Skill to a Cursor-compatible artifact and merges <ai>squads/sdd/hooks/cursor-hooks.json</ai> into the user's <ai>~/.cursor/hooks.json</ai>. Kiro path converts every Skill and Subagent to a Custom Agent JSON with per-agent hook wiring so <ai>guard-session-scope</ai> only fires for the orchestrator, not the dev. Three IDE targets from one set of source files.",
+      },
+      {
+        date: "2026-05-19",
+        version: "0.4 · unreleased",
+        title: "Canonical status enum + committer subagent.",
+        body: "Single source-of-truth for dispatch status lives in <ai>shared/schemas/dispatch-manifest.schema.json</ai>; Python and TypeScript consumers derive their enums from it at runtime. Added a <ai>committer</ai> subagent (haiku model) that auto-commits the working tree at the end of Phase 4 when verdict is <ai>done</ai>. Deprecated the <ai>partial</ai> status; full removal planned for vNext+1.",
+      },
+    ],
+    results: [
+      { value: "10", label: "roles in the pipeline" },
+      { value: "59/59", label: "smoke tests · PASS" },
+      { value: "3", label: "IDE runtimes · Claude / Cursor / Kiro" },
+      { value: "16d", label: "v0.1 to v0.4" },
+    ],
+    retrospective:
+      "What I wanted from this was a workflow that survived me forgetting to be disciplined. The first cut was all prompts — long, careful, full of \"you must\" language. It worked when I read every output. It failed the moment I trusted Phase 4 to run unattended. The fix was hooks: every load-bearing rule moved from \"the prompt asks\" to \"the runtime refuses.\" The second insight was multi-runtime — same Skills source, three IDE targets — because the workflow shouldn't care which editor I'm in this month. The third was the audit-agent: a single read-only reconciliation step at the end that refuses to hand off if the dispatch manifest doesn't match what actually ran. Boring, mechanical, and the reason I now trust the pipeline.",
   },
 
   {

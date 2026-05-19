@@ -29,6 +29,12 @@ const HEADLINES: Record<string, React.ReactNode> = {
       <Box as="span" className="serif-italic" color="brand.accent" fontWeight="600">actually</Box> use.
     </>
   ),
+  "ai-squad": (
+    <>
+      A workflow that survives me{" "}
+      <Box as="span" className="serif-italic" color="brand.accent" fontWeight="600">forgetting</Box> to be disciplined.
+    </>
+  ),
   calendarfr: (
     <>
       A planner that{" "}
@@ -41,7 +47,9 @@ const LEDES: Record<string, string> = {
   bettersmp:
     "BetterSMP is a Minecraft multiplayer server I run with my brother — 33 custom Java plugins on top of the vanilla game. Popular servers turn into idle farms (players leave the game running overnight for rewards); we wanted somewhere with actual gameplay, and the only way to get it was to write the gameplay. AI writes every line of Java. I write the architecture, the security model, and the calls that decide if it's fun.",
   soundwave:
-    "I take a lot of meetings. I miss a lot of details. soundwave records, transcribes, and surfaces the parts I'd otherwise lose — and grades how I sound on the parts I want to improve.",
+    "I take a lot of meetings. I miss a lot of details. soundwave records, transcribes, and surfaces the parts I'd otherwise lose — topics, decisions, action items — and grades how I sound on the parts I want to improve.",
+  "ai-squad":
+    "AI coding tools are powerful but unstructured. ai-squad adds the missing layer: interactive spec gates, parallel autonomous review, and a mechanical audit trail enforced by runtime hooks — so the loop survives me trusting it unattended.",
   calendarfr:
     "Every year I'd buy a planner and abandon it by February — too lazy to dig through a bag to find it. CalendarFR lives where I already am.",
 };
