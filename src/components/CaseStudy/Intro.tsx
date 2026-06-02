@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Flex, Text } from "@chakra-ui/react";
 import type { Project } from "@/types/project";
 

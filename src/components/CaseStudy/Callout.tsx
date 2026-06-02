@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Text } from "@chakra-ui/react";
 import type { Callout as CalloutType } from "@/types/project";
 

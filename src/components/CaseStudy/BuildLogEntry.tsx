@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Flex, Text } from "@chakra-ui/react";
 import type { BuildLogEntry as Entry } from "@/types/project";
 import { AiMark } from "./AiMark";

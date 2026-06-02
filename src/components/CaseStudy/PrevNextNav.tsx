@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Grid, Text } from "@chakra-ui/react";
 import Link from "next/link";
 

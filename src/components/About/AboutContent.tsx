@@ -3,6 +3,8 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { Nav } from "@/components/Home/Nav";
 import { Footer } from "@/components/Home/Footer";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { ProjectPlaceholder } from "@/components/ProjectPlaceholder";
 
 export default function AboutContent() {
   return (
@@ -31,6 +33,34 @@ export default function AboutContent() {
         >
           Took the long way to{" "}
           <Box as="span" className="serif-italic" color="brand.accent" fontWeight="600">code</Box>.
+        </Box>
+
+        <Box
+          display="inline-block"
+          mb={6}
+          borderRadius="50%"
+          border="2px solid"
+          borderColor="brand.accent"
+          overflow="hidden"
+          transition="transform var(--duration-fast) var(--ease-apple)"
+          _hover={{ transform: "scale(1.05)" }}
+        >
+          <ImageWithFallback
+            src="https://gabsportifolio.s3.amazonaws.com/img/About/perfil.png"
+            alt="Gabriel Andrade"
+            width={200}
+            height={200}
+            priority
+            style={{ display: "block" }}
+            fallback={
+              <ProjectPlaceholder
+                width="200px"
+                height="200px"
+                borderRadius="50%"
+                iconSize="60px"
+              />
+            }
+          />
         </Box>
 
         <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={5}>

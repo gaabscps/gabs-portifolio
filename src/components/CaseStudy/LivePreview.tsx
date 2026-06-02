@@ -1,5 +1,3 @@
-"use client";
-
 import { Box } from "@chakra-ui/react";
 import { COVER_COMPONENTS } from "@/components/CoverVisuals";
 import type { ProjectCover } from "@/types/project";
