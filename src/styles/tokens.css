@@ -71,16 +71,12 @@
   z-index: 1;
 }
 
-/* On the home, sections are transparent so the living background shows through
-   them. This overrides the legacy opaque grey section background from reset.css. */
-.bg-live section {
+/* reset.css gives every <section> a legacy opaque grey background (#181717).
+   On the dark textured pages we want sections transparent so the page's own
+   background shows through. Sections that need their own fill set it inline
+   (e.g. the case-study TerminalWindow), which wins over this rule. */
+.bg-textured section {
   background-color: transparent;
-}
-
-/* Full-bleed journey sections use 100vw; clip (not hidden) prevents the
-   scrollbar-width horizontal overflow without breaking sticky positioning. */
-.bg-live {
-  overflow-x: clip;
 }
 
 /* Hide the static journey fallback for JS users so the pre-animation content
