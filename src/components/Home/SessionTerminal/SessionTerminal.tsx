@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
-import { useJourneyScroll } from "../TerminalJourney/useJourneyScroll";
+import { useJourneyScroll } from "./useJourneyScroll";
 
 export type SessionStep =
   | { kind: "cmd"; text: string; weight?: number }

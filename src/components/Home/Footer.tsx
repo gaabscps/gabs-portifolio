@@ -22,7 +22,7 @@ export const Footer = () => (
     py={10}
     borderTop="1px solid"
     borderColor="brand.borderSubtle"
-    bg="brand.deep"
+    bg="#0c0a14"
   >
     <Grid templateColumns={{ base: "1fr", md: "2fr 1fr 1fr" }} gap={{ base: 8, md: 12 }}>
       <Box>
