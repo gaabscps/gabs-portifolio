@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
+import { usePathname, useRouter } from "next/navigation";
 import { runCommand, completeCommand, type TerminalLine } from "./commands";
 import { loadSession, saveSession, setUsed, type Entry } from "./session";
+import { promptPath } from "./filesystem";
 
 const toneColor: Record<string, string> = {
   default: "brand.textSecondary",
@@ -27,6 +29,10 @@ export function Terminal({ onClose }: { onClose: () => void }) {
   // Output that is still "typing out" line by line (terminal-writing effect).
   const [pending, setPending] = useState<TerminalLine[]>([]);
   const [charN, setCharN] = useState(0);
+
+  const pathname = usePathname();
+  const router = useRouter();
+  const cwdPrompt = promptPath(pathname || "/");
 
   const inputRef = useRef<HTMLInputElement>(null);
   const logRef = useRef<HTMLDivElement>(null);
@@ -66,14 +72,22 @@ export function Terminal({ onClose }: { onClose: () => void }) {
   const submit = () => {
     const input = value;
     let cleared = false;
-    const out = runCommand(input, { clear: () => { cleared = true; } });
+    const out = runCommand(input, {
+      clear: () => { cleared = true; },
+      cwd: pathname || "/",
+      navigate: (route) => router.push(route),
+    });
     if (cleared) {
       setEntries([]);
       setPending([]);
       setCharN(0);
     } else {
       // Flush any in-progress stream to committed, add the prompt, queue the new output.
-      setEntries((prev) => [...prev, ...pending.map((line) => ({ line })), { prompt: input }]);
+      setEntries((prev) => [
+        ...prev,
+        ...pending.map((line) => ({ line })),
+        { prompt: input, cwd: cwdPrompt },
+      ]);
       setPending(out);
       setCharN(0);
     }
@@ -174,7 +188,7 @@ export function Terminal({ onClose }: { onClose: () => void }) {
               <Box key={i} color="brand.text" whiteSpace="pre-wrap">
                 <Text as="span" color="brand.text">gabriel</Text>
                 <Text as="span" color="brand.accent">.dev</Text>
-                <Text as="span" color="brand.textMuted" mx={1}>~</Text>
+                <Text as="span" color="brand.textMuted" mx={1}>{en.cwd ?? "~"}</Text>
                 <Text as="span" color="brand.accent" fontWeight="700" mr={2}>$</Text>
                 {en.prompt}
               </Box>
@@ -193,7 +207,7 @@ export function Terminal({ onClose }: { onClose: () => void }) {
         </Box>
 
         <Flex align="center" gap={2} px={4} py={3} borderTop="1px solid" borderColor="brand.border">
-          <Text color="brand.accent" fontSize="13px" flex="none">~ $</Text>
+          <Text color="brand.accent" fontSize="13px" flex="none">{cwdPrompt} $</Text>
           <Box
             as="input"
             ref={inputRef}

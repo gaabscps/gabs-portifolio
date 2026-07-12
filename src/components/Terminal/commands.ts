@@ -1,9 +1,10 @@
 // src/components/Terminal/commands.ts
 import { siteConfig } from "@/config/site";
+import { listDir, resolvePath, promptPath } from "./filesystem";
 
 export type Tone = "default" | "accent" | "green" | "dim" | "error";
 export type TerminalLine = { text: string; tone?: Tone };
-export type CommandContext = { clear: () => void };
+export type CommandContext = { clear: () => void; cwd: string; navigate: (route: string) => void };
 export type CommandHandler = (args: string[], ctx: CommandContext) => TerminalLine[];
 
 const line = (text: string, tone?: Tone): TerminalLine => ({ text, tone });
@@ -14,6 +15,7 @@ export const COMMANDS: Record<string, CommandHandler> = {
     line("  whoami        who is this"),
     line("  stack         the tools I build with"),
     line("  contact       how to reach me"),
+    line("  ls / cd / pwd navigate the site as a filesystem"),
     line('  ask "..."     ask me something (scripted for now)'),
     line("  sudo hire-me  ;)"),
     line("  clear         wipe the screen"),
@@ -52,6 +54,22 @@ export const COMMANDS: Record<string, CommandHandler> = {
     else if (q.includes("ai")) answer = "AI writes a lot of my code now. My job is the architecture, the tests, and knowing when to stop it before it ships something that breaks.";
     else answer = "Good question. The short version: I like shipping small, correct things and improving them in the open.";
     return [line(answer), line("[scripted answer · the real AI is coming soon]", "dim")];
+  },
+  pwd: (_args, ctx) => [line(promptPath(ctx.cwd))],
+  ls: (args, ctx) => {
+    const target = args[0] ? resolvePath(ctx.cwd, args[0]) : ctx.cwd;
+    if (!target) return [line(`ls: no such directory: ${args[0]}`, "error")];
+    const entries = listDir(target);
+    if (!entries) return [line(`${promptPath(target)} is a page. cd .. to go up.`, "dim")];
+    return entries.map((e) => line(`  ${e.dir ? e.name + "/" : e.name}`, e.dir ? "accent" : "default"));
+  },
+  cd: (args, ctx) => {
+    const target = args.join(" ");
+    const route = resolvePath(ctx.cwd, target);
+    if (!route) return [line(`cd: no such directory: ${args[0] ?? ""}`, "error")];
+    if (route === ctx.cwd) return [line(`already in ${promptPath(route)}`, "dim")];
+    ctx.navigate(route);
+    return [line(`cd ${promptPath(route)}`, "dim")];
   },
 };
 

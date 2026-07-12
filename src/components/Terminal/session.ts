@@ -1,6 +1,6 @@
 import type { TerminalLine } from "./commands";
 
-export type Entry = { prompt?: string; line?: TerminalLine };
+export type Entry = { prompt?: string; cwd?: string; line?: TerminalLine };
 export type SessionState = { entries: Entry[]; past: string[] };
 
 export const SESSION_KEY = "gabriel:terminal";
