@@ -19,7 +19,7 @@ export default function WorkPage() {
     year: p.year,
   }));
   return (
-    <Box className="bg-textured" minH="100vh" color="brand.text" display="flex" flexDirection="column">
+    <Box className="bg-textured bg-live" minH="100vh" color="brand.text" display="flex" flexDirection="column">
       <Nav active="work" />
       <Box maxW="1200px" w="100%" mx="auto" flex="1">
         <Box px={{ base: 5, md: 8 }} pt={12} pb={4}>
