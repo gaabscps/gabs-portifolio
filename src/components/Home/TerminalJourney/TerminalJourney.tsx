@@ -86,9 +86,10 @@ export function TerminalJourney({
   // Slide in from the left (enter), hold center, then a slower slide-out to the
   // right. Viewport-relative (vw) so it fully clears any screen width.
   const slideX = !active ? 0 : track(progress, [[0, -60], [0.12, 0], [0.68, 0], [1, 125]]);
-  // Blur grows during the exit for a soft "whoosh" as it leaves.
-  const blur = !active ? 0 : track(progress, [[0, 0], [0.68, 0], [1, 12]]);
-  const fade = !active ? 1 : track(progress, [[0, 1], [0.92, 1], [1, 0]]);
+  // Blur and fade only at the very end: the terminal slides out sharp, then
+  // blurs and fades in the final moment for a clean finish.
+  const blur = !active ? 0 : track(progress, [[0, 0], [0.9, 0], [1, 14]]);
+  const fade = !active ? 1 : track(progress, [[0, 1], [0.9, 1], [1, 0]]);
 
   const prompt = (
     <Text as="span" fontFamily="var(--font-mono)">
