@@ -87,16 +87,16 @@ export const LivingBackground = () => {
     };
 
     const frame = () => {
-      smoothVel += (velocity - smoothVel) * 0.08;
+      smoothVel += (velocity - smoothVel) * 0.16;
       velocity *= 0.9;
 
       ctx.clearRect(0, 0, W, H);
-      paintGlow(0.04 + progress * 0.15);
+      paintGlow(0.05 + progress * 0.18);
 
-      const drift = 1 + progress * 1.8;
+      const drift = 1.3 + progress * 2.8;
       for (const p of parts) {
-        p.y -= (0.1 + p.z * 0.45) * drift;
-        p.x += smoothVel * p.z * 0.3;
+        p.y -= (0.18 + p.z * 0.7) * drift;
+        p.x += smoothVel * p.z * 0.95;
         if (p.y < -4) {
           p.y = H + 4;
           p.x = Math.random() * W;
@@ -104,8 +104,8 @@ export const LivingBackground = () => {
         if (p.x < -4) p.x = W + 4;
         else if (p.x > W + 4) p.x = -4;
 
-        const a = 0.1 + p.z * 0.4 * (0.5 + progress * 0.5);
-        const streak = Math.min(Math.abs(smoothVel) * p.z * 0.5, 20);
+        const a = 0.14 + p.z * 0.5 * (0.5 + progress * 0.5);
+        const streak = Math.min(Math.abs(smoothVel) * p.z * 1.3, 46);
         const color = `rgba(200,150,255,${a.toFixed(3)})`;
         if (streak > 2) {
           ctx.strokeStyle = color;

@@ -2,6 +2,7 @@
 
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { useJourneyScroll } from "./useJourneyScroll";
+import { useJourneyPlayhead } from "./useJourneyPlayhead";
 import { buildBeats, beatBounds } from "./beats";
 
 const START = 0.06;
@@ -32,21 +33,24 @@ export function TerminalJourney({
 }) {
   const stat = endStat ?? `${items.length} shown`;
   const { ref, active, progress } = useJourneyScroll();
+  const t = useJourneyPlayhead(ref, active);
   const beats = buildBeats(items.length);
   const bounds = beatBounds(beats, START, END);
 
-  // Local progress within a beat, clamped 0..1.
+  // The playhead `t` drives the terminal content (typing, tool, streaming): it
+  // is monotonic and auto-plays once pinned, accelerated by scroll and eased to
+  // completion near the end. The reversible scroll `progress` drives the zoom.
   const local = (i: number) => {
     const [a, b] = bounds[i];
-    return Math.max(0, Math.min(1, (progress - a) / (b - a)));
+    return Math.max(0, Math.min(1, (t - a) / (b - a)));
   };
-  const reached = (i: number) => progress >= bounds[i][0];
+  const reached = (i: number) => t >= bounds[i][0];
 
-  // Command typing scrubbed by scroll (fully shown when inactive).
+  // Command types out along the playhead (fully shown when inactive).
   const cmdLocal = active ? local(0) : 1;
   const typedCount = Math.round(cmdLocal * command.length);
   const typedCmd = command.slice(0, typedCount);
-  const cmdTyping = active && progress >= bounds[0][0] && progress < bounds[0][1];
+  const cmdTyping = active && t >= bounds[0][0] && t < bounds[0][1];
 
   const toolIdx = 1;
   const showTool = !active || reached(toolIdx);
@@ -55,7 +59,11 @@ export function TerminalJourney({
   const itemBeatIndex = (i: number) => 2 + i;
   const showItem = (i: number) => !active || reached(itemBeatIndex(i));
   const endShown = !active || reached(beats.length - 1);
-  const status = !active ? "done" : progress < START ? "idle" : progress > END ? "done" : "running";
+  const status = !active ? "done" : t <= 0 ? "idle" : t >= 1 ? "done" : "running";
+
+  // Reversible spatial effect: the terminal zooms in as the section scrolls
+  // into place (and back out on the way up), independent of the playhead.
+  const zoom = !active ? 1 : 0.92 + (Math.min(progress, 0.25) / 0.25) * 0.08;
 
   const prompt = (
     <Text as="span" fontFamily="var(--font-mono)">
@@ -76,6 +84,9 @@ export function TerminalJourney({
       sx={{ backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}
       w={{ base: "100%", md: "min(880px, 92vw)" }}
       fontFamily="var(--font-mono)"
+      transform={`scale(${zoom})`}
+      transformOrigin="center"
+      willChange="transform"
     >
       <Flex align="center" gap={3} px={4} py={3} borderBottom="1px solid" borderColor="brand.border" bg="rgba(8,6,14,.5)" fontSize="11px" color="brand.textMeta" aria-hidden="true">
         <Flex gap="6px">{light("#ff5f57")}{light("#febc2e")}{light("#28c840")}</Flex>
@@ -136,7 +147,7 @@ export function TerminalJourney({
 
   // Active: tall wrapper creates scroll distance; sticky stage pins the terminal.
   return (
-    <Box as="section" ref={ref} position="relative" h={{ base: "200vh", md: "440vh" }}>
+    <Box as="section" ref={ref} position="relative" h={{ base: "140vh", md: "200vh" }}>
       <Flex position="sticky" top={0} h="100vh" align="center" justify="center" px={{ base: 4, md: 8 }} overflow="hidden">
         {terminal}
       </Flex>
