@@ -81,10 +81,12 @@ export function TerminalJourney({
   const scale = !active
     ? 1
     : track(progress, [[0, 0.9], [0.15, 1], [0.4, 0.86], [0.62, 1], [0.82, 1], [1, 0.94]]);
-  // Slide is viewport-relative (vw) so it clears any screen width, and it fades
-  // out over the same window so it disappears cleanly with no lingering shadow.
-  const slideX = !active ? 0 : track(progress, [[0, 0], [0.82, 0], [1, 70]]);
-  const fade = !active ? 1 : track(progress, [[0, 1], [0.86, 1], [1, 0]]);
+  // Slide is viewport-relative (vw) and large enough (125vw) to carry the whole
+  // terminal off the right edge on any screen width, so it fully exits instead
+  // of stalling clipped mid-screen. The fade is only a short tail at the very
+  // end (after it is already mostly off screen) to clean up the last frames.
+  const slideX = !active ? 0 : track(progress, [[0, 0], [0.8, 0], [1, 125]]);
+  const fade = !active ? 1 : track(progress, [[0, 1], [0.94, 1], [1, 0]]);
 
   const prompt = (
     <Text as="span" fontFamily="var(--font-mono)">
