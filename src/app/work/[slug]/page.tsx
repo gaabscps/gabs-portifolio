@@ -103,7 +103,9 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
           </Box>
         )}
 
-        {hasFullCase && project.buildLog && <BuildLog entries={project.buildLog} />}
+        {hasFullCase && project.buildLog && (
+          <BuildLog entries={project.buildLog} projectName={project.slug} />
+        )}
 
         {project.plugins && project.plugins.length > 0 && (
           <PluginGrid plugins={project.plugins} />

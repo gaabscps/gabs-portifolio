@@ -12,14 +12,9 @@ export const Callout = ({ callout }: { callout: CalloutType }) => {
   return (
     <Box
       mt={4}
-      p={4}
-      bg="brand.surface1"
-      border="1px solid"
-      borderColor="brand.border"
-      borderLeft={`3px solid ${s.color}`}
-      borderRadius="6px"
+      pl={3}
+      borderLeft={`2px solid ${s.color}`}
       transition="border-color var(--duration-base) var(--ease-apple)"
-      _hover={{ borderColor: "brand.borderStrong", borderLeftColor: s.color }}
     >
       <Text
         as="div"
@@ -29,7 +24,7 @@ export const Callout = ({ callout }: { callout: CalloutType }) => {
         letterSpacing="0.15em"
         textTransform="uppercase"
         fontWeight="700"
-        mb={2}
+        mb={1}
       >
         {s.symbol} {callout.label}
       </Text>
