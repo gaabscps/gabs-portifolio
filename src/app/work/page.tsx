@@ -30,7 +30,7 @@ export default function WorkPage() {
             Every project, in production or shipped. Click for the case study.
           </Box>
         </Box>
-        <ArchiveList rows={rows} total={projects.length} />
+        <ArchiveList rows={rows} total={projects.length} animate />
       </Box>
       <Footer />
     </Box>
