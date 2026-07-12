@@ -11,6 +11,11 @@ export type SessionStep =
 const START = 0.03;
 const END = 0.97;
 
+const smoothstep = (x: number) => {
+  const c = Math.max(0, Math.min(1, x));
+  return c * c * (3 - 2 * c);
+};
+
 const light = (c: string) => (
   <Box as="span" w="9px" h="9px" borderRadius="50%" bg={c} display="inline-block" />
 );
@@ -45,12 +50,21 @@ export function SessionTerminal({ steps }: { steps: SessionStep[] }) {
   let lastRevealed = 0;
   for (let i = 0; i < steps.length; i++) if (!active || progress >= bounds[i][0]) lastRevealed = i;
 
-  // Auto-scroll the body to the newest revealed line while active.
+  // Smoothly ease the body scroll toward the newest line (no hard snap).
   useEffect(() => {
     if (!active) return;
     const el = bodyRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [progress, active]);
+    if (!el) return;
+    let raf = 0;
+    const tick = () => {
+      const target = el.scrollHeight - el.clientHeight;
+      const next = el.scrollTop + (target - el.scrollTop) * 0.12;
+      el.scrollTop = Math.abs(target - next) < 0.5 ? target : next;
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [active]);
 
   const status = !active ? "done" : progress < START ? "idle" : progress > END ? "done" : "running";
 
@@ -110,7 +124,7 @@ export function SessionTerminal({ steps }: { steps: SessionStep[] }) {
             const l = active ? local(i) : 1;
             const n = Math.round(Math.min(1, l * 1.25) * s.text.length);
             return (
-              <Box key={i} color="brand.text" mt={i === 0 ? 0 : 3}>
+              <Box key={i} color="brand.text" mt={i === 0 ? 0 : { base: 5, md: 6 }}>
                 <Text as="span">
                   <Text as="span" color="brand.text">gabriel</Text>
                   <Text as="span" color="brand.accent">.dev</Text>
@@ -122,16 +136,14 @@ export function SessionTerminal({ steps }: { steps: SessionStep[] }) {
               </Box>
             );
           }
-          const shown = !active || local(i) > 0.06;
+          // Continuous, scroll-tied reveal (fades and slides in over the first
+          // part of its window) so it never pops or drops frames.
+          const e = active ? smoothstep(local(i) / 0.45) : 1;
           return (
             <Box
               key={i}
-              mt={2}
-              sx={{
-                opacity: shown ? 1 : 0,
-                transform: shown ? "none" : "translateY(8px)",
-                transition: "opacity .35s var(--ease-out-quart), transform .35s var(--ease-out-quart)",
-              }}
+              mt={{ base: 3, md: 4 }}
+              sx={{ opacity: e, transform: `translateY(${((1 - e) * 16).toFixed(1)}px)` }}
             >
               {s.node}
             </Box>
@@ -150,7 +162,7 @@ export function SessionTerminal({ steps }: { steps: SessionStep[] }) {
   }
 
   return (
-    <Box as="section" ref={ref} position="relative" h={{ base: "360vh", md: "620vh" }}>
+    <Box as="section" ref={ref} position="relative" h={{ base: "480vh", md: "900vh" }}>
       <Flex position="sticky" top={0} h="100vh" align="center" justify="center" px={{ base: 4, md: 8 }} pt={{ base: 16, md: 20 }}>
         {terminal}
       </Flex>
