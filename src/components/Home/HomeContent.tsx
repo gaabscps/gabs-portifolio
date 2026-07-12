@@ -4,19 +4,12 @@ import { Box } from "@chakra-ui/react";
 import { LivingBackground } from "./LivingBackground";
 import { Nav } from "./Nav";
 import { Hero } from "./Hero";
-import { Featured } from "./Featured";
-import { Workshop } from "./Workshop";
-import { ArchiveList } from "./ArchiveList";
 import { Footer } from "./Footer";
-import { projects } from "@/data/projects";
+import { SessionTerminal } from "./SessionTerminal/SessionTerminal";
+import { buildHomeSession } from "./SessionTerminal/buildHomeSession";
 
 export default function HomeContent() {
-  const archive = projects.slice(0, 3).map((p) => ({
-    slug: p.slug,
-    name: p.id,
-    category: p.category ?? "project",
-    year: p.year,
-  }));
+  const session = buildHomeSession();
 
   return (
     <Box className="bg-textured bg-live" minH="100vh" color="brand.text" display="flex" flexDirection="column">
@@ -24,9 +17,7 @@ export default function HomeContent() {
       <Nav active="work" />
       <Box maxW="1200px" w="100%" mx="auto" flex="1">
         <Hero />
-        <Featured />
-        <Workshop />
-        <ArchiveList rows={archive} total={projects.length} />
+        <SessionTerminal steps={session} />
       </Box>
       <Footer />
     </Box>
