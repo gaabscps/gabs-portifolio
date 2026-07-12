@@ -78,15 +78,17 @@ export function TerminalJourney({
   // Reversible spatial choreography driven by scroll position (independent of
   // the playhead): zoom in, zoom out, zoom in, then slide right to hand off to
   // the next section. Fully reversible on the way back up.
+  // Enters from the left, zoom in / out / in, then a final zoom-out that leads
+  // straight into the slide (no dead time). Ends zoomed out.
   const scale = !active
     ? 1
-    : track(progress, [[0, 0.9], [0.15, 1], [0.4, 0.86], [0.62, 1], [0.82, 1], [1, 0.94]]);
-  // Slide is viewport-relative (vw) and large enough (125vw) to carry the whole
-  // terminal off the right edge on any screen width, so it fully exits instead
-  // of stalling clipped mid-screen. The fade is only a short tail at the very
-  // end (after it is already mostly off screen) to clean up the last frames.
-  const slideX = !active ? 0 : track(progress, [[0, 0], [0.8, 0], [1, 125]]);
-  const fade = !active ? 1 : track(progress, [[0, 1], [0.94, 1], [1, 0]]);
+    : track(progress, [[0, 0.9], [0.12, 1], [0.35, 0.88], [0.55, 1], [0.68, 0.8], [1, 0.76]]);
+  // Slide in from the left (enter), hold center, then a slower slide-out to the
+  // right. Viewport-relative (vw) so it fully clears any screen width.
+  const slideX = !active ? 0 : track(progress, [[0, -60], [0.12, 0], [0.68, 0], [1, 125]]);
+  // Blur grows during the exit for a soft "whoosh" as it leaves.
+  const blur = !active ? 0 : track(progress, [[0, 0], [0.68, 0], [1, 12]]);
+  const fade = !active ? 1 : track(progress, [[0, 1], [0.92, 1], [1, 0]]);
 
   const prompt = (
     <Text as="span" fontFamily="var(--font-mono)">
@@ -110,7 +112,8 @@ export function TerminalJourney({
       transform={`translateX(${slideX}vw) scale(${scale})`}
       transformOrigin="center"
       opacity={fade}
-      willChange="transform, opacity"
+      filter={blur > 0.1 ? `blur(${blur}px)` : undefined}
+      willChange="transform, opacity, filter"
     >
       <Flex align="center" gap={3} px={4} py={3} borderBottom="1px solid" borderColor="brand.border" bg="rgba(8,6,14,.5)" fontSize="11px" color="brand.textMeta" aria-hidden="true">
         <Flex gap="6px">{light("#ff5f57")}{light("#febc2e")}{light("#28c840")}</Flex>
@@ -178,7 +181,7 @@ export function TerminalJourney({
       as="section"
       ref={ref}
       position="relative"
-      h={{ base: "260vh", md: "450vh" }}
+      h={{ base: "300vh", md: "550vh" }}
       w="100vw"
       ml="calc(50% - 50vw)"
     >
