@@ -136,16 +136,23 @@ export function SessionTerminal({ steps }: { steps: SessionStep[] }) {
               </Box>
             );
           }
-          // Continuous, scroll-tied reveal (fades and slides in over the first
-          // part of its window) so it never pops or drops frames.
-          const e = active ? smoothstep(local(i) / 0.45) : 1;
+          // Continuous, scroll-tied reveal: the block grows its height from 0 to
+          // its natural height (via the grid-rows 0fr..1fr trick) while it fades
+          // in, so it streams in like real terminal output pushing content up,
+          // instead of popping in at full height.
+          const e = active ? smoothstep(local(i) / 0.55) : 1;
           return (
             <Box
               key={i}
-              mt={{ base: 3, md: 4 }}
-              sx={{ opacity: e, transform: `translateY(${((1 - e) * 16).toFixed(1)}px)` }}
+              sx={{
+                display: "grid",
+                gridTemplateRows: active ? `${e.toFixed(3)}fr` : "1fr",
+                opacity: e,
+              }}
             >
-              {s.node}
+              <Box overflow="hidden" minH={0} pt={{ base: 3, md: 4 }}>
+                {s.node}
+              </Box>
             </Box>
           );
         })}
