@@ -36,13 +36,13 @@ export function Terminal({ onClose }: { onClose: () => void }) {
     if (logRef.current) logRef.current.scrollTop = logRef.current.scrollHeight;
   }, [entries]);
 
-  const clear = () => setEntries([]);
-
   const submit = () => {
     const input = value;
-    const promptEntry: Entry = { prompt: input };
-    const out = runCommand(input, { clear });
-    setEntries((prev) => [...prev, promptEntry, ...out.map((line) => ({ line }))]);
+    let cleared = false;
+    const out = runCommand(input, { clear: () => { cleared = true; } });
+    setEntries((prev) =>
+      cleared ? [] : [...prev, { prompt: input }, ...out.map((line) => ({ line }))],
+    );
     if (input.trim()) setPast((p) => [input, ...p]);
     setPastIdx(-1);
     setValue("");
