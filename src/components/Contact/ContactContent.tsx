@@ -117,7 +117,7 @@ export default function ContactContent() {
               _hover={{ borderColor: "brand.accent", color: "brand.accentHover" }}
               onClick={() => {
                 window.open(
-                  `mailto:gaabscps@gmail.com?subject=Contact&body=${encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)}`
+                  `mailto:contact@gabrielandrade.net?subject=Contact&body=${encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)}`
                 );
                 reset();
               }}

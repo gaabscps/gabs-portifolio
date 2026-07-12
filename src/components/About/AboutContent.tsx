@@ -135,7 +135,7 @@ export default function AboutContent() {
           </Box>
           <Box
             as="a"
-            href="mailto:gaabscps@gmail.com"
+            href="mailto:contact@gabrielandrade.net"
             className="draw-link"
             color="brand.accentHover"
           >
