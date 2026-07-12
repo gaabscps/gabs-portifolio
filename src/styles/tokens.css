@@ -77,6 +77,12 @@
   background-color: transparent;
 }
 
+/* Full-bleed journey sections use 100vw; clip (not hidden) prevents the
+   scrollbar-width horizontal overflow without breaking sticky positioning. */
+.bg-live {
+  overflow-x: clip;
+}
+
 /* Hide the static journey fallback for JS users so the pre-animation content
    does not flash before the pinned journey activates. No-JS users (no .has-js)
    and reduced-motion users keep the full static content. */

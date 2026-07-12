@@ -174,7 +174,14 @@ export function TerminalJourney({
 
   // Active: tall wrapper creates scroll distance; sticky stage pins the terminal.
   return (
-    <Box as="section" ref={ref} position="relative" h={{ base: "260vh", md: "450vh" }}>
+    <Box
+      as="section"
+      ref={ref}
+      position="relative"
+      h={{ base: "260vh", md: "450vh" }}
+      w="100vw"
+      ml="calc(50% - 50vw)"
+    >
       <Flex position="sticky" top={0} h="100vh" align="center" justify="center" px={{ base: 4, md: 8 }} overflow="hidden">
         {terminal}
       </Flex>
