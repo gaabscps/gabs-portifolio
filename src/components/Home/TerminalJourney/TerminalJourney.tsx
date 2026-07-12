@@ -19,6 +19,7 @@ export function TerminalJourney({
   toolLabel,
   toolResult,
   items,
+  endStat,
   endHint = "type / for the full terminal",
 }: {
   command: string;
@@ -26,8 +27,10 @@ export function TerminalJourney({
   toolLabel: string;
   toolResult: string;
   items: JourneyItem[];
+  endStat?: string;
   endHint?: string;
 }) {
+  const stat = endStat ?? `${items.length} shown`;
   const { ref, active, progress } = useJourneyScroll();
   const beats = buildBeats(items.length);
   const bounds = beatBounds(beats, START, END);
@@ -115,7 +118,7 @@ export function TerminalJourney({
         {/* end / handover */}
         {endShown && (
           <Text mt={4} pl={4} color="brand.textMeta">
-            {"✓"} done · {items.length}/7 shown · <Box as="span" color="brand.accentHover">{endHint}</Box>
+            {"✓"} done · {stat} · <Box as="span" color="brand.accentHover">{endHint}</Box>
           </Text>
         )}
       </Box>
