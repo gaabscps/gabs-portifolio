@@ -19,7 +19,7 @@ export default function HomeContent() {
   }));
 
   return (
-    <Box className="bg-textured" minH="100vh" color="brand.text" display="flex" flexDirection="column">
+    <Box className="bg-textured bg-live" minH="100vh" color="brand.text" display="flex" flexDirection="column">
       <LivingBackground />
       <Nav active="work" />
       <Box maxW="1200px" w="100%" mx="auto" flex="1">

@@ -71,6 +71,12 @@
   z-index: 1;
 }
 
+/* On the home, sections are transparent so the living background shows through
+   them. This overrides the legacy opaque grey section background from reset.css. */
+.bg-live section {
+  background-color: transparent;
+}
+
 /* Shared keyframes, restrained, no glow */
 @keyframes blink-soft {
   0%, 100% { opacity: 1; }
