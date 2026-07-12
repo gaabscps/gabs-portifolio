@@ -103,6 +103,16 @@
   50%      { height: 24px; }
 }
 
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+
+@keyframes journey-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* Utility: cursor with blinking caret */
 .cursor-caret {
   display: inline-block;

@@ -24,6 +24,7 @@ export const theme = extendTheme({
       borderStrong: "#322b42",
       accent: "#AC6BED",
       accentHover: "#C896FF",
+      stateHelped: "#9dffb0",
       text: "#f0eaff",
       textSecondary: "#a89cb8",
       textMeta: "#7a6a90",
