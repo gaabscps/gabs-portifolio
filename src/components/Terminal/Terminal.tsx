@@ -98,6 +98,11 @@ export function Terminal({ onClose }: { onClose: () => void }) {
     >
       <Box
         ref={winRef}
+        onBlur={(e) => {
+          if (winRef.current && !winRef.current.contains(e.relatedTarget as Node)) {
+            inputRef.current?.focus();
+          }
+        }}
         w="min(680px, 92vw)"
         maxH="74vh"
         display="flex"
