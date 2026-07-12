@@ -80,10 +80,11 @@ export function TerminalJourney({
   // the next section. Fully reversible on the way back up.
   const scale = !active
     ? 1
-    : track(progress, [[0, 0.9], [0.15, 1], [0.4, 0.86], [0.62, 1], [0.82, 1], [1, 0.96]]);
-  const slideX = !active
-    ? 0
-    : track(progress, [[0, 0], [0.8, 0], [1, 118]]);
+    : track(progress, [[0, 0.9], [0.15, 1], [0.4, 0.86], [0.62, 1], [0.82, 1], [1, 0.94]]);
+  // Slide is viewport-relative (vw) so it clears any screen width, and it fades
+  // out over the same window so it disappears cleanly with no lingering shadow.
+  const slideX = !active ? 0 : track(progress, [[0, 0], [0.82, 0], [1, 70]]);
+  const fade = !active ? 1 : track(progress, [[0, 1], [0.86, 1], [1, 0]]);
 
   const prompt = (
     <Text as="span" fontFamily="var(--font-mono)">
@@ -104,9 +105,10 @@ export function TerminalJourney({
       sx={{ backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}
       w={{ base: "100%", md: "min(880px, 92vw)" }}
       fontFamily="var(--font-mono)"
-      transform={`translateX(${slideX}%) scale(${scale})`}
+      transform={`translateX(${slideX}vw) scale(${scale})`}
       transformOrigin="center"
-      willChange="transform"
+      opacity={fade}
+      willChange="transform, opacity"
     >
       <Flex align="center" gap={3} px={4} py={3} borderBottom="1px solid" borderColor="brand.border" bg="rgba(8,6,14,.5)" fontSize="11px" color="brand.textMeta" aria-hidden="true">
         <Flex gap="6px">{light("#ff5f57")}{light("#febc2e")}{light("#28c840")}</Flex>
@@ -157,9 +159,12 @@ export function TerminalJourney({
   );
 
   // Inactive (SSR / no-JS / reduced motion): full content, no pin, normal flow.
+  // The `journey-fallback` class lets CSS hide this pre-hydration render for
+  // JS users (so the static content does not flash before the animation takes
+  // over), while keeping it visible for no-JS and reduced-motion.
   if (!active) {
     return (
-      <Box as="section" ref={ref} px={{ base: 4, md: 8 }} py={10}>
+      <Box as="section" className="journey-fallback" ref={ref} px={{ base: 4, md: 8 }} py={10}>
         {terminal}
       </Box>
     );

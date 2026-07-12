@@ -77,6 +77,18 @@
   background-color: transparent;
 }
 
+/* Hide the static journey fallback for JS users so the pre-animation content
+   does not flash before the pinned journey activates. No-JS users (no .has-js)
+   and reduced-motion users keep the full static content. */
+.has-js .journey-fallback {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .has-js .journey-fallback {
+    display: block;
+  }
+}
+
 /* Shared keyframes, restrained, no glow */
 @keyframes blink-soft {
   0%, 100% { opacity: 1; }

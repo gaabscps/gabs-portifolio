@@ -71,6 +71,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={fonts.montserrat.variable}>
       <head>
+        {/* Runs before the body paints: marks JS so CSS can hide the static
+            journey fallback and avoid a flash of pre-animation content. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "try{document.documentElement.classList.add('has-js')}catch(e){}",
+          }}
+        />
         <script type="application/ld+json">
           {JSON.stringify(personJsonLd)}
         </script>
