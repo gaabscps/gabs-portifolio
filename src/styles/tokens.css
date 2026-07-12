@@ -1,16 +1,16 @@
 :root {
-  /* Background — deeper, less purple-bias for Apple HIG feel */
+  /* Background, deeper, less purple-bias for Apple HIG feel */
   --bg-base: #0c0a14;
   --bg-surface-1: #14111d;
   --bg-surface-2: #1a1626;
   --bg-deep: #08060e;
 
-  /* Borders — subtler */
+  /* Borders, subtler */
   --border-subtle: #1a1626;
   --border: #252132;
   --border-strong: #322b42;
 
-  /* Accent — used sparingly */
+  /* Accent, used sparingly */
   --accent: #AC6BED;
   --accent-hover: #C896FF;
   --accent-quiet: rgba(172, 107, 237, 0.12);
@@ -28,7 +28,7 @@
   --state-rejected: #ff7a7a;
   --state-validated: #AC6BED;
 
-  /* Motion — Apple-style ease-out, never bouncy */
+  /* Motion, Apple-style ease-out, never bouncy */
   --ease-out-quart: cubic-bezier(.2, .8, .2, 1);
   --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
   --duration-fast: 160ms;
@@ -48,7 +48,7 @@
   --font-serif-italic: 'Charter', 'Iowan Old Style', 'Source Serif Pro', Georgia, serif;
 }
 
-/* Background — restrained, less purple gradient, more subtle texture */
+/* Background, restrained, less purple gradient, more subtle texture */
 .bg-textured {
   background:
     radial-gradient(at 0% 0%, rgba(172, 107, 237, .03), transparent 50%),
@@ -71,7 +71,7 @@
   z-index: 1;
 }
 
-/* Shared keyframes — restrained, no glow */
+/* Shared keyframes, restrained, no glow */
 @keyframes blink-soft {
   0%, 100% { opacity: 1; }
   50%      { opacity: .5; }

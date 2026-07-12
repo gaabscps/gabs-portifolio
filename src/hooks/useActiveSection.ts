@@ -14,7 +14,7 @@ export const useActiveSection = (ids: string[]): string => {
     const visible = new Set<string>();
 
     const onScroll = () => {
-      // Fallback for "passed all sections" case — pick the last section above viewport top + 100px
+      // Fallback for "passed all sections" case, pick the last section above viewport top + 100px
       if (visible.size === 0) {
         let bestId = ids[0];
         let bestTop = -Infinity;

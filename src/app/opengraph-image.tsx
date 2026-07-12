@@ -3,7 +3,7 @@ import { siteConfig } from "@/config/site";
 
 export const runtime = "edge";
 
-export const alt = `${siteConfig.name} — ${siteConfig.jobTitle}`;
+export const alt = `${siteConfig.name} · ${siteConfig.jobTitle}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

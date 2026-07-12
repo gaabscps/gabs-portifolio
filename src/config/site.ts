@@ -4,7 +4,7 @@ export const siteConfig = {
   jobTitle: "Front-end Developer",
   locale: "pt_BR",
   defaultDescription:
-    "Portfólio de Gabriel Andrade — desenvolvedor front-end focado em interfaces dinâmicas, limpas e em ótimas experiências de usuário.",
+    "Portfólio de Gabriel Andrade, desenvolvedor front-end focado em interfaces dinâmicas, limpas e em ótimas experiências de usuário.",
   ogImage: "https://gabsportifolio.s3.amazonaws.com/img/About/perfil.png",
   twitterHandle: "@gaabscps",
   social: {

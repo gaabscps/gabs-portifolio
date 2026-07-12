@@ -45,13 +45,13 @@ const HEADLINES: Record<string, React.ReactNode> = {
 
 const LEDES: Record<string, string> = {
   bettersmp:
-    "BetterSMP is a Minecraft multiplayer server I run with my brother — 33 custom Java plugins on top of the vanilla game. Popular servers turn into idle farms (players leave the game running overnight for rewards); we wanted somewhere with actual gameplay, and the only way to get it was to write the gameplay. AI writes every line of Java. I write the architecture, the security model, and the calls that decide if it's fun.",
+    "BetterSMP is a Minecraft server I run with my friends, with 33 custom Java plugins on top of the vanilla game. Popular servers turn into idle farms, where players leave the game running overnight for rewards. We wanted somewhere with actual gameplay, and the only way to get it was to build it. I don't write Java, Claude does. My job is the architecture, the security model, and the calls about what's actually fun.",
   soundwave:
-    "SoundWave Summit is an audio AI platform — record or upload a meeting, get back a structured analysis with topics, decisions, action items, and sentiment. Started as a tool to capture my own meetings; grew into a real platform with Stripe billing, anonymous flows, public sharing, and a three-provider transcription chain with circuit breakers. I write the architecture, the security model, and the calls that decide what ships. AI is the keyboard.",
+    "SoundWave Summit is an audio AI platform, record or upload a meeting, get back a structured analysis with topics, decisions, action items, and sentiment. Started as a tool to capture my own meetings; grew into a real platform with Stripe billing, anonymous flows, public sharing, and a three-provider transcription chain with circuit breakers. I write the architecture, the security model, and the calls that decide what ships. AI is the keyboard.",
   "ai-squad":
     "ai-squad is the workflow I built because using AI to code without one was eating my afternoons. Two squads (Discovery for fuzzy ideas, SDD for clear pitches), ten roles, three IDE targets, and a mechanical enforcement layer that makes bypass impossible. Every interactive gate is conversational; the Build phase runs unattended. AI is the keyboard. The workflow is the judgment.",
   calendarfr:
-    "CalendarFR is a digital bullet journal that lives in the browser. Every day is one page — morning intention, an hourly agenda, evening gratitude — with the paper aesthetic intact: a handwritten font, a paper-grain texture, a baseline grid that aligns like a real notebook. Five planners are still sitting half-empty in a drawer behind me. This one I open every day because it's where I already am.",
+    "CalendarFR is a digital bullet journal that lives in the browser. Every day is one page (morning intention, an hourly agenda, evening gratitude) with the paper aesthetic intact: a handwritten font, a paper-grain texture, a baseline grid that aligns like a real notebook. Five planners are still sitting half-empty in a drawer behind me. This one I open every day because it's where I already am.",
 };
 
 export async function generateStaticParams() {

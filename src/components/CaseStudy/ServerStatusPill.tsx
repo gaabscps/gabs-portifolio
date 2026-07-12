@@ -64,7 +64,7 @@ export const ServerStatusPill = ({ address, pollMs = 60_000 }: Props) => {
       if (copyTimer.current) clearTimeout(copyTimer.current);
       copyTimer.current = setTimeout(() => setCopied(false), 1600);
     } catch {
-      // ignore — clipboard unavailable
+      // ignore, clipboard unavailable
     }
   };
 

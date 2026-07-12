@@ -159,7 +159,7 @@ export const PluginModal = ({ plugin, onClose }: Props) => (
                 mb={6}
                 lineHeight={1.4}
               >
-                — {plugin.requestedBy}
+                · {plugin.requestedBy}
               </Text>
             )}
 

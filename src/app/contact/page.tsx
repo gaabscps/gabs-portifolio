@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import ContactContent from "@/components/Contact/ContactContent";
 
 const description =
-  "Get in touch with Gabriel Andrade — WhatsApp, Telegram, or email for new projects and opportunities.";
+  "Get in touch with Gabriel Andrade, WhatsApp, Telegram, or email for new projects and opportunities.";
 
 export const metadata: Metadata = {
   title: "Contact",

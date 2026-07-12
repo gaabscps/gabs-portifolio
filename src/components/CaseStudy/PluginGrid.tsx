@@ -138,7 +138,7 @@ const PluginCard = ({ plugin, onSelect }: { plugin: Plugin; onSelect: (p: Plugin
           mb={3}
           lineHeight={1.4}
         >
-          — {plugin.requestedBy}
+          · {plugin.requestedBy}
         </Text>
       )}
 

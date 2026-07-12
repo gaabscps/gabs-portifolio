@@ -64,15 +64,15 @@ export default function AboutContent() {
         </Box>
 
         <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={5}>
-          I&apos;m Gabriel Andrade. Front-end engineer based in São Paulo. I started in nutrition at UNESP Botucatu before realizing I wanted to build software for a living. That late switch is the most-asked-about thing on my CV — and honestly, I think it&apos;s an advantage.
+          I&apos;m Gabriel Andrade. Front-end engineer based in São Paulo. I started in nutrition at UNESP Botucatu before realizing I wanted to build software for a living. That late switch is the most-asked-about thing on my CV, and honestly, I think it&apos;s an advantage.
         </Text>
 
         <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={5}>
-          I spent three years shipping production front-end work before the AI boom. React, Next.js, TypeScript, Chakra. Real users, real bugs, real on-call. By the time the LLMs got good, I already knew what good code looked like — and what bad code shipped feels like. That&apos;s the unfair advantage: AI accelerates everything for me because I can tell when its output is right and when it&apos;s wrong.
+          I spent three years shipping production front-end work before the AI boom. React, Next.js, TypeScript, Chakra. Real users, real bugs, real on-call. By the time the LLMs got good, I already knew what good code looked like, and what bad code shipped feels like. That&apos;s the unfair advantage: AI accelerates everything for me because I can tell when its output is right and when it&apos;s wrong.
         </Text>
 
         <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={5}>
-          Now I build production software with AI as leverage — never as the demo. I document <em>where</em> AI helps, <em>what</em> I changed by hand, and <em>what</em> I rejected, in every project. That&apos;s how I keep myself honest about it.
+          Now I build production software with AI as leverage, never as the demo. I document <em>where</em> AI helps, <em>what</em> I changed by hand, and <em>what</em> I rejected, in every project. That&apos;s how I keep myself honest about it.
         </Text>
 
         <Box mt={10} mb={8} pt={8} borderTop="1px solid" borderColor="brand.border">
@@ -100,7 +100,7 @@ export default function AboutContent() {
           </Box>
 
           <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={5}>
-            Claude Code is my daily driver; Cursor for quick edits. I write acceptance criteria before I prompt — if I can&apos;t say what &ldquo;done&rdquo; looks like in plain English, the model won&apos;t know either. Then small diffs, separate commits, and a full read of every line, even when the build is green.
+            Claude Code is my daily driver; Cursor for quick edits. I write acceptance criteria before I prompt, if I can&apos;t say what &ldquo;done&rdquo; looks like in plain English, the model won&apos;t know either. Then small diffs, separate commits, and a full read of every line, even when the build is green.
           </Text>
 
           <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={0}>

@@ -14,6 +14,8 @@ export type ProjectLinks = {
   github?: string;
   changelog?: string;
   discord?: string;
+  website?: string;
+  wiki?: string;
 };
 
 export type ProjectCover = {
