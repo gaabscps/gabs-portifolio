@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { runCommand, completeCommand, type TerminalLine } from "./commands";
+import { loadSession, saveSession, setUsed, type Entry } from "./session";
 
 const toneColor: Record<string, string> = {
   default: "brand.textSecondary",
@@ -12,15 +13,16 @@ const toneColor: Record<string, string> = {
   error: "#ff9a9a",
 };
 
-type Entry = { prompt?: string; line?: TerminalLine };
-
 export function Terminal({ onClose }: { onClose: () => void }) {
-  const [entries, setEntries] = useState<Entry[]>([
-    { line: { text: "gabriel.dev interactive shell · scripted preview", tone: "green" } },
-    { line: { text: "type 'help' to get started.", tone: "dim" } },
-  ]);
+  const saved = typeof window !== "undefined" ? loadSession() : null;
+  const [entries, setEntries] = useState<Entry[]>(
+    saved?.entries ?? [
+      { line: { text: "gabriel.dev interactive shell · scripted preview", tone: "green" } },
+      { line: { text: "type 'help' to get started.", tone: "dim" } },
+    ],
+  );
   const [value, setValue] = useState("");
-  const [past, setPast] = useState<string[]>([]);
+  const [past, setPast] = useState<string[]>(saved?.past ?? []);
   const [pastIdx, setPastIdx] = useState<number>(-1);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -36,6 +38,11 @@ export function Terminal({ onClose }: { onClose: () => void }) {
     if (logRef.current) logRef.current.scrollTop = logRef.current.scrollHeight;
   }, [entries]);
 
+  // Persist the session so it survives close/reopen and reload within the tab.
+  useEffect(() => {
+    saveSession({ entries, past });
+  }, [entries, past]);
+
   const submit = () => {
     const input = value;
     let cleared = false;
@@ -43,7 +50,10 @@ export function Terminal({ onClose }: { onClose: () => void }) {
     setEntries((prev) =>
       cleared ? [] : [...prev, { prompt: input }, ...out.map((line) => ({ line }))],
     );
-    if (input.trim()) setPast((p) => [input, ...p]);
+    if (input.trim()) {
+      setPast((p) => [input, ...p]);
+      setUsed(true);
+    }
     setPastIdx(-1);
     setValue("");
   };
