@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const BASE_MS = 2600; // natural full-play duration once the stage is pinned
+const BASE_MS = 6000; // natural full-play duration when pinned and not scrolling (deliberate typing)
+const MIN_MS = 3000; // fastest full-play when scrolling hard: rate cap so scroll never blasts the typing
 const FLOOR_START = 0.08; // section scroll fraction where the scroll floor starts rising
 const FLOOR_END = 0.9; // section scroll fraction where the scroll floor reaches 1 (skip)
 
@@ -48,7 +49,11 @@ export function useJourneyPlayhead(
       const natural = pinned ? dt / BASE_MS : 0;
       const floor = smoothstep((sectionP - FLOOR_START) / (FLOOR_END - FLOOR_START));
 
-      const next = Math.min(1, Math.max(cur + natural, floor));
+      // Target is the faster of the natural advance and the scroll floor, but
+      // the actual advance is rate-capped (dt / MIN_MS) so scrolling accelerates
+      // the typing without ever blasting through it. Monotonic (never < cur).
+      const target = Math.max(cur + natural, floor);
+      const next = Math.min(1, cur + Math.min(target - cur, dt / MIN_MS));
       if (next !== cur) {
         cur = next;
         setT(Math.round(next * 1000) / 1000);
