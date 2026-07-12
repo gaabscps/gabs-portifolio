@@ -38,7 +38,20 @@ export function useJourneyPlayhead(
       return c * c * (3 - 2 * c);
     };
 
+    // Only run the rAF loop when the section is near the viewport. Off-screen
+    // journeys suspend and are re-armed by the scroll listener, so we never spin
+    // a 60fps loop (with a per-frame layout read) for sections not yet reached.
+    const nearViewport = () => {
+      const rect = el.getBoundingClientRect();
+      return rect.bottom > -window.innerHeight && rect.top < window.innerHeight * 2;
+    };
+
     const loop = (time: number) => {
+      if (!nearViewport()) {
+        raf = 0;
+        lastTime = 0;
+        return;
+      }
       if (!lastTime) lastTime = time;
       const dt = time - lastTime;
       lastTime = time;
@@ -74,9 +87,19 @@ export function useJourneyPlayhead(
       raf = requestAnimationFrame(loop);
     };
 
+    // Re-arm the suspended loop when the section scrolls back near the viewport.
+    const onScroll = () => {
+      if (!raf && !done.current && nearViewport()) {
+        lastY = window.scrollY || 0;
+        raf = requestAnimationFrame(loop);
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
     if (!done.current) raf = requestAnimationFrame(loop);
     return () => {
       if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
     };
   }, [active, ref]);
 
