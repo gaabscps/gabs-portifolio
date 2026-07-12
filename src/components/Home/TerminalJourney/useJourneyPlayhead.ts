@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const BASE_MS = 6000; // natural full-play duration when pinned and not scrolling (deliberate typing)
-const MIN_MS = 3000; // fastest full-play when scrolling hard: rate cap so scroll never blasts the typing
-const FLOOR_START = 0.08; // section scroll fraction where the scroll floor starts rising
-const FLOOR_END = 0.9; // section scroll fraction where the scroll floor reaches 1 (skip)
+const BASE_MS = 6000; // natural full-play duration when pinned (deliberate typing)
+const MIN_MS = 3200; // fastest full-play when scrolling hard: rate cap so scroll never blasts the typing
+const TINY_BOOST = 0.00006; // per-pixel-of-scroll nudge: acceleration is nearly imperceptible
+const FLOOR_START = 0.7; // scroll only starts guaranteeing completion late in the section
+const FLOOR_END = 0.95; // ...and reaches full only near the very end (soft finish)
 
 // Monotonic 0..1 playhead for a journey's terminal animation. It reads the same
 // wrapper as useJourneyScroll (shared ref) but produces a different signal:
@@ -30,6 +31,7 @@ export function useJourneyPlayhead(
     let raf = 0;
     let lastTime = 0;
     let cur = 0;
+    let lastY = window.scrollY || 0;
 
     const smoothstep = (x: number) => {
       const c = Math.max(0, Math.min(1, x));
@@ -46,13 +48,18 @@ export function useJourneyPlayhead(
       const sectionP = scrollable > 0 ? -rect.top / scrollable : 0;
       const pinned = rect.top <= 0 && rect.bottom >= window.innerHeight;
 
+      const y = window.scrollY || 0;
+      const dy = Math.abs(y - lastY);
+      lastY = y;
+
+      // The playhead mostly auto-plays at its natural pace; scrolling adds only a
+      // tiny nudge, and the floor guarantees completion late in the section.
       const natural = pinned ? dt / BASE_MS : 0;
+      const boost = pinned ? dy * TINY_BOOST : 0;
       const floor = smoothstep((sectionP - FLOOR_START) / (FLOOR_END - FLOOR_START));
 
-      // Target is the faster of the natural advance and the scroll floor, but
-      // the actual advance is rate-capped (dt / MIN_MS) so scrolling accelerates
-      // the typing without ever blasting through it. Monotonic (never < cur).
-      const target = Math.max(cur + natural, floor);
+      // Rate-capped (dt / MIN_MS) so scroll never blasts the typing. Monotonic.
+      const target = Math.max(cur + natural + boost, floor);
       const next = Math.min(1, cur + Math.min(target - cur, dt / MIN_MS));
       if (next !== cur) {
         cur = next;

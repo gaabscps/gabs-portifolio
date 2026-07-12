@@ -8,6 +8,20 @@ import { buildBeats, beatBounds } from "./beats";
 const START = 0.06;
 const END = 0.92;
 
+// Piecewise-linear interpolation of a value across scroll-position keyframes.
+// stops are [progressPoint, value], in ascending progress order.
+const track = (p: number, stops: [number, number][]) => {
+  if (p <= stops[0][0]) return stops[0][1];
+  for (let i = 1; i < stops.length; i++) {
+    if (p <= stops[i][0]) {
+      const [p0, v0] = stops[i - 1];
+      const [p1, v1] = stops[i];
+      return v0 + (v1 - v0) * ((p - p0) / (p1 - p0));
+    }
+  }
+  return stops[stops.length - 1][1];
+};
+
 const light = (c: string) => (
   <Box as="span" w="9px" h="9px" borderRadius="50%" bg={c} display="inline-block" />
 );
@@ -61,9 +75,15 @@ export function TerminalJourney({
   const endShown = !active || reached(beats.length - 1);
   const status = !active ? "done" : t <= 0 ? "idle" : t >= 1 ? "done" : "running";
 
-  // Reversible spatial effect: the terminal zooms in as the section scrolls
-  // into place (and back out on the way up), independent of the playhead.
-  const zoom = !active ? 1 : 0.92 + (Math.min(progress, 0.25) / 0.25) * 0.08;
+  // Reversible spatial choreography driven by scroll position (independent of
+  // the playhead): zoom in, zoom out, zoom in, then slide right to hand off to
+  // the next section. Fully reversible on the way back up.
+  const scale = !active
+    ? 1
+    : track(progress, [[0, 0.9], [0.15, 1], [0.4, 0.86], [0.62, 1], [0.82, 1], [1, 0.96]]);
+  const slideX = !active
+    ? 0
+    : track(progress, [[0, 0], [0.8, 0], [1, 118]]);
 
   const prompt = (
     <Text as="span" fontFamily="var(--font-mono)">
@@ -84,7 +104,7 @@ export function TerminalJourney({
       sx={{ backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}
       w={{ base: "100%", md: "min(880px, 92vw)" }}
       fontFamily="var(--font-mono)"
-      transform={`scale(${zoom})`}
+      transform={`translateX(${slideX}%) scale(${scale})`}
       transformOrigin="center"
       willChange="transform"
     >
@@ -147,7 +167,7 @@ export function TerminalJourney({
 
   // Active: tall wrapper creates scroll distance; sticky stage pins the terminal.
   return (
-    <Box as="section" ref={ref} position="relative" h={{ base: "140vh", md: "200vh" }}>
+    <Box as="section" ref={ref} position="relative" h={{ base: "260vh", md: "450vh" }}>
       <Flex position="sticky" top={0} h="100vh" align="center" justify="center" px={{ base: 4, md: 8 }} overflow="hidden">
         {terminal}
       </Flex>
