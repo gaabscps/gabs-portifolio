@@ -127,6 +127,16 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Terminal modal entrance */
+@keyframes spot-in {
+  from { opacity: 0; transform: scale(0.97) translateY(6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 /* Utility: cursor with blinking caret */
 .cursor-caret {
   display: inline-block;

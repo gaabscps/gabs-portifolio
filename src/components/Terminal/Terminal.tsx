@@ -24,6 +24,9 @@ export function Terminal({ onClose }: { onClose: () => void }) {
   const [value, setValue] = useState("");
   const [past, setPast] = useState<string[]>(saved?.past ?? []);
   const [pastIdx, setPastIdx] = useState<number>(-1);
+  // Output that is still "typing out" line by line (terminal-writing effect).
+  const [pending, setPending] = useState<TerminalLine[]>([]);
+  const [charN, setCharN] = useState(0);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const logRef = useRef<HTMLDivElement>(null);
@@ -33,23 +36,47 @@ export function Terminal({ onClose }: { onClose: () => void }) {
     inputRef.current?.focus();
   }, []);
 
-  // Auto-scroll the log to the newest entry.
+  // Auto-scroll the log to the newest content (including while typing).
   useEffect(() => {
     if (logRef.current) logRef.current.scrollTop = logRef.current.scrollHeight;
-  }, [entries]);
+  }, [entries, pending, charN]);
 
   // Persist the session so it survives close/reopen and reload within the tab.
   useEffect(() => {
     saveSession({ entries, past });
   }, [entries, past]);
 
+  // Drive the terminal-writing effect: type the first pending line character by
+  // character, then commit it and move to the next line.
+  useEffect(() => {
+    if (pending.length === 0) return;
+    const cur = pending[0];
+    if (charN >= cur.text.length) {
+      const id = window.setTimeout(() => {
+        setEntries((prev) => [...prev, { line: cur }]);
+        setPending((p) => p.slice(1));
+        setCharN(0);
+      }, 45);
+      return () => window.clearTimeout(id);
+    }
+    const id = window.setTimeout(() => setCharN((n) => Math.min(cur.text.length, n + 2)), 14);
+    return () => window.clearTimeout(id);
+  }, [pending, charN]);
+
   const submit = () => {
     const input = value;
     let cleared = false;
     const out = runCommand(input, { clear: () => { cleared = true; } });
-    setEntries((prev) =>
-      cleared ? [] : [...prev, { prompt: input }, ...out.map((line) => ({ line }))],
-    );
+    if (cleared) {
+      setEntries([]);
+      setPending([]);
+      setCharN(0);
+    } else {
+      // Flush any in-progress stream to committed, add the prompt, queue the new output.
+      setEntries((prev) => [...prev, ...pending.map((line) => ({ line })), { prompt: input }]);
+      setPending(out);
+      setCharN(0);
+    }
     if (input.trim()) {
       setPast((p) => [input, ...p]);
       setUsed(true);
@@ -98,7 +125,11 @@ export function Terminal({ onClose }: { onClose: () => void }) {
       alignItems="center"
       justifyContent="center"
       bg="rgba(8,6,14,.6)"
-      sx={{ backdropFilter: "saturate(180%) blur(20px)", WebkitBackdropFilter: "saturate(180%) blur(20px)" }}
+      sx={{
+        backdropFilter: "saturate(180%) blur(20px)",
+        WebkitBackdropFilter: "saturate(180%) blur(20px)",
+        animation: "fade-in .2s ease-out",
+      }}
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -123,6 +154,7 @@ export function Terminal({ onClose }: { onClose: () => void }) {
         bg="linear-gradient(180deg, rgba(26,22,38,.96), rgba(12,10,20,.96))"
         boxShadow="0 30px 90px rgba(0,0,0,.6)"
         fontFamily="var(--font-mono)"
+        sx={{ animation: "spot-in .2s var(--ease-out-quart)" }}
       >
         <Flex align="center" gap={2} px={4} py={3} borderBottom="1px solid" borderColor="brand.border" fontSize="11px" color="brand.textMeta">
           <Flex gap="6px">
@@ -151,6 +183,12 @@ export function Terminal({ onClose }: { onClose: () => void }) {
                 {en.line?.text}
               </Box>
             ),
+          )}
+          {pending.length > 0 && (
+            <Box color={toneColor[pending[0].tone ?? "default"]} whiteSpace="pre-wrap">
+              {pending[0].text.slice(0, charN)}
+              <Box as="span" className="cursor-caret" />
+            </Box>
           )}
         </Box>
 
