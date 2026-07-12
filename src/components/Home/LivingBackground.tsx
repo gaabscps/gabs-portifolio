@@ -18,10 +18,18 @@ export const LivingBackground = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    // Cap the backing resolution. The field is soft, low-opacity and moving, so
+    // 1.5x is visually indistinguishable from 2x here but paints ~44% fewer
+    // pixels each frame — the dominant cost of a fixed full-screen canvas.
+    const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
     let W = 0;
     let H = 0;
     let raf = 0;
+    let lastT = 0;
+    // Draw-rate cap for the decorative field (~40fps). Motion is time-scaled in
+    // frame() so the on-screen speed stays the same regardless of this cap.
+    const FRAME_MS = 1000 / 40;
+    let glowGradient: CanvasGradient | null = null;
 
     // Scroll signal.
     let progress = 0;
@@ -38,6 +46,12 @@ export const LivingBackground = () => {
       canvas.width = W * DPR;
       canvas.height = H * DPR;
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      // Cache the full-screen glow gradient — only its geometry changes on
+      // resize. Per-frame intensity is applied via globalAlpha (see paintGlow),
+      // so the gradient is not rebuilt every frame.
+      glowGradient = ctx.createRadialGradient(W / 2, H * 0.4, 0, W / 2, H * 0.4, Math.max(W, H) * 0.62);
+      glowGradient.addColorStop(0, "rgba(172,107,237,1)");
+      glowGradient.addColorStop(1, "rgba(172,107,237,0)");
     };
 
     const seed = () => {
@@ -67,11 +81,12 @@ export const LivingBackground = () => {
     };
 
     const paintGlow = (glow: number) => {
-      const g = ctx.createRadialGradient(W / 2, H * 0.4, 0, W / 2, H * 0.4, Math.max(W, H) * 0.62);
-      g.addColorStop(0, `rgba(172,107,237,${glow.toFixed(3)})`);
-      g.addColorStop(1, "rgba(172,107,237,0)");
-      ctx.fillStyle = g;
+      if (!glowGradient) return;
+      // Cached gradient (built in resize); vary only its intensity per frame.
+      ctx.globalAlpha = glow;
+      ctx.fillStyle = glowGradient;
       ctx.fillRect(0, 0, W, H);
+      ctx.globalAlpha = 1;
     };
 
     // Single static frame for reduced motion.
@@ -86,17 +101,26 @@ export const LivingBackground = () => {
       }
     };
 
-    const frame = () => {
-      smoothVel += (velocity - smoothVel) * 0.16;
-      velocity *= 0.9;
+    const frame = (now: number) => {
+      raf = requestAnimationFrame(frame);
+      const dt = now - lastT;
+      if (dt < FRAME_MS) return;
+      lastT = now;
+      // Motion scale relative to the original 60fps baseline, so capping the
+      // draw rate keeps the field moving at the same on-screen speed. Clamped so
+      // a long idle gap (e.g. returning to a backgrounded tab) can't jump it.
+      const k = Math.min(dt / (1000 / 60), 2.5);
+
+      smoothVel += (velocity - smoothVel) * (1 - Math.pow(1 - 0.16, k));
+      velocity *= Math.pow(0.9, k);
 
       ctx.clearRect(0, 0, W, H);
       paintGlow(0.05 + progress * 0.18);
 
       const drift = 1.3 + progress * 2.8;
       for (const p of parts) {
-        p.y -= (0.18 + p.z * 0.7) * drift;
-        p.x += smoothVel * p.z * 0.95;
+        p.y -= (0.18 + p.z * 0.7) * drift * k;
+        p.x += smoothVel * p.z * 0.95 * k;
         if (p.y < -4) {
           p.y = H + 4;
           p.x = Math.random() * W;
@@ -121,7 +145,6 @@ export const LivingBackground = () => {
           ctx.fill();
         }
       }
-      raf = requestAnimationFrame(frame);
     };
 
     const start = () => {
@@ -146,8 +169,10 @@ export const LivingBackground = () => {
     window.addEventListener("resize", onResize);
     document.addEventListener("visibilitychange", onVisibility);
 
-    if (prefersReduced) paintStatic();
-    else start();
+    // Paint a filled first frame synchronously on mount so the field is present
+    // immediately (no blank-to-particles pop), then hand off to the animation.
+    paintStatic();
+    if (!prefersReduced) start();
 
     return () => {
       stop();

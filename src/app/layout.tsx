@@ -69,7 +69,10 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={fonts.montserrat.variable}>
+    // suppressHydrationWarning: the inline script below adds `has-js` to <html>
+    // before React hydrates, so the server markup (no class) intentionally
+    // differs from the client. Scoped to <html>'s own attributes only.
+    <html lang="en" className={fonts.montserrat.variable} suppressHydrationWarning>
       <head>
         {/* Runs before the body paints: marks JS so CSS can hide the static
             journey fallback and avoid a flash of pre-animation content. */}

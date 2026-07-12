@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { Box } from "@chakra-ui/react";
 import { LivingBackground } from "./LivingBackground";
 import { Nav } from "./Nav";
@@ -10,7 +11,9 @@ import { buildHomeSession } from "./SessionTerminal/buildHomeSession";
 import { TerminalHint } from "../Terminal/TerminalHint";
 
 export default function HomeContent() {
-  const session = buildHomeSession();
+  // Build once so the step nodes keep stable identities — this is what lets the
+  // memoized terminal blocks skip re-rendering on every scroll tick.
+  const session = useMemo(() => buildHomeSession(), []);
 
   return (
     <Box className="bg-textured" minH="100vh" color="brand.text" display="flex" flexDirection="column">
