@@ -7,6 +7,7 @@ import { Hero } from "./Hero";
 import { Footer } from "./Footer";
 import { SessionTerminal } from "./SessionTerminal/SessionTerminal";
 import { buildHomeSession } from "./SessionTerminal/buildHomeSession";
+import { TerminalHint } from "../Terminal/TerminalHint";
 
 export default function HomeContent() {
   const session = buildHomeSession();
@@ -20,6 +21,7 @@ export default function HomeContent() {
         <SessionTerminal steps={session} />
       </Box>
       <Footer />
+      <TerminalHint />
     </Box>
   );
 }

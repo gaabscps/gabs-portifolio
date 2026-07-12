@@ -28,6 +28,14 @@ export function TerminalMount() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  // Any element can open the terminal by dispatching this event (e.g. the home
+  // hint, the nav prompt, or the minimized chip in a later phase).
+  useEffect(() => {
+    const openIt = () => setOpen(true);
+    window.addEventListener("terminal:open", openIt);
+    return () => window.removeEventListener("terminal:open", openIt);
+  }, []);
+
   if (!open) return null;
   return <Terminal onClose={() => setOpen(false)} />;
 }
