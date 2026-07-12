@@ -84,10 +84,14 @@ export const CommandReveal = ({
       </Flex>
 
       <motion.div
+        key={r.willAnimate ? "anim" : "static"}
         variants={containerVariants}
         initial={r.containerInitial}
         animate={r.containerAnimate}
-        style={{ pointerEvents: r.containerAnimate === "show" ? "auto" : "none" }}
+        style={{
+          pointerEvents: r.containerAnimate === "show" ? "auto" : "none",
+          visibility: r.containerAnimate === "show" ? "visible" : "hidden",
+        }}
       >
         {children}
       </motion.div>

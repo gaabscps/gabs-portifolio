@@ -19,7 +19,7 @@ const Label = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const Workshop = () => (
-  <CommandReveal command="cat workshop/this-week.md" itemCount={5} borderTop>
+  <CommandReveal command="cat workshop/this-week.md" itemCount={5 /* 1 header + 4 columns */} borderTop>
     <RevealItem>
       <Text
         fontSize="10px"

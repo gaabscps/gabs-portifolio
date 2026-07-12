@@ -56,17 +56,19 @@ export function useCommandReveal(command: string, itemCount: number, speed = 45)
     return () => window.clearTimeout(id);
   }, [runAnim, typed, itemCount]);
 
-  const revealing = !runAnim || typed;
-
+  // Content is shown when: we are not animating at all (SSR / reduced motion),
+  // OR the reveal was skipped, OR the command has finished typing while in view.
+  // Crucially, "not animating" must NOT include "mounted but not yet scrolled
+  // into view": those sections stay hidden until inView.
   return {
     ref,
     showPrompt: mounted,
     commandText,
     typed,
-    skipped,
     revealDone,
+    willAnimate,
     containerInitial: (willAnimate ? "hidden" : "show") as "hidden" | "show",
-    containerAnimate: (!willAnimate || revealing || skipped ? "show" : "hidden") as
+    containerAnimate: (!willAnimate || skipped || (inView && typed) ? "show" : "hidden") as
       | "hidden"
       | "show",
     stagger: skipped ? 0 : 0.09,

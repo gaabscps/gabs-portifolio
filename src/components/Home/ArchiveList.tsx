@@ -75,5 +75,3 @@ export const ArchiveList = ({ rows, total }: Props) => (
     ))}
   </CommandReveal>
 );
-
-export type { Row };
