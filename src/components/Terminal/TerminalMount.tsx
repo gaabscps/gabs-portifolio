@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { TerminalChip } from "./TerminalChip";
 
 const Terminal = dynamic(() => import("./Terminal").then((m) => m.Terminal), { ssr: false });
 
@@ -36,6 +37,6 @@ export function TerminalMount() {
     return () => window.removeEventListener("terminal:open", openIt);
   }, []);
 
-  if (!open) return null;
+  if (!open) return <TerminalChip />;
   return <Terminal onClose={() => setOpen(false)} />;
 }

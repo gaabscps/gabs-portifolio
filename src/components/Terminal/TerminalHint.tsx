@@ -1,11 +1,23 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
+import { isUsed } from "./session";
 
 // A visible, clickable affordance that makes the global terminal discoverable
 // on the home. Clicking it (or pressing /) opens the terminal overlay.
 export function TerminalHint() {
+  const [used, setUsed] = useState(false);
+  useEffect(() => {
+    const sync = () => setUsed(isUsed());
+    sync();
+    window.addEventListener("terminal:used-change", sync);
+    return () => window.removeEventListener("terminal:used-change", sync);
+  }, []);
+
   const open = () => window.dispatchEvent(new CustomEvent("terminal:open"));
+
+  if (used) return null;
 
   return (
     <Flex
