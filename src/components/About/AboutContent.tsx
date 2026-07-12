@@ -46,7 +46,7 @@ export default function AboutContent() {
           _hover={{ transform: "scale(1.05)" }}
         >
           <ImageWithFallback
-            src="https://gabsportifolio.s3.amazonaws.com/img/About/perfil.png"
+            src="/about/profile.png"
             alt="Gabriel Andrade"
             width={200}
             height={200}
@@ -125,7 +125,7 @@ export default function AboutContent() {
           </Box>
           <Box
             as="a"
-            href="https://linkedin.com/in/gabriel-andrade"
+            href="https://www.linkedin.com/in/gabriel-andrade-199601a2/"
             target="_blank"
             rel="noopener noreferrer"
             className="draw-link"

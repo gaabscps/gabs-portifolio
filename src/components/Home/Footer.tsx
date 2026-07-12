@@ -11,7 +11,7 @@ const NAV_LINKS = [
 
 const EXTERNAL_LINKS = [
   { href: "https://github.com/gaabscps", label: "github ↗" },
-  { href: "https://linkedin.com/in/gabriel-andrade", label: "linkedin ↗" },
+  { href: "https://www.linkedin.com/in/gabriel-andrade-199601a2/", label: "linkedin ↗" },
   { href: "mailto:gaabscps@gmail.com", label: "email ↗" },
 ];
 

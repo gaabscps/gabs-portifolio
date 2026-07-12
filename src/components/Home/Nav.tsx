@@ -14,6 +14,7 @@ const NavLink = ({ href, label, active }: { href: string; label: string; active?
       transition="color var(--duration-fast) var(--ease-apple)"
       _hover={{ color: "brand.accentHover" }}
     >
+      <Box as="span" color="brand.textMeta">--</Box>
       {label}
     </Text>
   </Link>
@@ -41,6 +42,10 @@ export const Nav = ({ active }: { active?: "work" | "about" | "contact" }) => (
           gabriel<Box as="span" color="brand.accent">.dev</Box>
         </Text>
       </Link>
+      <Text fontFamily="var(--font-mono)" fontSize="11px" aria-hidden="true">
+        <Box as="span" color="brand.textMeta">~</Box>{" "}
+        <Box as="span" color="brand.accent" fontWeight="700">$</Box>
+      </Text>
     </Flex>
     <Flex gap={6}>
       <NavLink href="/work" label="work" active={active === "work"} />
