@@ -11,90 +11,101 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import type { Plugin } from "@/types/project";
+import { useState } from "react";
+import type { Plugin, PluginAsset } from "@/types/project";
+import { renderAiText } from "./AiMark";
+import { Lightbox } from "./Lightbox";
 
 type Props = {
   plugin: Plugin | null;
   onClose: () => void;
 };
 
-const Gallery = ({ gallery }: { gallery: NonNullable<Plugin["gallery"]> }) => (
-  <Box mt={2}>
-    <Text
-      fontSize="10px"
-      color="brand.textSecondary"
-      letterSpacing="0.22em"
-      textTransform="uppercase"
-      fontFamily="var(--font-mono)"
-      fontWeight="700"
-      mb={3}
-    >
-      assets
-    </Text>
-    <Grid templateColumns={{ base: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)" }} gap={3}>
-      {gallery.map((g) => (
-        <Box key={g.src}>
-          <Box
-            position="relative"
-            w="100%"
-            pt="100%"
-            borderRadius="8px"
-            overflow="hidden"
-            border="1px solid"
-            borderColor="brand.borderSubtle"
-            bg="brand.bg"
-            transition="all var(--duration-fast) var(--ease-apple)"
-            _hover={{ borderColor: "brand.accent", transform: "translateY(-2px)" }}
-          >
-            {g.kind === "video" ? (
-              <Box
-                as="video"
-                src={g.src}
-                aria-label={g.alt}
-                poster={g.poster}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                position="absolute"
-                inset={0}
-                w="100%"
-                h="100%"
-                objectFit="cover"
-              />
-            ) : (
-              <Box
-                as="img"
-                src={g.src}
-                alt={g.alt}
-                loading="lazy"
-                position="absolute"
-                inset={0}
-                w="100%"
-                h="100%"
-                objectFit="cover"
-              />
+const Gallery = ({ gallery }: { gallery: NonNullable<Plugin["gallery"]> }) => {
+  const [active, setActive] = useState<PluginAsset | null>(null);
+  return (
+    <Box mt={2}>
+      <Text
+        fontSize="10px"
+        color="brand.textSecondary"
+        letterSpacing="0.22em"
+        textTransform="uppercase"
+        fontFamily="var(--font-mono)"
+        fontWeight="700"
+        mb={3}
+      >
+        assets · click to enlarge
+      </Text>
+      <Grid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }} gap={3}>
+        {gallery.map((g) => (
+          <Box key={g.src}>
+            <Box
+              position="relative"
+              w="100%"
+              pt="56.25%"
+              borderRadius="8px"
+              overflow="hidden"
+              border="1px solid"
+              borderColor="brand.borderSubtle"
+              bg="brand.bg"
+              cursor="zoom-in"
+              role="button"
+              aria-label={`enlarge ${g.caption ?? g.alt}`}
+              onClick={() => setActive(g)}
+              transition="all var(--duration-fast) var(--ease-apple)"
+              _hover={{ borderColor: "brand.accent", transform: "translateY(-2px)" }}
+            >
+              {g.kind === "video" ? (
+                <Box
+                  as="video"
+                  src={g.src}
+                  aria-label={g.alt}
+                  poster={g.poster}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  position="absolute"
+                  inset={0}
+                  w="100%"
+                  h="100%"
+                  objectFit="cover"
+                />
+              ) : (
+                <Box
+                  as="img"
+                  src={g.src}
+                  alt={g.alt}
+                  loading="lazy"
+                  position="absolute"
+                  inset={0}
+                  w="100%"
+                  h="100%"
+                  objectFit="cover"
+                />
+              )}
+            </Box>
+            {g.caption && (
+              <Text
+                mt={2}
+                fontSize="10px"
+                color="brand.textMeta"
+                fontFamily="var(--font-mono)"
+                letterSpacing="0.08em"
+                textAlign="center"
+                textTransform="uppercase"
+              >
+                {g.caption}
+              </Text>
             )}
           </Box>
-          {g.caption && (
-            <Text
-              mt={2}
-              fontSize="10px"
-              color="brand.textMeta"
-              fontFamily="var(--font-mono)"
-              letterSpacing="0.08em"
-              textAlign="center"
-              textTransform="uppercase"
-            >
-              {g.caption}
-            </Text>
-          )}
-        </Box>
-      ))}
-    </Grid>
-  </Box>
-);
+        ))}
+      </Grid>
+      <Lightbox asset={active} onClose={() => setActive(null)} />
+    </Box>
+  );
+};
 
 export const PluginModal = ({ plugin, onClose }: Props) => (
   <Modal isOpen={Boolean(plugin)} onClose={onClose} size={{ base: "full", md: "3xl" }} isCentered scrollBehavior="inside">
@@ -148,7 +159,7 @@ export const PluginModal = ({ plugin, onClose }: Props) => (
             </Text>
 
             <Text fontSize={{ base: "15px", md: "17px" }} color="brand.textSecondary" lineHeight={1.55} mb={5}>
-              {plugin.summary}
+              {renderAiText(plugin.summary)}
             </Text>
 
             {plugin.requestedBy && (
@@ -224,7 +235,7 @@ export const PluginModal = ({ plugin, onClose }: Props) => (
                   how it works
                 </Text>
                 <Text fontSize="14px" color="brand.textSecondary" lineHeight={1.7}>
-                  {plugin.details}
+                  {renderAiText(plugin.details)}
                 </Text>
               </Box>
             )}

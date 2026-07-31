@@ -1,5 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import type { Callout as CalloutType } from "@/types/project";
+import { renderAiText } from "./AiMark";
 
 const STYLES: Record<CalloutType["kind"], { color: string; symbol: string }> = {
   rule: { color: "var(--state-validated)", symbol: "★" },
@@ -29,7 +30,7 @@ export const Callout = ({ callout }: { callout: CalloutType }) => {
         {s.symbol} {callout.label}
       </Text>
       <Text fontSize="12px" color="brand.textSecondary" lineHeight={1.6}>
-        {callout.body}
+        {renderAiText(callout.body)}
       </Text>
     </Box>
   );

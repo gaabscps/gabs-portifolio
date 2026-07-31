@@ -4,15 +4,16 @@ import { useState } from "react";
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import type { Plugin } from "@/types/project";
 import { PluginModal } from "./PluginModal";
+import { renderAiText } from "./AiMark";
 
 const PluginGallery = ({ gallery }: { gallery: NonNullable<Plugin["gallery"]> }) => (
-  <Grid templateColumns={{ base: "repeat(3, 1fr)", md: "repeat(6, 1fr)" }} gap={3} mt={4}>
+  <Grid templateColumns={{ base: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }} gap={3} mt={4}>
     {gallery.map((g) => (
       <Box key={g.src}>
         <Box
           position="relative"
           w="100%"
-          pt="100%"
+          pt="56.25%"
           borderRadius="8px"
           overflow="hidden"
           border="1px solid"
@@ -127,7 +128,7 @@ const PluginCard = ({ plugin, onSelect }: { plugin: Plugin; onSelect: (p: Plugin
       </Flex>
 
       <Text fontSize="13px" color="brand.textSecondary" lineHeight={1.55} mb={3}>
-        {plugin.summary}
+        {renderAiText(plugin.summary)}
       </Text>
 
       {plugin.requestedBy && (

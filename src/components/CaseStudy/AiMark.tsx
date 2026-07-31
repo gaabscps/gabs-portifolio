@@ -23,3 +23,13 @@ export const AiMark = ({ children = "AI" }: { children?: React.ReactNode }) => (
     {children}
   </Box>
 );
+
+// Splits a string on <ai>...</ai> markers and renders the marked segments as AiMark chips,
+// leaving the rest as plain text. Shared by every field that may embed the marker.
+export const renderAiText = (text: string) => {
+  const parts = text.split(/(<ai>.*?<\/ai>)/g);
+  return parts.map((part, i) => {
+    const m = part.match(/^<ai>(.*?)<\/ai>$/);
+    return m ? <AiMark key={i}>{m[1]}</AiMark> : <span key={i}>{part}</span>;
+  });
+};

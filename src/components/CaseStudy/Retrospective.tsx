@@ -1,5 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import { TerminalWindow } from "@/components/CaseStudy/TerminalWindow";
+import { renderAiText } from "./AiMark";
 
 export const Retrospective = ({ body }: { body: string }) => (
   <TerminalWindow
@@ -10,7 +11,7 @@ export const Retrospective = ({ body }: { body: string }) => (
     id="what-id-change"
   >
     <Text fontSize="14px" lineHeight={1.7} color="brand.textSecondary">
-      {body}
+      {renderAiText(body)}
       <Box as="span" className="cursor-caret" aria-hidden="true" />
     </Text>
   </TerminalWindow>

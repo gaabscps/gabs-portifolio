@@ -1,15 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import type { BuildLogEntry as Entry } from "@/types/project";
-import { AiMark } from "./AiMark";
+import { renderAiText } from "./AiMark";
 import { Callout } from "./Callout";
-
-const renderBody = (body: string) => {
-  const parts = body.split(/(<ai>.*?<\/ai>)/g);
-  return parts.map((part, i) => {
-    const m = part.match(/^<ai>(.*?)<\/ai>$/);
-    return m ? <AiMark key={i}>{m[1]}</AiMark> : <span key={i}>{part}</span>;
-  });
-};
 
 // Deterministic 7-char hex hash derived from the entry, so it stays stable across renders
 // instead of being random.
@@ -56,7 +48,7 @@ export const BuildLogEntry = ({ entry, isLast }: { entry: Entry; isLast?: boolea
 
       <Box pl={6}>
         <Text as="div" fontSize="13px" lineHeight={1.7} color="brand.textSecondary">
-          {renderBody(entry.body)}
+          {renderAiText(entry.body)}
         </Text>
         {entry.callouts?.map((c, i) => <Callout key={i} callout={c} />)}
       </Box>
