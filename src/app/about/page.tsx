@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
-import AboutContent from "./AboutContent";
+import AboutContent from "@/components/About/AboutContent";
 
 const description =
-  "Conheça Gabriel Andrade: desenvolvedor front-end com experiência em React, Next.js, TypeScript, Chakra UI e React Native.";
+  "Gabriel Andrade, front-end engineer in São Paulo. Late pivot to code, on time for AI. Three years building production software before the AI boom.";
 
 export const metadata: Metadata = {
-  title: "Sobre mim",
+  title: "About",
   description,
   alternates: { canonical: "/about" },
   openGraph: {
-    title: "Sobre mim · Gabriel Andrade",
+    title: "About · Gabriel Andrade",
     description,
     url: "/about",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sobre mim · Gabriel Andrade",
+    title: "About · Gabriel Andrade",
     description,
   },
 };

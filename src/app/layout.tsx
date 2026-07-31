@@ -1,8 +1,7 @@
 import { fonts } from "../themes/fonts/fonts";
 import { Providers } from "./providers";
 import "../styles/reset.css";
-import { Navbar } from "@/components/Navbar/index";
-import { Flex } from "@chakra-ui/react";
+import "../styles/tokens.css";
 import Script from "next/script";
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
@@ -70,8 +69,18 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="pt-BR" className={fonts.montserrat.variable}>
+    // suppressHydrationWarning: the inline script below adds `has-js` to <html>
+    // before React hydrates, so the server markup (no class) intentionally
+    // differs from the client. Scoped to <html>'s own attributes only.
+    <html lang="en" className={fonts.montserrat.variable} suppressHydrationWarning>
       <head>
+        {/* Runs before the body paints: marks JS so CSS can hide the static
+            journey fallback and avoid a flash of pre-animation content. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "try{document.documentElement.classList.add('has-js')}catch(e){}",
+          }}
+        />
         <script type="application/ld+json">
           {JSON.stringify(personJsonLd)}
         </script>
@@ -117,15 +126,7 @@ export default function RootLayout({
         </Script>
 
         <Providers>
-          <Navbar />
-          <Flex
-            justifyContent="center"
-            width="100%"
-            padding="94px 32px 0px 32px"
-            height="100vh"
-          >
-            {children}
-          </Flex>
+          {children}
         </Providers>
       </body>
     </html>

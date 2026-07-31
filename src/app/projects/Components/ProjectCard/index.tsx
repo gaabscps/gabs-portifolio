@@ -1,12 +1,12 @@
 "use client";
 
 import { Card } from "@/components/Card";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { ProjectPlaceholder } from "@/components/ProjectPlaceholder";
 import type { ProjectView } from "@/hooks/useProjects";
 import {
   Box,
   Flex,
-  Image,
   Text,
   useDisclosure,
   useMediaQuery,
@@ -51,7 +51,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
           onMouseEnter={onOpen}
           onMouseLeave={onClose}
           position="relative"
-          transition="all 0.3s ease"
+          transition="opacity 0.3s ease"
           display={isDesktop ? "block" : "flex"}
           flexDirection="column-reverse"
           alignItems="center"
@@ -60,21 +60,31 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDesktop }) => {
             position="relative"
             opacity={isOpen ? 0.2 : 1}
             transition="opacity 0.3s ease"
+            height="600px"
+            width={isDesktop ? "1040px" : "100%"}
+            borderRadius="10px"
+            overflow="hidden"
           >
-            <Image
-              objectFit="cover"
-              height="600px"
-              width={isDesktop ? "1040px" : "auto"}
-              borderRadius="10px"
-              src={coverImage}
-              alt={title}
-              fallback={
-                <ProjectPlaceholder
-                  height="600px"
-                  width={isDesktop ? "1040px" : "100%"}
-                />
-              }
-            />
+            {coverImage ? (
+              <ImageWithFallback
+                fill
+                src={coverImage}
+                alt={title}
+                sizes="(min-width: 1040px) 1040px, 100vw"
+                style={{ objectFit: "cover", borderRadius: "10px" }}
+                fallback={
+                  <ProjectPlaceholder
+                    height="600px"
+                    width={isDesktop ? "1040px" : "100%"}
+                  />
+                }
+              />
+            ) : (
+              <ProjectPlaceholder
+                height="600px"
+                width={isDesktop ? "1040px" : "100%"}
+              />
+            )}
           </Box>
           {isOpen && (
             <Flex

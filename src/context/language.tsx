@@ -8,7 +8,7 @@ import React, {
   ReactNode,
 } from "react";
 import { AppTexts } from "./AppTexts";
-import ptbr from "../locales/ptbr.json";
+import en from "../locales/en.json";
 
 type LanguageContextType = {
   language: string;
@@ -27,8 +27,8 @@ interface LanguageProviderProps {
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({
   children,
 }) => {
-  const [language, setLanguage] = useState("ptbr");
-  const [translations, setTranslations] = useState<AppTexts>(ptbr);
+  const [language, setLanguage] = useState("en");
+  const [translations, setTranslations] = useState<AppTexts>(en);
 
   useEffect(() => {
     const loadTranslations = async () => {

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import ProjectsContent from "./ProjectsContent";
 
 const description =
-  "Projetos selecionados de Gabriel Andrade — incluindo PlayX1, Banca do Ingresso e mais.";
+  "Projetos selecionados de Gabriel Andrade, incluindo PlayX1, Banca do Ingresso e mais.";
 
 export const metadata: Metadata = {
   title: "Projetos",

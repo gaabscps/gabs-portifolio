@@ -1,0 +1,57 @@
+import { Box, Flex, Grid, Text } from "@chakra-ui/react";
+import type { Stat } from "@/types/project";
+
+export const Stats = ({ stats, footer }: { stats: Stat[]; footer?: React.ReactNode }) => (
+  <Box
+    mb={10}
+    p={8}
+    border="1px solid"
+    borderColor="brand.borderSubtle"
+    borderRadius="12px"
+    bg="brand.surface1"
+    boxShadow="var(--inset-highlight)"
+  >
+    <Text
+      fontSize="11px"
+      color="brand.textSecondary"
+      letterSpacing="0.22em"
+      textTransform="uppercase"
+      fontFamily="var(--font-mono)"
+      fontWeight="700"
+      mb={6}
+    >
+      what shipped, in numbers
+    </Text>
+    <Grid templateColumns={{ base: "1fr 1fr", md: "repeat(2, 1fr)" }} gap={6}>
+      {stats.map((s, i) => (
+        <Flex key={i} align="baseline" gap={3} py={2}>
+          <Text fontSize="36px" fontWeight="700" letterSpacing="-0.03em" color="brand.text" lineHeight={1}>
+            {s.value}
+          </Text>
+          <Text
+            fontSize="10px"
+            color="brand.textSecondary"
+            fontFamily="var(--font-mono)"
+            letterSpacing="0.1em"
+            textTransform="uppercase"
+          >
+            {s.label}
+          </Text>
+        </Flex>
+      ))}
+    </Grid>
+    {footer && (
+      <Box
+        mt={6}
+        pt={4}
+        borderTop="1px solid"
+        borderColor="brand.borderSubtle"
+        fontSize="11px"
+        color="brand.textMeta"
+        fontFamily="var(--font-mono)"
+      >
+        {footer}
+      </Box>
+    )}
+  </Box>
+);

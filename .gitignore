@@ -47,3 +47,4 @@ docs/superpowers
 
 # ai-squad SDD per-session state
 .agent-session/
+.superpowers/

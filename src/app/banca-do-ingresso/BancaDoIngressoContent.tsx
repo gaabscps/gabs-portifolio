@@ -1,9 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable jsx-a11y/alt-text */
 "use client";
 
 import { Card } from "@/components/Card";
 import { FullSizeImageModal } from "@/components/FullSizeImageModal";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { ProjectPlaceholder } from "@/components/ProjectPlaceholder";
 import { useLanguage } from "@/context/language";
 import { useFullSize } from "@/hooks/useFullSize";
@@ -14,12 +13,10 @@ import {
   Box,
   Flex,
   Heading,
-  Image,
   Text,
   Button,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { RiCloseLine } from "react-icons/ri";
 
@@ -119,6 +116,8 @@ export default function BancaDoIngressoContent() {
             <Box
               cursor="pointer"
               borderRadius="10px"
+              border="2px solid #d0726d"
+              overflow="hidden"
               _hover={{
                 boxShadow: "0px 0px 25px #d0726d",
                 transform: "scale(1.01)",
@@ -128,20 +127,19 @@ export default function BancaDoIngressoContent() {
               flex={isDesktop ? "1" : "unset"}
               minWidth="0"
               width={isDesktop ? "auto" : "100%"}
-            >
-              <Image
-                onClick={() =>
-                  openImageFullSize(
-                    "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/dashboard+bdi.png"
-                  )
-                }
-                border={"2px solid #d0726d"}
-                objectFit="cover"
-                height="600px"
-                borderRadius="10px"
-                src={
+              position="relative"
+              height="600px"
+              onClick={() =>
+                openImageFullSize(
                   "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/dashboard+bdi.png"
-                }
+                )
+              }
+            >
+              <ImageWithFallback
+                fill
+                sizes="(min-width: 1023px) 50vw, 100vw"
+                style={{ objectFit: "cover", borderRadius: "10px" }}
+                src="https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/dashboard+bdi.png"
                 alt="Banca do Ingresso admin dashboard"
                 fallback={
                   <ProjectPlaceholder
@@ -183,6 +181,8 @@ export default function BancaDoIngressoContent() {
             <Box
               cursor="pointer"
               borderRadius="10px"
+              border="2px solid #d0726d"
+              overflow="hidden"
               _hover={{
                 boxShadow: "0px 0px 25px #d0726d",
                 transform: "scale(1.01)",
@@ -192,20 +192,19 @@ export default function BancaDoIngressoContent() {
               flex={isDesktop ? "1" : "unset"}
               minWidth="0"
               width={isDesktop ? "auto" : "100%"}
-            >
-              <Image
-                onClick={() =>
-                  openImageFullSize(
-                    "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/eventos.png"
-                  )
-                }
-                border={"2px solid #d0726d"}
-                objectFit="cover"
-                height="600px"
-                borderRadius="10px"
-                src={
+              position="relative"
+              height="600px"
+              onClick={() =>
+                openImageFullSize(
                   "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/eventos.png"
-                }
+                )
+              }
+            >
+              <ImageWithFallback
+                fill
+                sizes="(min-width: 1023px) 50vw, 100vw"
+                style={{ objectFit: "cover", borderRadius: "10px" }}
+                src="https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/eventos.png"
                 alt="Banca do Ingresso events list"
                 fallback={
                   <ProjectPlaceholder
@@ -226,6 +225,8 @@ export default function BancaDoIngressoContent() {
             <Box
               cursor="pointer"
               borderRadius="10px"
+              border="2px solid #d0726d"
+              overflow="hidden"
               _hover={{
                 boxShadow: "0px 0px 25px #d0726d",
                 transform: "scale(1.01)",
@@ -235,20 +236,19 @@ export default function BancaDoIngressoContent() {
               flex={isDesktop ? "1" : "unset"}
               minWidth="0"
               width={isDesktop ? "auto" : "100%"}
-            >
-              <Image
-                onClick={() =>
-                  openImageFullSize(
-                    "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/relatorios.png"
-                  )
-                }
-                w="100%"
-                objectFit="cover"
-                height="600px"
-                borderRadius="10px"
-                src={
+              position="relative"
+              height="600px"
+              onClick={() =>
+                openImageFullSize(
                   "https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/relatorios.png"
-                }
+                )
+              }
+            >
+              <ImageWithFallback
+                fill
+                sizes="(min-width: 1023px) 1040px, 100vw"
+                style={{ objectFit: "cover", borderRadius: "10px" }}
+                src="https://gabsportifolio.s3.amazonaws.com/img/BancaDoIngresso/relatorios.png"
                 alt="Banca do Ingresso reports view"
                 fallback={
                   <ProjectPlaceholder

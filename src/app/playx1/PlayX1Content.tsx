@@ -2,6 +2,7 @@
 
 import { Card } from "@/components/Card";
 import { FullSizeImageModal } from "@/components/FullSizeImageModal";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { ProjectPlaceholder } from "@/components/ProjectPlaceholder";
 import { useLanguage } from "@/context/language";
 import { useFullSize } from "@/hooks/useFullSize";
@@ -11,7 +12,6 @@ import {
   Box,
   Flex,
   Heading,
-  Image,
   Text,
   Button,
   useMediaQuery,
@@ -145,6 +145,7 @@ export default function PlayX1Content() {
             <Box
               cursor="pointer"
               borderRadius="10px"
+              border="2px solid #C3ACDA"
               _hover={{
                 boxShadow: "0px 0px 25px #C3ACDA",
                 transform: "scale(1.01)",
@@ -154,21 +155,20 @@ export default function PlayX1Content() {
               flex={isDesktop ? "1" : "unset"}
               minWidth="0"
               width={isDesktop ? "auto" : "100%"}
-            >
-              <Image
-                onClick={() =>
-                  openImageFullSize(
-                    "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/landing.png"
-                  )
-                }
-                cursor={"pointer"}
-                border={"2px solid #C3ACDA"}
-                objectFit="cover"
-                height="600px"
-                borderRadius="10px"
-                src={
+              position="relative"
+              height="600px"
+              overflow="hidden"
+              onClick={() =>
+                openImageFullSize(
                   "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/landing.png"
-                }
+                )
+              }
+            >
+              <ImageWithFallback
+                fill
+                sizes="(min-width: 1023px) 50vw, 100vw"
+                style={{ objectFit: "cover", borderRadius: "10px" }}
+                src="https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/landing.png"
                 alt="PlayX1 landing page"
                 fallback={
                   <ProjectPlaceholder
@@ -210,6 +210,7 @@ export default function PlayX1Content() {
             <Box
               cursor="pointer"
               borderRadius="10px"
+              border="2px solid #C3ACDA"
               _hover={{
                 boxShadow: "0px 0px 25px #C3ACDA",
                 transform: "scale(1.01)",
@@ -219,21 +220,20 @@ export default function PlayX1Content() {
               flex={isDesktop ? "1" : "unset"}
               minWidth="0"
               width={isDesktop ? "auto" : "100%"}
-            >
-              <Image
-                onClick={() =>
-                  openImageFullSize(
-                    "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/home.png"
-                  )
-                }
-                cursor={"pointer"}
-                border={"2px solid #C3ACDA"}
-                objectFit="cover"
-                height="600px"
-                borderRadius="10px"
-                src={
+              position="relative"
+              height="600px"
+              overflow="hidden"
+              onClick={() =>
+                openImageFullSize(
                   "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/home.png"
-                }
+                )
+              }
+            >
+              <ImageWithFallback
+                fill
+                sizes="(min-width: 1023px) 50vw, 100vw"
+                style={{ objectFit: "cover", borderRadius: "10px" }}
+                src="https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/home.png"
                 alt="PlayX1 home screen"
                 fallback={
                   <ProjectPlaceholder
@@ -254,6 +254,7 @@ export default function PlayX1Content() {
             <Box
               cursor="pointer"
               borderRadius="10px"
+              border="2px solid #C3ACDA"
               _hover={{
                 boxShadow: "0px 0px 25px #C3ACDA",
                 transform: "scale(1.01)",
@@ -263,21 +264,20 @@ export default function PlayX1Content() {
               flex={isDesktop ? "1" : "unset"}
               minWidth="0"
               width={isDesktop ? "auto" : "100%"}
-            >
-              <Image
-                onClick={() =>
-                  openImageFullSize(
-                    "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/match.png"
-                  )
-                }
-                cursor={"pointer"}
-                border={"2px solid #C3ACDA"}
-                objectFit="cover"
-                height="600px"
-                borderRadius="10px"
-                src={
+              position="relative"
+              height="600px"
+              overflow="hidden"
+              onClick={() =>
+                openImageFullSize(
                   "https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/match.png"
-                }
+                )
+              }
+            >
+              <ImageWithFallback
+                fill
+                sizes="(min-width: 1023px) 1040px, 100vw"
+                style={{ objectFit: "cover", borderRadius: "10px" }}
+                src="https://gabsportifolio.s3.amazonaws.com/img/ProjetoX1/match.png"
                 alt="PlayX1 match screen"
                 fallback={
                   <ProjectPlaceholder
