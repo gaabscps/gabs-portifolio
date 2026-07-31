@@ -489,7 +489,11 @@ export const projects: Project[] = [
     // To swap the cover to a recording-flow video (kind: "video"), drop the file at
     // public/soundwave/preview.mp4 and update the cover to:
     //   cover: { kind: "video", src: "/soundwave/preview.mp4", alt: "SoundWave Summit, 20s recording flow: hit record → speak → stop → analysis appears with topics, decisions, action items" },
-    cover: { kind: "custom", component: "Waveform" },
+    cover: {
+      kind: "screenshot",
+      src: "/soundwave/landing.png",
+      alt: "SoundWave Summit landing page: an 'Unlock Powerful Insights from Your Recordings' hero over a dark, waveform-lit background, with a 'Try for free' call to action and feature cards below.",
+    },
     stackChips: ["Vite + React", "Supabase", "Google AI", "Deepgram"],
     aiTool: "Claude",
     motivation:
@@ -551,9 +555,6 @@ export const projects: Project[] = [
       "What started as 'capture my own meetings' grew into a real platform (Stripe billing, anonymous flows, public sharing, multi-provider transcription with a circuit breaker. The thing that changed me most through this build wasn't a feature, it was the layering instinct. Anything that touches identity, money, or visibility now gets three independent enforcement layers) Postgres RLS, an Edge Function gate, a storage policy. Any one of them can fail without exposing data. The lesson generalizes: the UI is convenience. The real gate is at the data layer.",
     plugins: [
       {
-        // TODO assets:
-        //   /soundwave/transcription-metrics.png, admin dashboard showing the v_transcription_metrics_24h view: rows per model (deepgram-nova-2, deepgram-whisper-large, gemini-2.5-flash) with attempts_total, success_rate_pct, p50_duration_ms, p95_duration_ms
-        //   /soundwave/transcription-attempts.png (single-job detail panel showing the transcription_attempts JSON array) three rows: nova-2 (error 4xx), whisper-large (circuit_open), gemini-2.5-flash (ok), with timing
         name: "Transcription Engine",
         summary:
           "Three speech-to-text providers in a fallback chain. If the first fails (or its circuit breaker is open), the next tries, and the next. Every attempt is logged; success rate is tracked per provider in a 24-hour rolling view.",
@@ -568,21 +569,13 @@ export const projects: Project[] = [
           "Graceful degradation as the default, not an afterthought. The circuit breaker means a bad day at one provider doesn't burn the user's quota retrying it.",
         gallery: [
           {
-            src: "/soundwave/transcription-metrics.png",
-            alt: "Admin metrics dashboard, three rows for deepgram-nova-2, deepgram-whisper-large, gemini-2.5-flash, each showing total attempts, success rate %, p50 and p95 duration in ms, over the last 24 hours",
-            caption: "v_transcription_metrics_24h",
-          },
-          {
-            src: "/soundwave/transcription-attempts.png",
-            alt: "Single-job detail panel, transcription_attempts JSON array shown as three timeline rows: nova-2 (outcome: error), whisper-large (outcome: circuit_open), gemini-2.5-flash (outcome: ok), each with started_at and duration_ms",
-            caption: "per-job retry log",
+            src: "/soundwave/admin-overview.png",
+            alt: "Admin dashboard overview: total users, total analyses, credits used, and a success-rate card, plus an analysis-status breakdown (completed / processing / failed) and users-by-plan distribution. The operational surface where a degrading provider shows up as a falling success rate. Figures are redacted.",
+            caption: "admin · success rate & platform stats",
           },
         ],
       },
       {
-        // TODO assets:
-        //   /soundwave/analysis-result.png, finished analysis page: topics card (3 carousel items), decisions card, insights card, todos card, sentiment card with per-participant breakdown
-        //   /soundwave/analysis-languages.png, output-language dropdown showing all 10 options (en/pt/es/fr/de/it/ja/ko/zh/ru) with one selected
         name: "Analysis Pipeline",
         summary:
           "Once an audio is transcribed, Gemini extracts the structured analysis (topics, insights, decisions, todos, sentiment) into a typed JSON object the front-end renders into cards. Defensive parsing handles the LLM responses that forget to format.",
@@ -598,19 +591,12 @@ export const projects: Project[] = [
         gallery: [
           {
             src: "/soundwave/analysis-result.png",
-            alt: "Finished analysis page, top half shows a topics carousel (3 cards), middle shows decisions and todos lists, bottom shows insights and a sentiment card with per-participant emotion labels",
-            caption: "analysis · all sections",
-          },
-          {
-            src: "/soundwave/analysis-languages.png",
-            alt: "Language picker open, dropdown menu listing all 10 output languages (English, Portuguese, Spanish, French, German, Italian, Japanese, Korean, Chinese, Russian) with one currently selected",
-            caption: "10 output languages",
+            alt: "Finished analysis page: a three-column layout with an X-Ray panel (sentiment, trend, participants, speech time), a Transcription feed, and an Insights and Recommended Actions panel, above Topics and Key Decisions cards. The real transcript, participant names, and insight text are blurred; the structure is left intact.",
+            caption: "analysis · content redacted",
           },
         ],
       },
       {
-        // TODO assets:
-        //   /soundwave/worker-queue.png, admin view of the audio_jobs table: list of rows with status pills (queued / processing / done / error), worker_id column, locked_at timestamp, progress %
         name: "Audio Worker",
         summary:
           "A Node.js worker on Railway that processes audio outside of Supabase Edge Functions. Picks jobs from a Postgres queue, chunks the audio with ffmpeg, transcribes each chunk, writes the result back.",
@@ -623,18 +609,8 @@ export const projects: Project[] = [
           "Edge Functions can't spawn subprocesses, which makes ffmpeg unusable there, but ffmpeg is the only reasonable tool for time-based audio chunking. So the worker is a separate Node.js service on Railway. Jobs live in a Postgres `audio_jobs` table; the worker claims one atomically using `SELECT … FOR UPDATE SKIP LOCKED`, then writes a lease (`locked_at` / `locked_by`) so a crashed worker's job can be picked up after a timeout. Default chunk size is 120 seconds. The transcription chain runs per chunk; analysis runs once on the assembled transcript.",
         myContribution:
           "Pick the runtime that matches the operation. Edge Functions are perfect for short, stateless requests; ffmpeg-driven chunking is not that. One service per kind of work, not one service for everything.",
-        gallery: [
-          {
-            src: "/soundwave/worker-queue.png",
-            alt: "Audio_jobs admin view, table of recent jobs with columns: status pill (queued / processing / done / error), worker_id, locked_at timestamp, progress percentage, original_filename. One row currently processing, two done, one queued.",
-            caption: "audio_jobs queue",
-          },
-        ],
       },
       {
-        // TODO assets:
-        //   /soundwave/visibility-toggles.png, settings panel with 8 toggle switches (audio, transcription, sentiment, speech_time, topics, decisions, insights, todos), each labeled, some on/some off
-        //   /soundwave/public-view.png, public viewer of a shared analysis: visible sections rendered normally, hidden sections shown as 'not shared' placeholders
         name: "Public Sharing · FEAT-009",
         summary:
           "Any analysis can be made public with eight independent toggles: audio, transcription, sentiment, speech-time, topics, decisions, insights, todos. Public viewers get exactly what the owner allowed, nothing more, nothing less.",
@@ -647,23 +623,8 @@ export const projects: Project[] = [
           "Visibility is a JSONB column on the analysis row, validated by a `pg_jsonschema` CHECK constraint (with a pure-SQL fallback when the extension isn't available). Public reads go through a SECURITY DEFINER RPC that walks the visibility JSON and returns only the allowed fields. The storage policy gates the audio file at the signed-URL layer, a request for the audio fails at the bucket if `audio: false`, even if a UI somehow asks for it. `REVOKE SELECT … FROM anon` on the underlying table is the defense-in-depth: if everything else fails, the anon role still can't read the raw rows.",
         myContribution:
           "Three independent enforcement layers (RLS, RPC, storage policy) for a single property. Any one of them can fail without exposing data. The UI is convenience; the real gate is at the data layer.",
-        gallery: [
-          {
-            src: "/soundwave/visibility-toggles.png",
-            alt: "Visibility settings panel, eight labeled toggle switches in two columns: audio, transcription, sentiment, speech_time on the left; topics, decisions, insights, todos on the right. Four are on, four are off. Below: a 'copy public link' button.",
-            caption: "8 toggles",
-          },
-          {
-            src: "/soundwave/public-view.png",
-            alt: "Public viewer of a shared analysis, header with title and 'shared publicly' badge, topics and decisions cards rendered normally, the audio player section replaced with a small 'audio not shared' placeholder, the transcription section greyed out with a similar placeholder",
-            caption: "public view · respects toggles",
-          },
-        ],
       },
       {
-        // TODO assets:
-        //   /soundwave/anonymous-flow.mp4, 20-25s clip: landing page → 'try without signup' CTA → upload an audio file → see the analysis result without ever signing up
-        //   /soundwave/anonymous-claim.png (signup completion screen showing 'We found 2 analyses you started before signing up) they've been added to your account' with a list
         name: "Anonymous-then-Claim Flow",
         summary:
           "Try the product without signing up. Upload audio, run an analysis, see the result. If you want to keep it, create an account, your in-progress analyses are claimed and migrated to your user automatically.",
@@ -678,22 +639,13 @@ export const projects: Project[] = [
           "Activation friction is the first feature, not the last polish. Letting a visitor see the product work on their own audio (before any email) is what made the funnel actually convert.",
         gallery: [
           {
-            src: "/soundwave/anonymous-flow.mp4",
-            alt: "Anonymous flow demo, 20-25s clip: landing page with prominent 'try without signup' CTA, click → file upload modal → drop an audio file → processing animation → finished analysis appears (topics, decisions, todos visible). No signup wall, no email gate.",
-            caption: "anonymous · full flow",
-            kind: "video",
-          },
-          {
-            src: "/soundwave/anonymous-claim.png",
-            alt: "Post-signup screen (message reads 'We found 2 analyses you started before signing up) they've been added to your account.' Below, a list of two analysis cards with titles and created_at dates, both now linked to the new user.",
-            caption: "claim on signup",
+            src: "/soundwave/signup.png",
+            alt: "Create-your-account screen: 'Continue with Google', or email and password fields, with a 'Sign In' link for existing users. This is the endpoint of the anonymous flow, where the claim step re-attaches any analyses started before signup to the new account.",
+            caption: "signup · where anonymous work is claimed",
           },
         ],
       },
       {
-        // TODO assets:
-        //   /soundwave/recorder-active.mp4, 15-20s clip: user clicks record, sees the waveform indicator, switches browser tab (Picture-in-Picture window appears with mini waveform), tabs back (title was flashing), clicks stop, recording uploads
-        //   /soundwave/recorder-safari.png, Safari-specific permission warning screen with a custom animation explaining how to grant mic + screen-share permissions in Safari's distinct prompts
         name: "Browser Recorder",
         summary:
           "Record audio in the browser: mic only, tab audio only, or both mixed together. Works across Chrome, Firefox, and Safari, each of which has its own personality. Falls back to local download if upload fails so the meeting is never lost.",
@@ -708,15 +660,9 @@ export const projects: Project[] = [
           "Browser APIs are services with personalities. Safari isn't broken, it's enforcing its own permission model, and the recorder has to know that. The download fallback was added after the first user lost a meeting to a network blip.",
         gallery: [
           {
-            src: "/soundwave/recorder-active.mp4",
-            alt: "Recording flow, 15-20s clip: user clicks the record button on the dashboard, waveform animation starts in the panel; user switches to a different browser tab and a small Picture-in-Picture window appears with a live waveform; user returns to the tab (title was flashing for attention); user clicks stop; upload progress completes",
-            caption: "record · tab away · stop",
-            kind: "video",
-          },
-          {
-            src: "/soundwave/recorder-safari.png",
-            alt: "Safari-specific permission walkthrough, modal with a Safari logo, animated illustration showing how to grant mic permission via Safari's distinct prompt, separate step for screen-share permission with the system dialog highlighted",
-            caption: "Safari · custom walkthrough",
+            src: "/soundwave/dashboard.png",
+            alt: "Recorder dashboard: a 'Record Audio' / 'Upload File' switch, a highlighted 'Safari Limitation' warning explaining that Safari cannot capture site audio, a 'Record system audio (Calls)' toggle, a live-transcription toggle, and a 'Start Recording' button. This is the recorder surface where each browser's quirks are handled.",
+            caption: "recorder · Safari limitation handled",
           },
         ],
       },

@@ -60,6 +60,8 @@ export function buildHomeSession(): SessionStep[] {
           stack={p.stackChips ?? []}
           aiTool={p.aiTool}
           coverComponent={p.cover?.component}
+          coverSrc={p.cover?.src}
+          coverAlt={p.cover?.alt}
         />,
       ),
     }),

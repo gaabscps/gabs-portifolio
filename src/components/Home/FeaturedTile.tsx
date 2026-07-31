@@ -13,9 +13,11 @@ type Props = {
   stack: string[];
   aiTool?: string;
   coverComponent?: string;
+  coverSrc?: string;
+  coverAlt?: string;
 };
 
-export const FeaturedTile = ({ slug, status, year, name, blurb, stack, aiTool, coverComponent }: Props) => {
+export const FeaturedTile = ({ slug, status, year, name, blurb, stack, aiTool, coverComponent, coverSrc, coverAlt }: Props) => {
   const Cover = coverComponent ? COVER_COMPONENTS[coverComponent] : null;
   return (
     <Link href={`/work/${slug}`} style={{ textDecoration: "none" }}>
@@ -41,9 +43,24 @@ export const FeaturedTile = ({ slug, status, year, name, blurb, stack, aiTool, c
           alignItems="center"
           justifyContent="center"
           position="relative"
-          px={4}
+          px={coverSrc ? 0 : 4}
         >
-          {Cover && <Cover />}
+          {coverSrc ? (
+            <Box
+              as="img"
+              src={coverSrc}
+              alt={coverAlt ?? name}
+              loading="lazy"
+              position="absolute"
+              inset={0}
+              w="100%"
+              h="100%"
+              objectFit="cover"
+              objectPosition="top"
+            />
+          ) : (
+            Cover && <Cover />
+          )}
           <Text
             position="absolute"
             top="10px"
