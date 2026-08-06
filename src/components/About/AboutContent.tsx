@@ -68,7 +68,7 @@ export default function AboutContent() {
         </Text>
 
         <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={5}>
-          I spent three years shipping production front-end work before the AI boom. React, Next.js, TypeScript, Chakra. Real users, real bugs, real on-call. By the time the LLMs got good, I already knew what good code looked like, and what bad code shipped feels like. That&apos;s the unfair advantage: AI accelerates everything for me because I can tell when its output is right and when it&apos;s wrong.
+          I spent four years shipping production front-end work before the AI boom. React, Next.js, TypeScript, Chakra. Real users, real bugs, real on-call. By the time the LLMs got good, I already knew what good code looked like, and what bad code shipped feels like. That&apos;s the unfair advantage: AI accelerates everything for me because I can tell when its output is right and when it&apos;s wrong.
         </Text>
 
         <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={5}>

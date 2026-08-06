@@ -26,7 +26,7 @@ export function buildHomeSession(): SessionStep[] {
       <Text color="brand.textSecondary" lineHeight={1.7}>
         <Text as="span" color="brand.stateHelped">gabriel andrade</Text> · front-end engineer
         <br />
-        <Text as="span" color="brand.textMeta">São Paulo, BR · three years shipping before the AI boom</Text>
+        <Text as="span" color="brand.textMeta">São Paulo, BR · four years shipping before the AI boom</Text>
       </Text>
     ),
   });

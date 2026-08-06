@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import HomeContent from "@/components/Home/HomeContent";
 
 const description =
-  "Front-end engineer in São Paulo. Three years shipping production software before the AI boom, now shipping with it as leverage.";
+  "Front-end engineer in São Paulo. Four years shipping production software before the AI boom, now shipping with it as leverage.";
 
 export const metadata: Metadata = {
   title: { absolute: "Gabriel Andrade · Front-end Engineer" },

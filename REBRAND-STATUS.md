@@ -88,7 +88,7 @@ b5e31e6  feat(home):    add hero, featured, workshop, archive, nav, footer + Pro
 - `next.config.mjs` — 308 redirects from old project routes (`/banca-do-ingresso`, `/playx1`, `/projects`).
 
 ### Phase 4 · Legacy pages refresh
-- `src/components/About/AboutContent.tsx` — new long-form bio in English, uses Nav + Footer + new design tokens. Talks about the UNESP → late dev pivot → 3 years pre-AI → AI on time narrative.
+- `src/components/About/AboutContent.tsx` — new long-form bio in English, uses Nav + Footer + new design tokens. Talks about the UNESP → late dev pivot → 4 years pre-AI → AI on time narrative.
 - `src/components/Contact/ContactContent.tsx` — same form (WhatsApp/Telegram/email) restyled in the new system, English copy.
 - Old `app/about/AboutContent.tsx` and `app/contact/ContactContent.tsx` deleted.
 
