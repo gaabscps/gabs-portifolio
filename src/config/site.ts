@@ -1,10 +1,10 @@
 export const siteConfig = {
   url: "https://gabrielandrade.net",
   name: "Gabriel Andrade",
-  jobTitle: "Front-end Developer",
-  locale: "pt_BR",
+  jobTitle: "Front-end Engineer",
+  locale: "en_US",
   defaultDescription:
-    "Portfólio de Gabriel Andrade, desenvolvedor front-end focado em interfaces dinâmicas, limpas e em ótimas experiências de usuário.",
+    "Gabriel Andrade builds products end to end. Front-end engineer in São Paulo, shipping production software with AI as leverage, not as the demo.",
   ogImage: "/about/profile.png",
   twitterHandle: "@gaabscps",
   social: {
@@ -14,11 +14,8 @@ export const siteConfig = {
   },
 } as const;
 
-export const routes = [
-  "/",
-  "/about",
-  "/projects",
-  "/contact",
-  "/playx1",
-  "/banca-do-ingresso",
-] as const;
+// Static pages only. The case study pages under /work/<slug> are derived from
+// the project data in the sitemap, so adding a project does not need an edit
+// here. The old /projects, /playx1 and /banca-do-ingresso paths are left out on
+// purpose: next.config.mjs redirects them, and a sitemap should list final URLs.
+export const routes = ["/", "/about", "/work", "/contact"] as const;
