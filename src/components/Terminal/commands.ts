@@ -22,7 +22,7 @@ export const COMMANDS: Record<string, CommandHandler> = {
   ],
   whoami: () => [
     line("gabriel andrade · front-end engineer", "green"),
-    line("São Paulo, BR · three years shipping before the AI boom", "dim"),
+    line("São Paulo, BR · four years shipping before the AI boom", "dim"),
     line("now shipping with AI as leverage, not as the demo"),
   ],
   stack: () => [
@@ -49,7 +49,7 @@ export const COMMANDS: Record<string, CommandHandler> = {
     const q = args.join(" ").toLowerCase();
     let answer: string;
     if (!q) return [line('usage: ask "your question"', "error")];
-    if (q.includes("hire") || q.includes("why")) answer = "I ship. Three years of production work before the AI wave, and now I use AI to move faster without shipping the demo.";
+    if (q.includes("hire") || q.includes("why")) answer = "I ship. Four years of production work before the AI wave, and now I use AI to move faster without shipping the demo.";
     else if (q.includes("stack") || q.includes("tech")) answer = "React, Next.js and TypeScript up front; Supabase and Node behind. Run 'stack' for the full list.";
     else if (q.includes("ai")) answer = "AI writes a lot of my code now. My job is the architecture, the tests, and knowing when to stop it before it ships something that breaks.";
     else answer = "Good question. The short version: I like shipping small, correct things and improving them in the open.";
