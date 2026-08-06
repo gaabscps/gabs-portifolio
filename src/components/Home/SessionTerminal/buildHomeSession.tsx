@@ -4,7 +4,6 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { FeaturedTile } from "../FeaturedTile";
 import { projects } from "@/data/projects";
-import { WORKSHOP } from "@/config/workshop";
 import type { SessionStep } from "./SessionTerminal";
 
 const rail = (children: React.ReactNode) => (
@@ -13,8 +12,8 @@ const rail = (children: React.ReactNode) => (
   </Box>
 );
 
-// Builds the home page as one terminal session: whoami, the live projects, the
-// workshop, and the archive, each as a typed command followed by rich output.
+// Builds the home page as one terminal session: whoami, the live projects, and
+// the archive, each as a typed command followed by rich output.
 export function buildHomeSession(): SessionStep[] {
   const live = projects.filter((p) => p.status === "live").slice(0, 3);
   const steps: SessionStep[] = [];
@@ -66,32 +65,6 @@ export function buildHomeSession(): SessionStep[] {
       ),
     }),
   );
-
-  steps.push({ kind: "cmd", text: "cat workshop/this-week.md" });
-  steps.push({
-    kind: "out",
-    weight: 1.2,
-    node: rail(
-      <Flex direction={{ base: "column", md: "row" }} flexWrap="wrap" gap={5} py={1}>
-        <Box minW="180px" flex="1">
-          <Text fontSize="10px" color="brand.accentHover" letterSpacing="0.14em" textTransform="uppercase" fontWeight="700" mb={1}>Now</Text>
-          <Text fontSize="13px" color="brand.text">{WORKSHOP.now}</Text>
-        </Box>
-        <Box minW="140px" flex="1">
-          <Text fontSize="10px" color="brand.accentHover" letterSpacing="0.14em" textTransform="uppercase" fontWeight="700" mb={1}>Playing</Text>
-          <Text fontSize="13px" color="brand.text">{WORKSHOP.playing.primary}</Text>
-        </Box>
-        <Box minW="160px" flex="1">
-          <Text fontSize="10px" color="brand.accentHover" letterSpacing="0.14em" textTransform="uppercase" fontWeight="700" mb={1}>Reading</Text>
-          <Text fontSize="13px" color="brand.text" className="serif-italic">{WORKSHOP.reading.title}</Text>
-        </Box>
-        <Box minW="200px" flex="1.4">
-          <Text fontSize="10px" color="brand.accentHover" letterSpacing="0.14em" textTransform="uppercase" fontWeight="700" mb={1}>Note</Text>
-          <Text fontSize="13px" color="brand.text" fontStyle="italic" borderLeft="2px solid" borderColor="brand.accent" pl={3}>&ldquo;{WORKSHOP.note}&rdquo;</Text>
-        </Box>
-      </Flex>,
-    ),
-  });
 
   steps.push({ kind: "cmd", text: "ls ./work --all" });
   steps.push({
