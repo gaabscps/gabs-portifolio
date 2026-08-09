@@ -18,13 +18,13 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   keywords: [
     "Gabriel Andrade",
-    "Front-end Developer",
+    "Front-end Engineer",
     "React",
     "Next.js",
     "TypeScript",
     "Chakra UI",
     "React Native",
-    "Portfólio",
+    "Portfolio",
   ],
   alternates: {
     canonical: "/",

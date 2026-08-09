@@ -2,6 +2,7 @@
 
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { HERO_STATUS } from "@/config/hero";
+import { projects } from "@/data/projects";
 
 export const Hero = () => (
   <Box as="section" px={{ base: 4, md: 8 }} pt={{ base: 16, md: 24 }} pb={10}>
@@ -64,7 +65,7 @@ export const Hero = () => (
     >
       <Box as="span">SP, BR</Box>
       <Box as="span">·</Box>
-      <Box as="span">7 projects shipped</Box>
+      <Box as="span">{projects.length} projects shipped</Box>
       <Box as="span">·</Box>
       <Box as="span">music on weekends</Box>
       <Box as="span">·</Box>
