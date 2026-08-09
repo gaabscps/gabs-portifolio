@@ -1,6 +1,27 @@
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import type { Stat } from "@/types/project";
 
+const DAY = 24 * 60 * 60 * 1000;
+
+// Turns a start date into a short running duration, so stats like "live in prod"
+// count on their own. Runs on the server while the page is generated, so the
+// number is refreshed by every deploy rather than typed by hand.
+const elapsedSince = (since: string) => {
+  const days = Math.floor((Date.now() - new Date(`${since}T00:00:00Z`).getTime()) / DAY);
+  if (days < 14) {
+    return `${days}d`;
+  }
+  const weeks = Math.floor(days / 7);
+  if (weeks < 52) {
+    return `${weeks}wk`;
+  }
+  return `${Math.floor(days / 30)}mo`;
+};
+
+const statValue = (stat: Stat) => {
+  return stat.since ? elapsedSince(stat.since) : stat.value;
+};
+
 export const Stats = ({ stats, footer }: { stats: Stat[]; footer?: React.ReactNode }) => (
   <Box
     mb={10}
@@ -26,7 +47,7 @@ export const Stats = ({ stats, footer }: { stats: Stat[]; footer?: React.ReactNo
       {stats.map((s, i) => (
         <Flex key={i} align="baseline" gap={3} py={2}>
           <Text fontSize="36px" fontWeight="700" letterSpacing="-0.03em" color="brand.text" lineHeight={1}>
-            {s.value}
+            {statValue(s)}
           </Text>
           <Text
             fontSize="10px"
