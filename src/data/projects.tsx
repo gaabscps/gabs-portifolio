@@ -85,7 +85,7 @@ export const projects: Project[] = [
     results: [
       { value: "0", label: "lines of Java I wrote" },
       { value: "33", label: "plugins live" },
-      { value: "12wk", label: "live in prod" },
+      { since: "2026-02-26", label: "live in prod" },
       { value: "3", label: "RPG classes live" },
     ],
     retrospective:

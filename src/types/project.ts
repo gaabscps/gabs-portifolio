@@ -68,9 +68,14 @@ export type BuildLogEntry = {
   callouts?: Callout[];
 };
 
+// A stat is either a fixed value ("33 plugins live") or a running duration that
+// counts from a date ("live in prod"). Set `since` instead of `value` for the
+// second kind, so the number recomputes on every build instead of being typed
+// by hand and going stale.
 export type Stat = {
-  value: string;
+  value?: string;
   label: string;
+  since?: string;
 };
 
 export type Project = {
