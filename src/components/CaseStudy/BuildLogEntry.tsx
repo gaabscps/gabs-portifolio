@@ -3,17 +3,7 @@ import type { BuildLogEntry as Entry } from "@/types/project";
 import { renderAiText } from "./AiMark";
 import { Callout } from "./Callout";
 
-// Deterministic 7-char hex hash derived from the entry, so it stays stable across renders
-// instead of being random.
-const shortHash = (seed: string) => {
-  let h = 5381;
-  for (let i = 0; i < seed.length; i++) h = ((h << 5) + h + seed.charCodeAt(i)) >>> 0;
-  return h.toString(16).padStart(7, "0").slice(0, 7);
-};
-
 export const BuildLogEntry = ({ entry, isLast }: { entry: Entry; isLast?: boolean }) => {
-  const hash = shortHash(`${entry.version}:${entry.date}:${entry.title}`);
-
   return (
     <Box
       py={5}
@@ -24,21 +14,21 @@ export const BuildLogEntry = ({ entry, isLast }: { entry: Entry; isLast?: boolea
     >
       <Text fontFamily="var(--font-mono)" fontSize="13px">
         <Box as="span" color="brand.textMeta">
-          commit
+          focus
         </Box>{" "}
         <Box as="span" color="brand.accentHover">
-          {hash}
+          {entry.date}
         </Box>
         <Box as="span" color="var(--state-changed)">
-          {` (tag: ${entry.version})`}
+          {` · ${entry.version}`}
         </Box>
       </Text>
       <Text fontFamily="var(--font-mono)" fontSize="12px" mb={4}>
         <Box as="span" color="brand.textMuted">
-          Date:
+          context:
         </Box>{" "}
         <Box as="span" color="brand.textMeta">
-          {entry.date}
+          {entry.version}
         </Box>
       </Text>
 

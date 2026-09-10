@@ -1,10 +1,10 @@
 export const siteConfig = {
   url: "https://gabrielandrade.net",
   name: "Gabriel Andrade",
-  jobTitle: "Front-end Engineer",
+  jobTitle: "Software Engineer",
   locale: "en_US",
   defaultDescription:
-    "Gabriel Andrade builds products end to end. Front-end engineer in São Paulo, shipping production software with AI as leverage, not as the demo.",
+    "Gabriel Andrade is a software engineer in São Paulo building product interfaces, full-stack systems, and AI-assisted workflows.",
   ogImage: "/about/profile.png",
   twitterHandle: "@gaabscps",
   social: {

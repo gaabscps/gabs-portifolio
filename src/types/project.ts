@@ -19,7 +19,7 @@ export type ProjectLinks = {
 };
 
 export type ProjectCover = {
-  kind: "screenshot" | "video" | "custom" | "gif";
+  kind: "screenshot" | "artwork" | "video" | "custom" | "gif";
   src?: string;
   component?: string;
   alt?: string;

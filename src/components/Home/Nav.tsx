@@ -35,19 +35,19 @@ export const Nav = ({ active }: { active?: "work" | "about" | "contact" }) => (
     bg="rgba(12, 10, 20, 0.78)"
     sx={{ backdropFilter: "saturate(180%) blur(20px)", WebkitBackdropFilter: "saturate(180%) blur(20px)" }}
   >
-    <Flex align="center" gap={4}>
-      <TrafficLights />
+    <Flex align="center" gap={{ base: 2, md: 4 }} flexShrink={0}>
+      <Box display={{ base: "none", sm: "block" }}><TrafficLights /></Box>
       <Link href="/" style={{ textDecoration: "none" }}>
         <Text fontFamily="var(--font-mono)" fontWeight="700" letterSpacing="0.02em" fontSize="11px" color="brand.text">
           gabriel<Box as="span" color="brand.accent">.dev</Box>
         </Text>
       </Link>
-      <Text fontFamily="var(--font-mono)" fontSize="11px" aria-hidden="true">
+      <Text display={{ base: "none", md: "block" }} fontFamily="var(--font-mono)" fontSize="11px" aria-hidden="true">
         <Box as="span" color="brand.textMeta">~</Box>{" "}
         <Box as="span" color="brand.accent" fontWeight="700">$</Box>
       </Text>
     </Flex>
-    <Flex gap={6}>
+    <Flex gap={{ base: 3, md: 6 }}>
       <NavLink href="/work" label="work" active={active === "work"} />
       <NavLink href="/about" label="about" active={active === "about"} />
       <NavLink href="/contact" label="contact" active={active === "contact"} />

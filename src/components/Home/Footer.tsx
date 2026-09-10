@@ -27,7 +27,7 @@ export const Footer = () => (
     <Grid templateColumns={{ base: "1fr", md: "2fr 1fr 1fr" }} gap={{ base: 8, md: 12 }}>
       <Box>
         <Text fontSize="11px" color="brand.textMeta" lineHeight={1.7} maxW="480px">
-          <Box as="span" color="brand.textSecondary">Gabriel Andrade</Box>, front-end engineer in São Paulo. UNESP Botucatu background, then a late pivot to code. Four years building without AI before catching the wave on time. Musician on weekends, gamer on weeknights.
+          <Box as="span" color="brand.textSecondary">Gabriel Andrade</Box>, software engineer in São Paulo. Building product interfaces and full-stack systems since 2022, with AI as part of a deliberate engineering workflow. Musician on weekends, gamer on weeknights.
         </Text>
       </Box>
 

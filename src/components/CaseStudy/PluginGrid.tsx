@@ -6,14 +6,15 @@ import type { Plugin } from "@/types/project";
 import { PluginModal } from "./PluginModal";
 import { renderAiText } from "./AiMark";
 
-const PluginGallery = ({ gallery }: { gallery: NonNullable<Plugin["gallery"]> }) => (
-  <Grid templateColumns={{ base: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }} gap={3} mt={4}>
+const PluginGallery = ({ gallery, onSelect }: { gallery: NonNullable<Plugin["gallery"]>; onSelect: () => void }) => (
+  <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={3} mt={4}>
     {gallery.map((g) => (
-      <Box key={g.src}>
+      <Box key={g.src} gridColumn={g.kind === "video" ? "1 / -1" : undefined}>
         <Box
+          display="block"
           position="relative"
           w="100%"
-          pt="56.25%"
+          pt="62.5%"
           borderRadius="8px"
           overflow="hidden"
           border="1px solid"
@@ -21,6 +22,7 @@ const PluginGallery = ({ gallery }: { gallery: NonNullable<Plugin["gallery"]> })
           bg="brand.bg"
           transition="all var(--duration-fast) var(--ease-apple)"
           _hover={{ borderColor: "brand.accent", transform: "translateY(-2px)" }}
+          _focusVisible={{ outline: "2px solid var(--accent)", outlineOffset: "2px" }}
         >
           {g.kind === "video" ? (
             <Box
@@ -28,29 +30,29 @@ const PluginGallery = ({ gallery }: { gallery: NonNullable<Plugin["gallery"]> })
               src={g.src}
               aria-label={g.alt}
               poster={g.poster}
-              autoPlay
-              muted
-              loop
+              controls
               playsInline
-              preload="metadata"
+              preload="none"
               position="absolute"
               inset={0}
               w="100%"
               h="100%"
-              objectFit="cover"
+              objectFit="contain"
             />
           ) : (
-            <Box
-              as="img"
-              src={g.src}
-              alt={g.alt}
-              loading="lazy"
-              position="absolute"
-              inset={0}
-              w="100%"
-              h="100%"
-              objectFit="cover"
-            />
+            <Box as="button" type="button" onClick={onSelect} aria-label={`Open gallery: ${g.caption ?? g.alt}`} position="absolute" inset={0} w="100%" h="100%" _focusVisible={{ outline: "2px solid var(--accent)", outlineOffset: "-2px" }}>
+              <Box
+                as="img"
+                src={g.src}
+                alt={g.alt}
+                loading="lazy"
+                position="absolute"
+                inset={0}
+                w="100%"
+                h="100%"
+                objectFit="contain"
+              />
+            </Box>
           )}
         </Box>
         {g.caption && (
@@ -73,19 +75,8 @@ const PluginGallery = ({ gallery }: { gallery: NonNullable<Plugin["gallery"]> })
 
 const PluginCard = ({ plugin, onSelect }: { plugin: Plugin; onSelect: (p: Plugin) => void }) => {
   const spans = Boolean(plugin.gallery?.length);
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      onSelect(plugin);
-    }
-  };
   return (
     <Box
-      role="button"
-      tabIndex={0}
-      onClick={() => onSelect(plugin)}
-      onKeyDown={onKeyDown}
-      aria-label={`open details for ${plugin.name}`}
       gridColumn={{ base: "1", md: spans ? "1 / -1" : "auto" }}
       p={5}
       bg="brand.surface1"
@@ -93,7 +84,6 @@ const PluginCard = ({ plugin, onSelect }: { plugin: Plugin; onSelect: (p: Plugin
       borderColor="brand.borderSubtle"
       borderRadius="10px"
       boxShadow="var(--inset-highlight)"
-      cursor="pointer"
       transition="all var(--duration-fast) var(--ease-apple)"
       position="relative"
       _hover={{
@@ -103,7 +93,7 @@ const PluginCard = ({ plugin, onSelect }: { plugin: Plugin; onSelect: (p: Plugin
       }}
       _focusVisible={{ outline: "2px solid var(--accent)", outlineOffset: "2px" }}
     >
-      <Flex justify="space-between" align="flex-start" gap={3} mb={2}>
+      <Flex as="button" type="button" onClick={() => onSelect(plugin)} aria-label={`open details for ${plugin.name}`} w="100%" textAlign="left" justify="space-between" align="flex-start" gap={3} mb={2} _focusVisible={{ outline: "2px solid var(--accent)", outlineOffset: "4px" }}>
         <Text
           fontSize="15px"
           fontWeight="700"
@@ -130,6 +120,12 @@ const PluginCard = ({ plugin, onSelect }: { plugin: Plugin; onSelect: (p: Plugin
       <Text fontSize="13px" color="brand.textSecondary" lineHeight={1.55} mb={3}>
         {renderAiText(plugin.summary)}
       </Text>
+      {plugin.myContribution && (
+        <Text fontSize="13px" color="brand.textSecondary" lineHeight={1.65} mb={4}>
+          <Box as="span" color="brand.accentHover" fontWeight="600">My contribution: </Box>
+          {plugin.myContribution}
+        </Text>
+      )}
 
       {plugin.requestedBy && (
         <Text
@@ -163,7 +159,7 @@ const PluginCard = ({ plugin, onSelect }: { plugin: Plugin; onSelect: (p: Plugin
         )}
       </Flex>
 
-      {plugin.gallery?.length ? <PluginGallery gallery={plugin.gallery} /> : null}
+      {plugin.gallery?.length ? <PluginGallery gallery={plugin.gallery} onSelect={() => onSelect(plugin)} /> : null}
     </Box>
   );
 };
@@ -182,15 +178,14 @@ export const PluginGrid = ({ plugins }: { plugins: Plugin[] }) => {
           fontFamily="var(--font-mono)"
           fontWeight="700"
         >
-          core systems · {plugins.length} of 33 live
+          selected architecture · {plugins.length} deep dive
         </Text>
         <Text
           fontSize="11px"
           color="brand.textMeta"
           fontFamily="var(--font-mono)"
         >
-          every line of java: <Box as="span" color="brand.accentHover">claude</Box>{" "}
-          · arch / observability / tests / scope: <Box as="span" color="brand.accentHover">me</Box>
+          role / challenge / choices / outcomes
         </Text>
       </Flex>
 

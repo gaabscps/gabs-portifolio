@@ -6,22 +6,26 @@
   },
   "projects": {
     "h1": "Projects",
-    "bancaDoIngresso": {
-      "title": "Banca do ingresso Admin Dashboard",
-      "description": "The 'Banca do Ingresso' project, is a system for manage event tickets. The admin dashboard is a web application that allows the management of events, tickets and users. The system was developed using react and typescript."
+    "aiSquad": {
+      "title": "ai-squad",
+      "description": "A structured AI-assisted development workflow with scoped tasks, executable verification, mechanical guardrails, and human checkpoints."
     },
-    "playx1": {
-      "title": "PlayX1",
-      "description": "The PlayX1 is a project of a platform for betting on online games. The project was developed using ReactJS, NextJS, Typescript"
+    "soundwave": {
+      "title": "SoundWave Summit",
+      "description": "A full-stack audio AI platform for turning recordings into transcripts, topics, decisions, insights, and action items."
     },
-    "dashboard": {
-      "title": "Services Dashboard",
-      "description": "Under construction..."
+    "aios": {
+      "title": "aiOS",
+      "description": "A React observability cockpit for AI-assisted work sessions, delivery, attention, cost, and verification evidence."
+    },
+    "squadhouse": {
+      "title": "Squadhouse",
+      "description": "A Next.js platform with scoped operating agents, an internal CRM, and a WhatsApp message bridge."
     }
   },
   "about": {
     "h1": "Gabriel Andrade",
-    "lede": "Front-end developer specializing in React, Next.js and TypeScript, building dynamic, clean interfaces and great user experiences.",
+    "lede": "Software engineer building product interfaces, full-stack systems, and dependable AI-assisted workflows.",
     "h2About": "About me",
     "h2Skills": "Skills",
     "text1": "I'm <strong>Gabriel</strong>, a front-end engineer who builds products end to end, with a focus on dynamic, clean interfaces and user experience. I take on the whole front-end: the design system other projects consume, features, maintenance and production deploys, using technologies such as <strong>ReactTS</strong>, <strong>Next.js</strong> and <strong>Chakra UI</strong>. I also played an important role in the development of the front-end of an administrative system in a large events and ticketing company, using <strong>ReactTS</strong>, <strong>Redux</strong> and <strong>Sass</strong>.",

@@ -6,22 +6,26 @@
   },
   "projects": {
     "h1": "Projetos",
-    "bancaDoIngresso": {
-      "title": "Banca do ingresso Painel Administrativo",
-      "description": "O projeto Banca do Ingresso é um sistema de gestão de ingressos para eventos. O painel administrativo é uma aplicação web que permite a gestão de eventos, ingressos e usuários. O sistema foi desenvolvido utilizando react e typescript."
+    "aiSquad": {
+      "title": "ai-squad",
+      "description": "Um workflow estruturado de desenvolvimento com IA, tarefas delimitadas, verificação executável, guardrails mecânicos e checkpoints humanos."
     },
-    "playx1": {
-      "title": "PlayX1",
-      "description": "O PlayX1 é o projeto de uma plataforma de apostas em jogos online. O projeto foi desenvolvido utilizando ReactJS, NextJS, Typescript"
+    "soundwave": {
+      "title": "SoundWave Summit",
+      "description": "Uma plataforma full-stack de áudio com IA que transforma gravações em transcrição, tópicos, decisões, insights e ações."
     },
-    "dashboard": {
-      "title": "Dashboard de serviços",
-      "description": "Em construção..."
+    "aios": {
+      "title": "aiOS",
+      "description": "Um cockpit em React para observar sessões de trabalho com IA, entregas, atenção, custo e evidências de verificação."
+    },
+    "squadhouse": {
+      "title": "Squadhouse",
+      "description": "Uma plataforma Next.js com agentes operacionais delimitados, CRM interno e ponte de mensagens do WhatsApp."
     }
   },
   "about": {
     "h1": "Gabriel Andrade",
-    "lede": "Desenvolvedor front-end especializado em React, Next.js e TypeScript, criando interfaces dinâmicas, limpas e ótimas experiências de usuário.",
+    "lede": "Engenheiro de software que constrói interfaces de produto, sistemas full-stack e workflows confiáveis de desenvolvimento com IA.",
     "h2About": "Sobre mim",
     "h2Skills": "Habilidades",
     "text1": "Sou <strong>Gabriel</strong>, um engenheiro front-end que constrói produtos de ponta a ponta, com foco em interfaces dinâmicas, limpas e na experiência de usuário. Assumo o front-end inteiro: o design system que os outros projetos consomem, features, manutenção e deploys em produção, utilizando tecnologias como <strong>ReactTS</strong>, <strong>Next.js</strong> e <strong>Chakra UI</strong>. Também desempenhei papel importante no desenvolvimento do front-end de um sistema administrativo em uma grande empresa de eventos e bilheteria, usando <strong>ReactTS</strong>, <strong>Redux</strong> e <strong>Sass</strong>.",

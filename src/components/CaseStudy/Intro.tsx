@@ -20,9 +20,9 @@ export const Intro = ({ project, headline, lede }: { project: Project; headline?
         bg="brand.accent"
         sx={{ animation: "blink-soft 2s infinite" }}
       />
-      {project.id} · running since {project.startedAt ?? project.year}
+      {project.id} · {project.year}
     </Flex>
-    <Box
+    <Box as="h1"
       fontSize={{ base: "32px", md: "44px" }}
       fontWeight="800"
       letterSpacing="-0.035em"

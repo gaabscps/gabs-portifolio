@@ -2,20 +2,20 @@ import type { Metadata } from "next";
 import HomeContent from "@/components/Home/HomeContent";
 
 const description =
-  "Front-end engineer in São Paulo. Four years shipping production software before the AI boom, now shipping with it as leverage.";
+  "Software engineer in São Paulo building product interfaces, full-stack systems, and AI-assisted workflows since 2022.";
 
 export const metadata: Metadata = {
-  title: { absolute: "Gabriel Andrade · Front-end Engineer" },
+  title: { absolute: "Gabriel Andrade · Software Engineer" },
   description,
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Gabriel Andrade · Front-end Engineer",
+    title: "Gabriel Andrade · Software Engineer",
     description,
     url: "/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gabriel Andrade · Front-end Engineer",
+    title: "Gabriel Andrade · Software Engineer",
     description,
   },
 };

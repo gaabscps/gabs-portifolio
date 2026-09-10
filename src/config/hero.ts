@@ -1,5 +1,5 @@
 export const HERO_STATUS = {
   label: "Currently shipping",
-  project: "betterSMP",
-  version: "v2",
+  project: "product systems",
+  version: "with AI",
 };

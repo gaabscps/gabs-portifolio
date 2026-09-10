@@ -23,7 +23,7 @@ export default function AboutContent() {
         >
           About
         </Text>
-        <Box
+        <Box as="h1"
           fontSize={{ base: "38px", md: "48px" }}
           fontWeight="800"
           letterSpacing="-0.04em"
@@ -64,15 +64,15 @@ export default function AboutContent() {
         </Box>
 
         <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={5}>
-          I&apos;m Gabriel Andrade. Front-end engineer based in São Paulo. I started in nutrition at UNESP Botucatu before realizing I wanted to build software for a living. That late switch is the most-asked-about thing on my CV, and honestly, I think it&apos;s an advantage.
+          I&apos;m Gabriel Andrade, a software engineer based in São Paulo. I have worked as a developer since 2022, after starting my career in nutrition at UNESP Botucatu. Today I build product interfaces, full-stack systems, and the workflows that make AI-assisted development dependable.
         </Text>
 
         <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={5}>
-          I spent four years shipping production front-end work before the AI boom. React, Next.js, TypeScript, Chakra. Real users, real bugs, real on-call. By the time the LLMs got good, I already knew what good code looked like, and what bad code shipped feels like. That&apos;s the unfair advantage: AI accelerates everything for me because I can tell when its output is right and when it&apos;s wrong.
+          At valePay, I owned the front-end: product features, the shared design system, reusable project foundations, and production deploys. SoundWave and Squadhouse extend that work into my own full-stack products, with workers, data models, authentication, billing, and integrations.
         </Text>
 
         <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={5}>
-          Now I build production software with AI as leverage, never as the demo. I document <em>where</em> AI helps, <em>what</em> I changed by hand, and <em>what</em> I rejected, in every project. That&apos;s how I keep myself honest about it.
+          I use AI throughout that work, with written acceptance criteria, bounded tasks, executable checks, and human review around consequential decisions. ai-squad and aiOS are the tools I built to make that process visible and repeatable.
         </Text>
 
         <Box mt={10} mb={8} pt={8} borderTop="1px solid" borderColor="brand.border">
@@ -100,16 +100,16 @@ export default function AboutContent() {
           </Box>
 
           <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={5}>
-            Claude Code is my daily driver; Cursor for quick edits. I write acceptance criteria before I prompt, if I can&apos;t say what &ldquo;done&rdquo; looks like in plain English, the model won&apos;t know either. Then small diffs, separate commits, and a full read of every line, even when the build is green.
+            I use Claude Code, Codex, and Cursor. I write acceptance criteria, constrain each task, and pair model-assisted review with executable verification. A reviewer&apos;s opinion and a passing command answer different questions; I use both when deciding whether a change is ready.
           </Text>
 
           <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={0}>
-            The hardest lesson so far: AI ships async code that passes local tests and dies under load. Missing <Box as="code" fontFamily="var(--font-mono)" fontSize="13px" color="brand.text">await</Box>s, stale closures, race conditions the prompt never asked about. Now I review every loop, every effect, every concurrent call by hand before I trust the output.
+            In Squadhouse, that same approach extends to operational agents: narrow responsibilities, deterministic validation, an evaluation suite for risky output, and a human decision before anyone is contacted.
           </Text>
         </Box>
 
         <Text fontSize="15px" color="brand.textSecondary" lineHeight={1.7} mb={8}>
-          Outside code: I play music on weekends and games on weeknights. I&apos;ve been a Minecraft addict for longer than I care to admit.
+          Outside code, I play music on weekends and games on weeknights.
         </Text>
 
         <Flex gap={3} flexWrap="wrap" fontSize="11px" fontFamily="var(--font-mono)">

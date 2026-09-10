@@ -7,15 +7,19 @@ export type AppTexts = {
 
   projects: {
     h1: string;
-    bancaDoIngresso: {
+    aiSquad: {
       title: string;
       description: string;
     };
-    playx1: {
+    soundwave: {
       title: string;
       description: string;
     };
-    dashboard: {
+    aios: {
+      title: string;
+      description: string;
+    };
+    squadhouse: {
       title: string;
       description: string;
     };

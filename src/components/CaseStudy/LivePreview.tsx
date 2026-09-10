@@ -4,7 +4,7 @@ import type { ProjectCover } from "@/types/project";
 
 export const LivePreview = ({ cover }: { cover: ProjectCover }) => {
   const Cover = cover.component ? COVER_COMPONENTS[cover.component] : null;
-  const isImage = (cover.kind === "gif" || cover.kind === "screenshot") && cover.src;
+  const isImage = (cover.kind === "gif" || cover.kind === "screenshot" || cover.kind === "artwork") && cover.src;
   const isVideo = cover.kind === "video" && cover.src;
   const isMedia = isImage || isVideo;
 
@@ -26,7 +26,7 @@ export const LivePreview = ({ cover }: { cover: ProjectCover }) => {
       transition="all var(--duration-base) var(--ease-apple)"
       _hover={{ borderColor: "brand.borderStrong" }}
       _before={{
-        content: '"▶ LIVE PREVIEW"',
+        content: cover.kind === "artwork" ? '"PROJECT COVER"' : '"PROJECT PREVIEW"',
         position: "absolute",
         top: "12px",
         right: "12px",
@@ -36,6 +36,9 @@ export const LivePreview = ({ cover }: { cover: ProjectCover }) => {
         fontWeight: 600,
         letterSpacing: "0.15em",
         zIndex: 1,
+        background: "rgba(12, 10, 20, 0.82)",
+        padding: "5px 8px",
+        borderRadius: "4px",
         textShadow: "0 1px 2px rgba(0,0,0,0.4)",
       }}
     >
@@ -58,11 +61,9 @@ export const LivePreview = ({ cover }: { cover: ProjectCover }) => {
           w="100%"
           h="auto"
           display="block"
-          autoPlay
-          muted
-          loop
+          controls
           playsInline
-          preload="metadata"
+          preload="none"
         />
       )}
       {!isMedia && Cover && <Cover />}

@@ -40,8 +40,8 @@ export const Lightbox = ({ asset, onClose }: { asset: PluginAsset | null; onClos
             src={asset.src}
             aria-label={asset.alt}
             controls
-            autoPlay
-            loop
+            poster={asset.poster}
+            preload="none"
             playsInline
             maxW="94vw"
             maxH="82vh"

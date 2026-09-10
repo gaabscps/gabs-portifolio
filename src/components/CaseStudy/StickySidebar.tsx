@@ -11,7 +11,7 @@ const buildSections = (project: Project): Section[] => {
   const sections: Section[] = [{ id: "intro", label: "intro" }];
   if (project.motivation) sections.push({ id: "why", label: "why we built it" });
   if (project.buildLog?.length) sections.push({ id: "build-log", label: "build log" });
-  if (project.plugins?.length) sections.push({ id: "plugins", label: "plugins" });
+  if (project.plugins?.length) sections.push({ id: "plugins", label: "product details" });
   if (project.results?.length) sections.push({ id: "what-shipped", label: "what shipped" });
   if (project.retrospective) sections.push({ id: "what-id-change", label: "what i'd change" });
   if (project.server) sections.push({ id: "join", label: "join the server" });

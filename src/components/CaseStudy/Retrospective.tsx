@@ -4,7 +4,7 @@ import { renderAiText } from "./AiMark";
 
 export const Retrospective = ({ body }: { body: string }) => (
   <TerminalWindow
-    filename="retrospective.md (bettersmp)"
+    filename="retrospective.md"
     label="what I'd change next time"
     command="cat retrospective.md"
     mb={10}

@@ -17,7 +17,7 @@ export const TerminalWindow = ({
   label,
   command,
   user = "gabs",
-  host = "bettersmp",
+  host = "portfolio",
   children,
   ...rest
 }: Props) => (

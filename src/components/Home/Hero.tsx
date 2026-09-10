@@ -33,26 +33,26 @@ export const Hero = () => (
     </Flex>
 
     <Box
-      fontSize={{ base: "44px", md: "56px" }}
+      as="h1"
+      fontSize={{ base: "clamp(32px, 10vw, 44px)", md: "56px" }}
       fontWeight="800"
       letterSpacing="-0.04em"
       lineHeight="0.95"
       mb={6}
       color="brand.text"
     >
-      I got into dev late.
+      I build products end to end.
       <br />
-      Got into AI{" "}
+      And make AI development{" "}
       <Box as="span" className="serif-italic" color="brand.accent" fontWeight="600">
-        on time
+        reliable
       </Box>
       <Box as="span" className="cursor-caret" />
     </Box>
 
     <Text fontSize={{ base: "14px", md: "16px" }} color="brand.textSecondary" lineHeight={1.6} maxW="544px" mb={8}>
-      Front-end engineer in São Paulo. Four years shipping production software{" "}
-      <Box as="em" color="brand.text" fontStyle="italic">before</Box>{" "}
-      the AI boom. Now shipping with it as leverage, not as the demo.
+      Software engineer in São Paulo, building products since 2022. I work across
+      front-end, product systems, and AI-assisted workflows from idea to production.
     </Text>
 
     <Flex
@@ -65,11 +65,11 @@ export const Hero = () => (
     >
       <Box as="span">SP, BR</Box>
       <Box as="span">·</Box>
-      <Box as="span">{projects.length} projects shipped</Box>
+      <Box as="span">{projects.length} selected case studies</Box>
       <Box as="span">·</Box>
-      <Box as="span">music on weekends</Box>
+      <Box as="span">React · TypeScript · Node.js</Box>
       <Box as="span">·</Box>
-      <Box as="span">gamer for life</Box>
+      <Box as="span">AI workflows · product systems</Box>
     </Flex>
   </Box>
 );

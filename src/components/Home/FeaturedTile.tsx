@@ -22,23 +22,26 @@ export const FeaturedTile = ({ slug, status, year, name, blurb, stack, aiTool, c
   return (
     <Link href={`/work/${slug}`} style={{ textDecoration: "none" }}>
       <Box
+        display="grid"
+        gridTemplateColumns={{ base: "minmax(0, 1fr)", lg: "minmax(0, 1.6fr) minmax(0, 1fr)" }}
         bg="brand.surface1"
         border="1px solid"
         borderColor="brand.border"
         borderRadius="12px"
         overflow="hidden"
-        transition="all var(--duration-base) var(--ease-apple)"
+        transition="border-color var(--duration-base) var(--ease-apple), background var(--duration-base) var(--ease-apple)"
         boxShadow="var(--inset-highlight)"
         _hover={{
-          transform: "translateY(-1px)",
           borderColor: "brand.borderStrong",
           bg: "brand.surface2",
         }}
       >
         <Flex
-          h="120px"
+          minW={0}
+          aspectRatio="16 / 10"
           bg="brand.bg"
-          borderBottom="1px solid"
+          borderBottom={{ base: "1px solid", lg: 0 }}
+          borderRight={{ base: 0, lg: "1px solid" }}
           borderColor="brand.borderSubtle"
           alignItems="center"
           justifyContent="center"
@@ -55,8 +58,7 @@ export const FeaturedTile = ({ slug, status, year, name, blurb, stack, aiTool, c
               inset={0}
               w="100%"
               h="100%"
-              objectFit="cover"
-              objectPosition="top"
+              objectFit="contain"
             />
           ) : (
             Cover && <Cover />
@@ -70,19 +72,23 @@ export const FeaturedTile = ({ slug, status, year, name, blurb, stack, aiTool, c
             fontFamily="var(--font-mono)"
             fontWeight="600"
             letterSpacing="0.12em"
+            bg="rgba(12, 10, 20, 0.82)"
+            px={2}
+            py={1}
+            borderRadius="4px"
           >
             {status.toUpperCase()} · {year}
           </Text>
         </Flex>
-        <Box px={4} pt={4} pb={4}>
-          <Text fontSize="15px" fontWeight="600" color="brand.text" mb={2}>{name}</Text>
-          <Text fontSize="12px" color="brand.textSecondary" lineHeight={1.5} mb={4}>{blurb}</Text>
+        <Flex direction="column" justify="center" minW={0} p={{ base: 5, xl: 8 }}>
+          <Text as="h2" fontSize={{ base: "21px", md: "26px" }} fontWeight="600" letterSpacing="-0.03em" lineHeight={1.2} color="brand.text" mb={3}>{name}</Text>
+          <Text fontSize={{ base: "13px", md: "14px" }} color="brand.textSecondary" lineHeight={1.7} mb={5}>{blurb}</Text>
           <Flex gap={2} flexWrap="wrap">
             {stack.map((s) => (
               <Box
                 key={s}
                 as="span"
-                fontSize="9px"
+                fontSize="10px"
                 color="brand.textMeta"
                 border="1px solid"
                 borderColor="brand.border"
@@ -98,7 +104,7 @@ export const FeaturedTile = ({ slug, status, year, name, blurb, stack, aiTool, c
             {aiTool && (
               <Box
                 as="span"
-                fontSize="9px"
+                fontSize="10px"
                 color="brand.accentHover"
                 border="1px solid"
                 borderColor="var(--accent-quiet)"
@@ -113,7 +119,8 @@ export const FeaturedTile = ({ slug, status, year, name, blurb, stack, aiTool, c
               </Box>
             )}
           </Flex>
-        </Box>
+          <Text mt={6} fontSize="11px" color="brand.accentHover" fontWeight="600">Explore case study <Box as="span" aria-hidden="true">↗</Box></Text>
+        </Flex>
       </Box>
     </Link>
   );

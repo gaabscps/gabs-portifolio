@@ -1,0 +1,143 @@
+[
+  {
+    "file": "public/projects/ai-squad/cover.webp",
+    "bytes": 103340,
+    "width": 1440,
+    "height": 900,
+    "format": "webp"
+  },
+  {
+    "file": "public/projects/ai-squad/walkthrough.mp4",
+    "bytes": 1668632,
+    "width": 1440,
+    "height": 900,
+    "codec": "h264",
+    "durationSeconds": 13.76
+  },
+  {
+    "file": "public/projects/ai-squad/workflow.webp",
+    "bytes": 103276,
+    "width": 1440,
+    "height": 900,
+    "format": "webp"
+  },
+  {
+    "file": "public/projects/aios/board.webp",
+    "bytes": 46600,
+    "width": 1440,
+    "height": 900,
+    "format": "webp"
+  },
+  {
+    "file": "public/projects/aios/cover.webp",
+    "bytes": 55394,
+    "width": 1440,
+    "height": 900,
+    "format": "webp"
+  },
+  {
+    "file": "public/projects/aios/overview.webp",
+    "bytes": 55394,
+    "width": 1440,
+    "height": 900,
+    "format": "webp"
+  },
+  {
+    "file": "public/projects/aios/session.webp",
+    "bytes": 57012,
+    "width": 1440,
+    "height": 900,
+    "format": "webp"
+  },
+  {
+    "file": "public/projects/aios/walkthrough.mp4",
+    "bytes": 619411,
+    "width": 1440,
+    "height": 900,
+    "codec": "h264",
+    "durationSeconds": 17.291667
+  },
+  {
+    "file": "public/projects/soundwave/analysis.webp",
+    "bytes": 64476,
+    "width": 1440,
+    "height": 900,
+    "format": "webp"
+  },
+  {
+    "file": "public/projects/soundwave/cover.webp",
+    "bytes": 83846,
+    "width": 1440,
+    "height": 900,
+    "format": "webp"
+  },
+  {
+    "file": "public/projects/soundwave/walkthrough.mp4",
+    "bytes": 2943664,
+    "width": 1440,
+    "height": 900,
+    "codec": "h264",
+    "durationSeconds": 17.52
+  },
+  {
+    "file": "public/projects/squadhouse/cover.webp",
+    "bytes": 49952,
+    "width": 1440,
+    "height": 720,
+    "format": "webp"
+  },
+  {
+    "file": "public/projects/squadhouse/crm.webp",
+    "bytes": 34970,
+    "width": 1440,
+    "height": 720,
+    "format": "webp"
+  },
+  {
+    "file": "public/projects/squadhouse/platform.webp",
+    "bytes": 49952,
+    "width": 1440,
+    "height": 720,
+    "format": "webp"
+  },
+  {
+    "file": "public/projects/squadhouse/walkthrough.mp4",
+    "bytes": 344977,
+    "width": 1440,
+    "height": 720,
+    "codec": "h264",
+    "durationSeconds": 11.08
+  },
+  {
+    "file": "public/projects/ai-squad/brand-cover.webp",
+    "bytes": 167920,
+    "width": 1586,
+    "height": 992,
+    "format": "webp",
+    "provenance": "AI-generated editorial brand artwork"
+  },
+  {
+    "file": "public/projects/soundwave/brand-cover.webp",
+    "bytes": 88340,
+    "width": 1586,
+    "height": 992,
+    "format": "webp",
+    "provenance": "AI-generated editorial brand artwork"
+  },
+  {
+    "file": "public/projects/aios/brand-cover.webp",
+    "bytes": 90346,
+    "width": 1586,
+    "height": 992,
+    "format": "webp",
+    "provenance": "AI-generated editorial brand artwork"
+  },
+  {
+    "file": "public/projects/squadhouse/brand-cover.webp",
+    "bytes": 55164,
+    "width": 1586,
+    "height": 992,
+    "format": "webp",
+    "provenance": "AI-generated editorial brand artwork"
+  }
+]

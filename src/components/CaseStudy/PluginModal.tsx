@@ -36,24 +36,23 @@ const Gallery = ({ gallery }: { gallery: NonNullable<Plugin["gallery"]> }) => {
       >
         assets · click to enlarge
       </Text>
-      <Grid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }} gap={3}>
+      <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={3}>
         {gallery.map((g) => (
-          <Box key={g.src}>
+          <Box key={g.src} gridColumn={g.kind === "video" ? { base: "1", md: "1 / -1" } : undefined}>
             <Box
+              display="block"
               position="relative"
               w="100%"
-              pt="56.25%"
+              pt="62.5%"
               borderRadius="8px"
               overflow="hidden"
               border="1px solid"
               borderColor="brand.borderSubtle"
               bg="brand.bg"
-              cursor="zoom-in"
-              role="button"
-              aria-label={`enlarge ${g.caption ?? g.alt}`}
-              onClick={() => setActive(g)}
+              cursor={g.kind === "video" ? "default" : "zoom-in"}
               transition="all var(--duration-fast) var(--ease-apple)"
               _hover={{ borderColor: "brand.accent", transform: "translateY(-2px)" }}
+              _focusVisible={{ outline: "2px solid var(--accent)", outlineOffset: "2px" }}
             >
               {g.kind === "video" ? (
                 <Box
@@ -61,29 +60,29 @@ const Gallery = ({ gallery }: { gallery: NonNullable<Plugin["gallery"]> }) => {
                   src={g.src}
                   aria-label={g.alt}
                   poster={g.poster}
-                  autoPlay
-                  muted
-                  loop
+                  controls
                   playsInline
-                  preload="metadata"
+                  preload="none"
                   position="absolute"
                   inset={0}
                   w="100%"
                   h="100%"
-                  objectFit="cover"
+                  objectFit="contain"
                 />
               ) : (
-                <Box
-                  as="img"
-                  src={g.src}
-                  alt={g.alt}
-                  loading="lazy"
-                  position="absolute"
-                  inset={0}
-                  w="100%"
-                  h="100%"
-                  objectFit="cover"
-                />
+                <Box as="button" type="button" onClick={() => setActive(g)} aria-label={`enlarge ${g.caption ?? g.alt}`} position="absolute" inset={0} w="100%" h="100%" _focusVisible={{ outline: "2px solid var(--accent)", outlineOffset: "-2px" }}>
+                  <Box
+                    as="img"
+                    src={g.src}
+                    alt={g.alt}
+                    loading="lazy"
+                    position="absolute"
+                    inset={0}
+                    w="100%"
+                    h="100%"
+                    objectFit="contain"
+                  />
+                </Box>
               )}
             </Box>
             {g.caption && (

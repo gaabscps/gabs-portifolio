@@ -15,8 +15,13 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      { source: "/banca-do-ingresso", destination: "/work/banca-do-ingresso", permanent: true },
-      { source: "/playx1", destination: "/work/playx1", permanent: true },
+      { source: "/banca-do-ingresso", destination: "/work", permanent: true },
+      { source: "/playx1", destination: "/work", permanent: true },
+      { source: "/work/banca-do-ingresso", destination: "/work", permanent: true },
+      { source: "/work/playx1", destination: "/work", permanent: true },
+      { source: "/work/bettersmp", destination: "/work", permanent: true },
+      { source: "/work/calendarfr", destination: "/work", permanent: true },
+      { source: "/work/dashboard", destination: "/work", permanent: true },
       { source: "/projects", destination: "/work", permanent: true },
     ];
   },

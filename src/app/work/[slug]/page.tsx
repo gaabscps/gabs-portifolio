@@ -17,12 +17,6 @@ import { ServerAddressCTA } from "@/components/CaseStudy/ServerAddressCTA";
 type Params = { slug: string };
 
 const HEADLINES: Record<string, React.ReactNode> = {
-  bettersmp: (
-    <>
-      We built the Minecraft server we wished{" "}
-      <Box as="span" className="serif-italic" color="brand.accent" fontWeight="600">existed</Box>.
-    </>
-  ),
   soundwave: (
     <>
       Meetings I can{" "}
@@ -31,27 +25,27 @@ const HEADLINES: Record<string, React.ReactNode> = {
   ),
   "ai-squad": (
     <>
-      A workflow that survives me{" "}
-      <Box as="span" className="serif-italic" color="brand.accent" fontWeight="600">forgetting</Box> to be disciplined.
+      Engineering a workflow where verification outranks{" "}
+      <Box as="span" className="serif-italic" color="brand.accent" fontWeight="600">confidence</Box>.
     </>
   ),
-  calendarfr: (
+  aios: (
     <>
-      A planner I actually{" "}
-      <Box as="span" className="serif-italic" color="brand.accent" fontWeight="600">open</Box>.
+      Make AI-assisted work{" "}
+      <Box as="span" className="serif-italic" color="brand.accent" fontWeight="600">observable</Box>.
     </>
   ),
 };
 
 const LEDES: Record<string, string> = {
-  bettersmp:
-    "BetterSMP is a Minecraft server I run with my friends, with 33 custom Java plugins on top of the vanilla game. Popular servers turn into idle farms, where players leave the game running overnight for rewards. We wanted somewhere with actual gameplay, and the only way to get it was to build it. I don't write Java, Claude does. My job is the architecture, the security model, and the calls about what's actually fun.",
   soundwave:
-    "SoundWave Summit is an audio AI platform, record or upload a meeting, get back a structured analysis with topics, decisions, action items, and sentiment. Started as a tool to capture my own meetings; grew into a real platform with Stripe billing, anonymous flows, public sharing, and a three-provider transcription chain with circuit breakers. I write the architecture, the security model, and the calls that decide what ships. AI is the keyboard.",
+    "SoundWave Summit is a full-stack audio AI product: record or upload audio, process it outside the browser, and return a structured workspace for transcripts, topics, decisions, sentiment, and action items.",
   "ai-squad":
-    "ai-squad is the workflow I built because using AI to code without one was eating my afternoons. Two squads (Discovery for fuzzy ideas, SDD for clear pitches), ten roles, three IDE targets, and a mechanical enforcement layer that makes bypass impossible. Every interactive gate is conversational; the Build phase runs unattended. AI is the keyboard. The workflow is the judgment.",
-  calendarfr:
-    "CalendarFR is a digital bullet journal that lives in the browser. Every day is one page (morning intention, an hourly agenda, evening gratitude) with the paper aesthetic intact: a handwritten font, a paper-grain texture, a baseline grid that aligns like a real notebook. Five planners are still sitting half-empty in a drawer behind me. This one I open every day because it's where I already am.",
+    "ai-squad is a structured workflow for AI-assisted development. Its current V3 build phase uses one implementer, executable verification, a fresh-eyes review, and two human checkpoints, with hooks enforcing file scope and git-write rules.",
+  aios:
+    "aiOS is the React observability cockpit inside the ai-squad repository. It turns recorded session artifacts into an attention board and detailed evidence views for phase, duration, cost, verification, and decisions. Screens shown use synthetic data.",
+  squadhouse:
+    "Squadhouse connects a Next.js 16 customer platform, AI-assisted service delivery, and an internal CRM with a WhatsApp bridge and shared Supabase data contract.",
 };
 
 export async function generateStaticParams() {
@@ -118,9 +112,9 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
               footer={
                 project.links.live ? (
                   <>
-                    verified by community →{" "}
-                    <Box as="span" className="draw-link" color="brand.accentHover">
-                      {project.links.live}
+                    explore the product →{" "}
+                    <Box as="a" href={project.links.live} target="_blank" rel="noopener noreferrer" className="draw-link" color="brand.accentHover">
+                      {project.id}
                     </Box>
                   </>
                 ) : null
@@ -207,7 +201,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                 fontFamily="var(--font-mono)"
                 textDecoration="none"
               >
-                join the server{" "}
+                open product{" "}
                 <Box as="span" sx={{ animation: "wiggle-arrow 1.5s ease-in-out infinite" }}>→</Box>
               </Box>
             )}

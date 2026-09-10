@@ -7,7 +7,7 @@ import { projects } from "@/data/projects";
 
 export const metadata: Metadata = {
   title: "Work",
-  description: "All projects, in production and archived.",
+  description: "Selected product engineering and AI workflow case studies by Gabriel Andrade.",
   alternates: { canonical: "/work" },
 };
 
@@ -23,11 +23,11 @@ export default function WorkPage() {
       <Nav active="work" />
       <Box maxW="1200px" w="100%" mx="auto" flex="1">
         <Box px={{ base: 5, md: 8 }} pt={12} pb={4}>
-          <Box fontSize={{ base: "32px", md: "42px" }} fontWeight="800" letterSpacing="-0.035em" lineHeight={1} color="brand.text">
+          <Box as="h1" fontSize={{ base: "32px", md: "42px" }} fontWeight="800" letterSpacing="-0.035em" lineHeight={1} color="brand.text">
             Work
           </Box>
           <Box mt={3} fontSize="14px" color="brand.textSecondary" maxW="500px">
-            Every project, in production or shipped. Click for the case study.
+            Four selected cases across product engineering, AI workflows, observability, and operations.
           </Box>
         </Box>
         <ArchiveList rows={rows} total={projects.length} />

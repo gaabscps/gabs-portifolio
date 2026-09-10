@@ -25,7 +25,7 @@ const statValue = (stat: Stat) => {
 export const Stats = ({ stats, footer }: { stats: Stat[]; footer?: React.ReactNode }) => (
   <Box
     mb={10}
-    p={8}
+    p={{ base: 5, md: 8 }}
     border="1px solid"
     borderColor="brand.borderSubtle"
     borderRadius="12px"
@@ -41,12 +41,12 @@ export const Stats = ({ stats, footer }: { stats: Stat[]; footer?: React.ReactNo
       fontWeight="700"
       mb={6}
     >
-      what shipped, in numbers
+      technical outcomes
     </Text>
-    <Grid templateColumns={{ base: "1fr 1fr", md: "repeat(2, 1fr)" }} gap={6}>
+    <Grid templateColumns="repeat(2, minmax(0, 1fr))" gap={6}>
       {stats.map((s, i) => (
-        <Flex key={i} align="baseline" gap={3} py={2}>
-          <Text fontSize="36px" fontWeight="700" letterSpacing="-0.03em" color="brand.text" lineHeight={1}>
+        <Flex key={i} direction="column" align="flex-start" gap={3} py={2} minW={0}>
+          <Text fontSize={{ base: "27px", md: "36px" }} fontWeight="700" letterSpacing="-0.03em" color="brand.text" lineHeight={1}>
             {statValue(s)}
           </Text>
           <Text
